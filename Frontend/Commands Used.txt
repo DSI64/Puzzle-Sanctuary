@@ -1,0 +1,9 @@
+// This is a file to state the commands used to create the website's frontend
+
+Installing React: npm create vite@latest
+	Project Name: puzzle-sanctuary
+	Framework: React
+	Variant: JavaScript
+	Linter: Oxlint
+
+Starting React Frontend: npm run dev
