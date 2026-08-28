@@ -1,4 +1,4 @@
-// This is a file to state the commands used to create the website's frontend
+// This is a file to state the commands used to create the website's frontend content
 
 Installing React: npm create vite@latest
 	Project Name: puzzle-sanctuary
