@@ -6,4 +6,6 @@ Installing React: npm create vite@latest
 	Variant: JavaScript
 	Linter: Oxlint
 
+Used this command for page routing: npm install react-router-dom
+
 Starting React Frontend: npm run dev

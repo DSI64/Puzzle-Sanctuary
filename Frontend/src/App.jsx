@@ -1,59 +1,44 @@
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
+import Home from "./pages-jsx/Home";
+import DailyGame from "./pages-jsx/DailyGame";
+import Puzzles from "./pages-jsx/Puzzles";
+import Account from "./pages-jsx/Account";
+import Challenges from "./pages-jsx/Challenges";
 
 function App() {
   return (
-    <div className="app">
-      <header className="navbar">
-        <h1 className="logo">Puzzle Sanctuary</h1>
+    <BrowserRouter>
+      <div className="app">
 
-        <nav>
-          <a href="#">Home</a>
-          <a href="#">Daily Game</a>
-          <a href="#">Puzzles</a>
-          <a href="#">About</a>
-        </nav>
-      </header>
+        <header className="navbar">
+          <Link to="/" className="logo">
+            Puzzle Sanctuary
+          </Link>
 
-      <main>
-        <section className="hero">
-          <h2>Welcome to Puzzle Sanctuary</h2>
-          <p>
-            Take a break, challenge your mind, and enjoy a collection of
-            relaxing and entertaining puzzles.
-          </p>
+          <nav>
+            <Link to="/">Home</Link>
+            <Link to="/daily">Daily Game</Link>
+            <Link to="/puzzles">Puzzles</Link>
+            <Link to="/challenges">Challenges</Link>
+            <Link to="/account">Account</Link>
+          </nav>
+        </header>
 
-          <button>Play Today's Puzzle</button>
-        </section>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/daily" element={<DailyGame />} />
+          <Route path="/puzzles" element={<Puzzles />} />
+          <Route path="/challenges" element={<Challenges />} />
+          <Route path="/account" element={<Account />} />
+        </Routes>
 
-        <section className="featured">
-          <h2>Featured Puzzles</h2>
+        <footer>
+          <p>© 2026 Puzzle Sanctuary</p>
+        </footer>
 
-          <div className="puzzle-grid">
-            <div className="puzzle-card">
-              <h3>Word Puzzle</h3>
-              <p>Test your vocabulary and find the hidden words.</p>
-              <button>Play</button>
-            </div>
-
-            <div className="puzzle-card">
-              <h3>Number Puzzle</h3>
-              <p>Put your mathematical thinking to the test.</p>
-              <button>Play</button>
-            </div>
-
-            <div className="puzzle-card">
-              <h3>Logic Puzzle</h3>
-              <p>Use logic and deduction to solve challenging problems.</p>
-              <button>Play</button>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer>
-        <p>© 2026 Puzzle Sanctuary</p>
-      </footer>
-    </div>
+      </div>
+    </BrowserRouter>
   );
 }
 

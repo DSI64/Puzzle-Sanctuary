@@ -1,22 +1,38 @@
+:root {
+  --background: #ffffff;
+  --surface: #f5f5f5;
+  --primary: #2f3e46;
+  --primary-dark: #354f52;
+  --accent: #52796f;
+  --light: #cad2c5;
+  --text: #222222;
+}
+
+/* General */
+
 .app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Navigation Bar */
+/* Navigation */
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
-  background: #2f3e46;
+  background: var(--primary);
   color: white;
 }
 
 .logo {
   margin: 0;
+  color: white;
+  text-decoration: none;
+  font-size: 25px;
+  font-weight: bold;
 }
 
 .navbar nav {
@@ -24,20 +40,14 @@
   gap: 25px;
 }
 
-.navbar a {
+.navbar nav a {
   color: white;
   text-decoration: none;
   font-weight: bold;
 }
 
-.navbar a:hover {
-  text-decoration: underline;
-}
-
-/* Main */
-
-main {
-  flex: 1;
+.navbar nav a:hover {
+  color: var(--light);
 }
 
 /* Hero */
@@ -45,33 +55,43 @@ main {
 .hero {
   text-align: center;
   padding: 100px 20px;
-  background: #cad2c5;
+  background: var(--light);
 }
 
-.hero h2 {
+.hero-label {
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--primary);
+}
+
+.hero h1 {
   font-size: 42px;
-  margin-bottom: 15px;
+  margin: 10px 0 15px;
+  color: var(--primary);
 }
 
-.hero p {
+.hero p:not(.hero-label) {
   max-width: 600px;
   margin: 0 auto 30px;
   font-size: 18px;
   line-height: 1.6;
 }
 
+/* Buttons */
+
 button {
   border: none;
   padding: 12px 24px;
   border-radius: 8px;
-  background: #52796f;
+  background: var(--accent);
   color: white;
   font-size: 16px;
   cursor: pointer;
 }
 
 button:hover {
-  background: #354f52;
+  background: var(--primary-dark);
 }
 
 /* Featured puzzles */
@@ -79,11 +99,13 @@ button:hover {
 .featured {
   padding: 60px 40px;
   text-align: center;
+  background: var(--background);
 }
 
 .featured h2 {
   font-size: 32px;
   margin-bottom: 40px;
+  color: var(--primary);
 }
 
 .puzzle-grid {
@@ -97,12 +119,29 @@ button:hover {
 .puzzle-card {
   padding: 30px;
   border-radius: 12px;
-  background: #f5f5f5;
+  background: var(--surface);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .puzzle-card h3 {
   margin-top: 0;
+  color: var(--primary);
+}
+
+.puzzle-card p {
+  color: #555;
+}
+
+/* Other pages */
+
+.page {
+  flex: 1;
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.page h1 {
+  color: var(--primary);
 }
 
 /* Footer */
@@ -110,22 +149,28 @@ button:hover {
 footer {
   padding: 20px;
   text-align: center;
-  background: #2f3e46;
+  background: var(--primary);
   color: white;
 }
 
-/* Mobile Layout */
+/* Mobile */
+
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
     gap: 15px;
   }
 
+  .navbar nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .puzzle-grid {
     grid-template-columns: 1fr;
   }
 
-  .hero h2 {
+  .hero h1 {
     font-size: 32px;
   }
 }
