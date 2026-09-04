@@ -1,12 +1,19 @@
-import "../App.css";
+import "../pages-css/Home.css";
 
 function Home() {
   return (
-    <main>
+    <main className="home-page">
       <section className="hero">
+        
+        {/* <div className="tree">
+          <div className="tree-leaves"></div>
+          <div className="tree-trunk"></div>
+        </div> */}
+
         <p className="hero-label">WELCOME TO</p>
         <h1>PUZZLE SANCTUARY</h1>
-        <p>
+
+        <p className="hero-description">
           Relax, challenge yourself, and enjoy a collection of puzzles
           designed for all kinds of players.
         </p>

@@ -1,0 +1,167 @@
+.home-page {
+  min-height: 100vh;
+}
+
+/* Hero */
+
+.hero {
+  min-height: 550px;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background: #f7f4e9;
+  color: #26352a;
+}
+
+.hero-label {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #2f5d3a;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 52px;
+  color: #2f5d3a;
+}
+
+.hero-description {
+  max-width: 650px;
+  margin: 20px auto;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #405344;
+}
+
+.hero button {
+  margin-top: 15px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 8px;
+
+  background: #4ade80;
+  color: #26352a;
+
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+
+  transition: transform 0.2s ease;
+}
+
+.hero button:hover {
+  transform: translateY(-3px);
+}
+
+/* Tree */
+/* 
+.tree {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin-bottom: 25px;
+}
+
+.tree-trunk {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 35px;
+  height: 90px;
+
+  transform: translateX(-50%);
+
+  background: #8b5e3c;
+  border-radius: 10px 10px 5px 5px;
+}
+
+.tree-leaves {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+
+  width: 140px;
+  height: 140px;
+
+  transform: translateX(-50%);
+
+  background: #4ade80;
+  border-radius: 50%;
+  box-shadow:
+    -45px 5px 0 #66bb6a,
+    45px 5px 0 #66bb6a,
+    0 30px 0 #3fae63;
+} */
+
+/* Explore Puzzles */
+
+.featured {
+  padding: 60px 40px;
+  background: #dde8d5;
+  text-align: center;
+}
+
+.featured h2 {
+  margin-bottom: 35px;
+  color: #2f5d3a;
+  font-size: 34px;
+}
+
+.puzzle-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.puzzle-card {
+  padding: 30px;
+  border-radius: 14px;
+
+  background: #f7f4e9;
+
+  box-shadow: 0 4px 12px rgba(47, 93, 58, 0.12);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.puzzle-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(47, 93, 58, 0.18);
+}
+
+.puzzle-card h3 {
+  color: #2f5d3a;
+  font-size: 23px;
+}
+
+.puzzle-card p {
+  color: #405344;
+  line-height: 1.5;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 38px;
+  }
+
+  .puzzle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tree {
+    transform: scale(0.85);
+  }
+}

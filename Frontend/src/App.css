@@ -23,7 +23,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
-  background: var(--primary);
+  background: #2f5d3a;
   color: white;
 }
 
@@ -47,7 +47,7 @@
 }
 
 .navbar nav a:hover {
-  color: var(--light);
+  color: #4ade80;
 }
 
 /* Hero */
