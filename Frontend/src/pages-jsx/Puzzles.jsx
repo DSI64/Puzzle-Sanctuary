@@ -1,63 +1,81 @@
 // Puzzle Page of the website; Lists the available games on the website
 import PuzzleCard from "../components/PuzzleCard";
 import "../pages-css/Puzzles.css"
+import puzzlePlaceholder from "../assets/placeholder.png";
 
 function Puzzles() {
   const puzzles = [ //Gives the name, desciption, and the type of puzzle game it is
     {
-      name: "Test",
-      description: "A Description",
-      type: "Logic",
+      name: "Game Name",
+      description: "This is a description for the game",
+      type: "Puzzle Type",
+      image: puzzlePlaceholder,
     },
     {
       name: "",
       description: "",
       type: "",
+      image: puzzlePlaceholder,
     },
     {
       name: "",
       description: "",
       type: "",
+      image: puzzlePlaceholder,
     },
     {
       name: "",
       description: "",
       type: "",
+      image: puzzlePlaceholder,
     },
     {
       name: "",
       description: "",
       type: "",
+      image: puzzlePlaceholder,
     },
     {
       name: "",
       description: "",
       type: "",
+      image: puzzlePlaceholder,
     },
     {
       name: "",
       description: "",
       type: "",
+      image: puzzlePlaceholder,
     },
     {
       name: "",
       description: "",
       type: "",
+      image: puzzlePlaceholder,
     },
     {
       name: "",
       description: "",
       type: "",
+      image: puzzlePlaceholder,
     },
     {
       name: "",
       description: "",
       type: "",
+      image: puzzlePlaceholder,
     },
     {
       name: "",
       description: "",
       type: "",
+      image: puzzlePlaceholder,
+    },
+    {
+      name: "",
+      description: "",
+      type: "",
+      image: puzzlePlaceholder,
     }
   ]
 
@@ -77,6 +95,7 @@ function Puzzles() {
                 name={puzzle.name}
                 description={puzzle.description}
                 type={puzzle.type}
+                image={puzzle.image}
             />
           ))}
         </div>
