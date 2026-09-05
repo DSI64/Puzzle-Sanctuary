@@ -1,0 +1,329 @@
+.account-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+/* Profile */
+
+.profile-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 40px;
+
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+
+  background: white;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
+
+  overflow: hidden;
+  border-radius: 50%;
+  background: #cad2c5;
+}
+
+.profile-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.profile-info {
+  text-align: left;
+}
+
+.account-label {
+  margin: 0 0 8px;
+
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 2px;
+
+  color: #52796f;
+}
+
+.profile-info h1 {
+  margin: 0;
+
+  font-size: 42px;
+
+  color: #2f3e46;
+}
+
+.profile-level {
+  margin: 12px 0 6px;
+
+  color: #555;
+  font-size: 18px;
+}
+
+.favorite-game {
+  margin: 0;
+
+  color: #555;
+  font-size: 16px;
+}
+
+
+/* Dashboard Row */
+
+.dashboard-row {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px;
+
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+}
+
+
+/* Statistics */
+
+.statistics-section {
+  padding: 0;
+}
+
+.statistics-section h2,
+.favorite-section h2,
+.badges-section h2 {
+  margin: 0 0 25px;
+
+  color: #2f3e46;
+  font-size: 30px;
+}
+
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.stat-card {
+  padding: 25px;
+
+  text-align: center;
+
+  background: white;
+  border-radius: 12px;
+
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card h3 {
+  margin: 0;
+
+  font-size: 32px;
+
+  color: #52796f;
+}
+
+.stat-card p {
+  margin: 8px 0 0;
+
+  color: #555;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+
+/* Favorite Game */
+
+.favorite-section {
+  padding: 0;
+}
+
+.favorite-game-card {
+  overflow: hidden;
+
+  background: white;
+  border-radius: 12px;
+
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.favorite-game-image {
+  width: 100%;
+  height: 150px;
+}
+
+.favorite-game-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+.favorite-game-info {
+  padding: 20px;
+}
+
+.favorite-game-info h3 {
+  margin: 0 0 8px;
+
+  color: #2f3e46;
+  font-size: 23px;
+}
+
+.favorite-game-info p {
+  margin: 0;
+
+  color: #555;
+}
+
+
+/* Badges */
+
+.badges-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 40px 60px;
+}
+
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.badge-card {
+  text-align: center;
+}
+
+.badge-image-container {
+  position: relative;
+
+  width: 100%;
+  height: 130px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: white;
+  border-radius: 12px;
+
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.badge-image-container img {
+  width: 90px;
+  height: 90px;
+
+  object-fit: contain;
+}
+
+.badge-card p {
+  margin: 10px 0 0;
+
+  color: #354f52;
+  font-weight: bold;
+}
+
+
+/* Badge Tooltip */
+
+.badge-tooltip {
+  position: absolute;
+
+  bottom: calc(100% + 10px);
+  left: 50%;
+
+  width: 220px;
+  padding: 12px;
+
+  transform: translateX(-50%);
+
+  background: #2f3e46;
+  color: white;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  line-height: 1.4;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+
+  z-index: 10;
+}
+
+.badge-image-container:hover .badge-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* Settings */
+
+.settings-button {
+  margin-left: auto;
+  align-self: flex-start;
+
+  background: #52796f;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 10px 24px;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.settings-button:hover {
+  background: #354f52;
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .profile-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-info {
+    text-align: center;
+  }
+
+  .profile-info h1 {
+    font-size: 34px;
+  }
+
+  .settings-button {
+    margin-left: 0;
+    align-self: center;
+  }
+
+  .dashboard-row {
+    grid-template-columns: 1fr;
+  }
+
+  .statistics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .badge-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
