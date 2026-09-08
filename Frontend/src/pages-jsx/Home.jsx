@@ -14,8 +14,8 @@ function Home() {
         <h1>PUZZLE SANCTUARY</h1>
 
         <p className="hero-description">
-          Relax, challenge yourself, and enjoy a collection of puzzles
-          designed for all kinds of players.
+          Relax, challenge yourself, and enjoy a collection of 
+          relaxing and entertaining puzzles.
         </p>
 
         <button>Play Today's Puzzle</button>
