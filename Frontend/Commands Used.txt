@@ -6,6 +6,12 @@ Installing React: npm create vite@latest
 	Variant: JavaScript
 	Linter: Oxlint
 
+In Home return above welcome to: 
+        {/* <div className="tree">
+          <div className="tree-leaves"></div>
+          <div className="tree-trunk"></div>
+        </div> */}
+
 Used this command for page routing: npm install react-router-dom
 
 Starting React Frontend: npm run dev
