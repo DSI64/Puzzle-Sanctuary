@@ -9,6 +9,13 @@ function Home() {
           <div className="tree-leaves"></div>
           <div className="tree-trunk"></div>
         </div> */}
+      
+        <div className="background-decoration puzzle-bg puzzle-bg-1"></div>
+        <div className="background-decoration puzzle-bg puzzle-bg-2"></div>
+        <div className="background-decoration puzzle-bg puzzle-bg-3"></div>
+        <div className="background-decoration puzzle-bg puzzle-bg-4"></div>
+        <div className="background-decoration leaf-bg leaf-bg-1">🍃</div>
+        <div className="background-decoration leaf-bg leaf-bg-2">🍃</div>
 
         <p className="hero-label puzzle-piece-1">WELCOME TO</p>
         <h1 className="puzzle-piece-2">PUZZLE SANCTUARY</h1>
