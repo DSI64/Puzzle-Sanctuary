@@ -10,15 +10,15 @@ function Home() {
           <div className="tree-trunk"></div>
         </div> */}
 
-        <p className="hero-label">WELCOME TO</p>
-        <h1>PUZZLE SANCTUARY</h1>
+        <p className="hero-label puzzle-piece-1">WELCOME TO</p>
+        <h1 className="puzzle-piece-2">PUZZLE SANCTUARY</h1>
 
-        <p className="hero-description">
+        <p className="puzzle-piece-3">
           Relax, challenge yourself, and enjoy a collection of 
           relaxing and entertaining puzzles.
         </p>
 
-        <button>Play Today's Puzzle</button>
+        <button className="puzzle-piece-4">Play Today's Puzzle</button>
       </section>
 
       <section className="featured">

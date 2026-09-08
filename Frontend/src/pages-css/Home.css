@@ -2,6 +2,87 @@
   min-height: 100vh;
 }
 
+/* Homepage Assembly Animation */
+.puzzle-piece-1,
+.puzzle-piece-2,
+.puzzle-piece-3,
+.puzzle-piece-4 {
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+/* Welcome text Animation*/
+.puzzle-piece-1 {
+  animation-name: assembleTop;
+}
+
+@keyframes assembleTop {
+  from {
+    transform: translateY(-80px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+}
+
+/* Main title (Puzzle Sanctuary) Animation */
+.puzzle-piece-2 { 
+  animation-name: assembleLeft;
+  animation-delay: 0.15s;
+  opacity: 0;
+}
+
+@keyframes assembleLeft {
+  from {
+    transform: translateX(-120px) rotate(-5deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) rotate(0);
+    opacity: 1;
+  }
+}
+
+/* Description Animation */
+.puzzle-piece-3 {
+  animation-name: assembleRight;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+@keyframes assembleRight {
+  from {
+    transform: translateX(120px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Button (Play Today's Puzzle) Animation */
+.puzzle-piece-4 {
+  animation-name: assembleBottom;
+  animation-delay: 0.45s;
+  opacity: 0;
+}
+
+@keyframes assembleBottom {
+  from {
+    transform: translateX(100px) scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
 /* Hero */
 
 .hero {
