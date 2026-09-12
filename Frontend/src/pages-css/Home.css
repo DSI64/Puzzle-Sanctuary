@@ -2,7 +2,10 @@
   min-height: 100vh;
 }
 
-/* Homepage Assembly Animation */
+
+/* ============================================================
+   Homepage Assembly Animation
+   ============================================================ */
 
 .puzzle-piece-1,
 .puzzle-piece-2,
@@ -12,6 +15,7 @@
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
 }
+
 
 /* Welcome Text Animation */
 
@@ -37,7 +41,7 @@
 }
 
 
-/* Main Title (Puzzle Sanctuary) Animation */
+/* Main Title Animation */
 
 .puzzle-piece-2 {
   animation-name: assembleLeft;
@@ -89,7 +93,7 @@
 }
 
 
-/* Button (Play Today's Puzzle) Animation */
+/* Button Animation */
 
 .puzzle-piece-4 {
   animation-name: assembleBottom;
@@ -115,7 +119,9 @@
 }
 
 
-/* Hero */
+/* ============================================================
+   Hero
+   ============================================================ */
 
 .hero {
   min-height: 550px;
@@ -142,7 +148,7 @@
   font-weight: bold;
   letter-spacing: 3px;
 
-  color: #03AC13;
+  color: #03ac13;
 }
 
 .hero h1 {
@@ -150,7 +156,7 @@
 
   font-size: 52px;
 
-  color: #03AC13;
+  color: #03ac13;
 }
 
 .hero-description {
@@ -186,7 +192,9 @@
 }
 
 
-/* Background Decorations */
+/* ============================================================
+   Background Decorations
+   ============================================================ */
 
 .background-decoration {
   position: absolute;
@@ -207,18 +215,20 @@
 }
 
 
-/* Puzzle Background Shapes */
+/* ============================================================
+   Puzzle Background Shapes
+   ============================================================ */
 
 .puzzle-bg {
   width: 170px;
   height: 170px;
 
-  background: rgba(3, 172, 19, 0.18);
-
   /*
-    Creates a rough jigsaw-piece silhouette.
-    The shape has tabs and notches around its edges.
+    Default bright green.
+    Individual puzzle pieces below override this color.
   */
+
+  background: rgba(74, 222, 128, 0.45);
 
   clip-path: polygon(
     25% 0%,
@@ -268,14 +278,25 @@
 }
 
 
-/* Puzzle Positions */
+/* ============================================================
+      Puzzle Pieces
+   ============================================================ */
+
+/* Puzzle 1 - Bright Green */
 
 .puzzle-bg-1 {
   --rotation: 15deg;
 
   top: -35px;
   left: -35px;
+
+  width: 190px;
+  height: 190px;
+
+  background: rgba(74, 222, 128, 0.50);
 }
+
+/* Puzzle 2 - Bright Orange */
 
 .puzzle-bg-2 {
   --rotation: -20deg;
@@ -283,42 +304,197 @@
   right: -45px;
   bottom: -45px;
 
-  width: 210px;
-  height: 210px;
+  width: 220px;
+  height: 220px;
+
+  background: rgba(251, 146, 60, 0.42);
 
   animation-delay: -6s;
 }
 
+/* Puzzle 3 - Bright Blue (Top Right) */
+
 .puzzle-bg-3 {
   --rotation: 25deg;
 
-  top: 18%;
-  right: 7%;
+  top: 20%;
+  right: 3%;
 
-  width: 85px;
-  height: 85px;
+  width: 185px;
+  height: 185px;
 
-  opacity: 0.5;
+  background: rgba(56, 189, 248, 1.55);
+  clip-path: polygon(
+    20% 20%, 
+    80% 20%, 
+
+    80% 38%, 90% 38%, 98% 42%, 98% 58%, 90% 62%, 80% 62%, 
+    80% 80%, 
+
+    62% 80%, 62% 75%, 56% 72%, 44% 72%, 38% 75%, 38% 80%, 
+    20% 80%, 
+
+    20% 62%, 10% 62%, 2% 58%, 2% 42%, 10% 38%, 20% 38%
+  );
 
   animation-delay: -3s;
 }
 
-.puzzle-bg-4 {
-  --rotation: -15deg;
+/* Puzzle 5 - Purple (Left Middle) */
 
-  bottom: 18%;
-  left: 8%;
+.puzzle-bg-5 {
+  --rotation: -10deg;
 
-  width: 105px;
-  height: 105px;
+  top: 35%;
+  left: 2%;
 
-  opacity: 0.45;
+  width: 180px;
+  height: 180px;
 
-  animation-delay: -9s;
+  background: rgba(167, 139, 250, 1.40);
+
+  clip-path: polygon(
+    20% 20%, 
+    80% 20%, /* Flat Top */
+    80% 80%, /* Flat Right */
+    20% 80%, /* Flat Bottom */
+    20% 62%, 10% 62%, 0% 58%, 0% 42%, 10% 38%, 20% 38% /* Left Tab */
+  );
+
+  animation-delay: -2s;
+}
+
+/* Puzzle 6 - Teal (Right Top) */
+
+.puzzle-bg-6 {
+  --rotation: 18deg;
+
+  top: 3%;
+  right: 19%;
+
+  width: 160px;
+  height: 160px;
+
+  background: rgba(45, 212, 191, 1.42);
+
+  clip-path: polygon(
+    20% 20%, 
+    80% 20%, 
+    80% 80%, 
+    62% 80%, 62% 90%, 58% 100%, 42% 100%, 38% 90%, 38% 80%, 
+    20% 80%, 
+    20% 62%, 10% 62%, 0% 58%, 0% 42%, 10% 38%, 20% 38%
+  );
+
+  animation-delay: -7s;
+}
+
+/* Puzzle 7 - Bright Yellow (Left Bottom Middle) */
+
+.puzzle-bg-7 {
+  --rotation: -25deg;
+
+  bottom: 5%;
+  left: 19%;
+
+  width: 175px;
+  height: 175px;
+
+  background: rgba(250, 204, 21, 1.52);
+
+  animation-delay: -5s;
+  clip-path: polygon(
+    20% 20%, 
+    38% 20%, 38% 10%, 42% 0%, 58% 0%, 62% 10%, 62% 20%, 
+    80% 20%, 
+
+    80% 38%, 75% 38%, 72% 44%, 72% 56%, 75% 62%, 80% 62%, 
+    80% 80%, 
+
+    62% 80%, 62% 75%, 56% 72%, 44% 72%, 38% 75%, 38% 80%, 
+    20% 80%, 
+
+    20% 62%, 10% 62%, 0% 58%, 0% 42%, 10% 38%, 20% 38%
+  );
+}
+
+/*  Puzzle 8 - Bright Pink (Right Middle Bottom) */
+
+.puzzle-bg-8 {
+  --rotation: 12deg;
+
+  right: 25%;
+  bottom: 15%;
+
+  width: 95px;
+  height: 95px;
+
+  background: rgba(244, 114, 182, 1.42);
+
+  clip-path: polygon(
+    0% 0%,
+    30% 0%,
+    36% 8%,
+    44% 12%,
+    52% 8%,
+    58% 0%,
+
+    100% 0%,
+    100% 30%,
+    92% 36%,
+    88% 44%,
+    92% 52%,
+    100% 58%,
+
+    100% 100%,
+    65% 100%,
+    59% 92%,
+    51% 88%,
+    43% 92%,
+    37% 100%,
+
+    0% 100%,
+    0% 62%,
+    8% 56%,
+    12% 48%,
+    8% 40%,
+    0% 34%
+  );
+
+  animation-delay: -8s;
+}
+
+/*  Puzzle 9 - Dark Blue */
+
+.puzzle-bg-9 {
+  --rotation: -18deg;
+
+  top: 7%;
+  left: 23%;
+
+  width: 150px;
+  height: 150px;
+
+  background: rgba(0, 0, 128, 0.70);
+
+  clip-path: polygon(
+    20% 20%,
+    38% 20%, 38% 10%, 42% 0%, 58% 0%, 62% 10%, 62% 20%, /* Top Tab */
+    80% 20%,
+    80% 38%, 90% 38%, 100% 42%, 100% 58%, 90% 62%, 80% 62%, /* Right Tab */
+    80% 80%,
+    62% 80%, 62% 90%, 58% 100%, 42% 100%, 38% 90%, 38% 80%, /* Bottom Tab */
+    20% 80%,
+    20% 62%, 10% 62%, 0% 58%, 0% 42%, 10% 38%, 20% 38%  /* Left Tab */
+  );
+
+  animation-delay: -11s;
 }
 
 
-/* Leaves */
+/* ============================================================
+   Leaves
+   ============================================================ */
 
 .leaf-bg {
   font-size: 55px;
@@ -344,7 +520,9 @@
 }
 
 
-/* Background Movement */
+/* ============================================================
+   Background Movement
+   ============================================================ */
 
 @keyframes floatingPuzzle {
   0% {
@@ -377,9 +555,11 @@
 }
 
 
-/* Tree */
+/* ============================================================
+   Tree
+   ============================================================ */
 
-/* 
+/*
 .tree {
   position: relative;
   width: 180px;
@@ -424,7 +604,9 @@
 */
 
 
-/* Explore Puzzles */
+/* ============================================================
+   Explore Puzzles
+   ============================================================ */
 
 .featured {
   padding: 60px 40px;
@@ -437,7 +619,7 @@
 .featured h2 {
   margin-bottom: 35px;
 
-  color: #01796F;
+  color: #01796f;
 
   font-size: 34px;
 }
@@ -473,7 +655,7 @@
 }
 
 .puzzle-card h3 {
-  color: #01796F;
+  color: #01796f;
 
   font-size: 23px;
 }
@@ -485,7 +667,9 @@
 }
 
 
-/* Mobile */
+/* ============================================================
+   Mobile
+   ============================================================ */
 
 @media (max-width: 768px) {
   .hero h1 {
@@ -498,5 +682,68 @@
 
   .tree {
     transform: scale(0.85);
+  }
+
+
+  /* Puzzle 1 */
+
+  .puzzle-bg-1 {
+    width: 140px;
+    height: 140px;
+  }
+
+
+  /* Puzzle 2 */
+
+  .puzzle-bg-2 {
+    width: 160px;
+    height: 160px;
+  }
+
+
+  /* Puzzle 5 */
+
+  .puzzle-bg-5 {
+    width: 90px;
+    height: 90px;
+  }
+
+
+  /* Puzzle 6 */
+
+  .puzzle-bg-6 {
+    width: 75px;
+    height: 75px;
+  }
+
+
+  /* Puzzle 7 */
+
+  .puzzle-bg-7 {
+    width: 60px;
+    height: 60px;
+  }
+
+
+  /* Puzzle 8 */
+
+  .puzzle-bg-8 {
+    width: 70px;
+    height: 70px;
+  }
+
+
+  /* Puzzle 9 */
+
+  .puzzle-bg-9 {
+    width: 85px;
+    height: 85px;
+  }
+
+
+  /* Leaves */
+
+  .leaf-bg {
+    font-size: 40px;
   }
 }

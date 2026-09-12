@@ -1,0 +1,728 @@
+/* Account Settings */
+
+.account-settings-page {
+  min-height: 100vh;
+  padding: 50px 20px;
+
+  background: #f7f4e9;
+  color: #26352a;
+}
+
+
+/* Main Layout */
+
+.settings-layout-container {
+  display: flex;
+
+  max-width: 1050px;
+  margin: 0 auto;
+
+  gap: 30px;
+}
+
+
+/* Sidebar */
+
+.settings-sidebar {
+  width: 250px;
+
+  flex-shrink: 0;
+}
+
+
+/* Back to Profile */
+
+.back-link {
+  display: inline-block;
+
+  margin-bottom: 20px;
+
+  color: #01796f;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: #03ac13;
+}
+
+
+/* Sidebar Menu */
+
+.sidebar-menu {
+  list-style: none;
+
+  padding: 0;
+  margin: 0;
+
+  background: #ffffff;
+
+  border-radius: 14px;
+
+  box-shadow: 0 4px 12px rgba(47, 93, 58, 0.12);
+
+  overflow: hidden;
+}
+
+.sidebar-menu li {
+  padding: 15px 20px;
+
+  border-bottom: 1px solid #dde8d5;
+
+  color: #405344;
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.sidebar-menu li:last-child {
+  border-bottom: none;
+}
+
+
+/* Sidebar Active Item */
+
+.sidebar-menu li.active {
+  background: #dde8d5;
+
+  color: #01796f;
+
+  font-weight: bold;
+}
+
+
+/* Sidebar Hover */
+
+.sidebar-menu li:hover:not(.active) {
+  background: #f7f4e9;
+
+  color: #01796f;
+}
+
+
+/* Main Settings Panel */
+
+.settings-panel {
+  flex: 1;
+
+  background: #ffffff;
+
+  border-radius: 14px;
+
+  box-shadow: 0 4px 12px rgba(47, 93, 58, 0.12);
+
+  overflow: hidden;
+}
+
+
+/* Settings Section */
+
+.settings-section {
+  padding: 30px;
+}
+
+.settings-section h1 {
+  margin: 0 0 25px;
+
+  color: #01796f;
+
+  font-size: 30px;
+}
+
+
+/* Individual Settings */
+
+.settings-option {
+  display: grid;
+
+  grid-template-columns: 40% 60%;
+
+  min-height: 150px;
+
+  padding: 30px 0;
+
+  border-bottom: 1px solid #dde8d5;
+}
+
+
+/* Setting Labels */
+
+.settings-label {
+  padding-right: 30px;
+}
+
+.settings-label h2 {
+  margin: 0 0 8px;
+
+  color: #01796f;
+
+  font-size: 21px;
+}
+
+.settings-label p {
+  margin: 0;
+
+  color: #405344;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* Setting Controls */
+
+.settings-control {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-start;
+
+  gap: 20px;
+}
+
+
+/* General */
+
+.general-control {
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 12px;
+}
+
+
+/* Profile Picture */
+
+.profile-picture-control {
+  gap: 25px;
+}
+
+.current-avatar {
+  width: 90px;
+  height: 90px;
+
+  flex-shrink: 0;
+
+  overflow: hidden;
+
+  border-radius: 50%;
+
+  background: #cad2c5;
+}
+
+.current-avatar img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+/* Avatar Choices */
+
+.avatar-options {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.avatar-option {
+  width: 65px;
+  height: 65px;
+
+  padding: 3px;
+
+  border: 3px solid transparent;
+  border-radius: 50%;
+
+  background: #f5f5f5;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.avatar-option img {
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+}
+
+.avatar-option:hover {
+  transform: translateY(-2px);
+}
+
+.avatar-option.selected {
+  border-color: #01796f;
+
+  box-shadow: 0 0 0 2px #4ade80;
+}
+
+
+/* Username */
+
+.username-input {
+  width: 280px;
+
+  padding: 11px 14px;
+
+  border: 2px solid #cad2c5;
+
+  border-radius: 8px;
+
+  background: #f7f4e9;
+
+  color: #26352a;
+
+  font-size: 16px;
+
+  outline: none;
+}
+
+.username-input:focus {
+  border-color: #4ade80;
+}
+
+
+/* Profile Background */
+
+.background-control {
+  align-items: flex-start;
+}
+
+.background-color-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 50px);
+
+  gap: 12px;
+}
+
+.background-color-option {
+  width: 50px;
+  height: 50px;
+
+  padding: 0;
+
+  border: 3px solid transparent;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.background-color-option:hover {
+  transform: translateY(-2px);
+}
+
+.background-color-option.selected {
+  border-color: #01796f;
+
+  box-shadow: 0 0 0 2px #4ade80;
+}
+
+
+/* Background Preview */
+
+.background-preview {
+  min-height: 100px;
+
+  margin-top: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  color: #2f3e46;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  transition: background-color 0.2s ease;
+}
+
+
+/* Favorite Game */
+
+.favorite-game-settings h1 {
+  margin-bottom: 25px;
+}
+
+.favorite-game-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 20px;
+}
+
+
+/* Favorite Game Card */
+
+.settings-game-card {
+  overflow: hidden;
+
+  background: white;
+
+  border: 2px solid transparent;
+
+  border-radius: 12px;
+
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.settings-game-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+
+/* Selected Game */
+
+.settings-game-card.selected {
+  border-color: #4ade80;
+
+  box-shadow:
+    0 0 0 2px #4ade80,
+    0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+
+/* Game Image */
+
+.settings-game-image {
+  width: 100%;
+  height: 100px;
+}
+
+.settings-game-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+
+/* Game Information */
+
+.settings-game-info {
+  padding: 15px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.settings-game-info h3 {
+  margin: 0 0 6px;
+
+  color: #2f3e46;
+
+  font-size: 18px;
+}
+
+.settings-game-info p {
+  margin: 0;
+
+  color: #555;
+
+  font-size: 13px;
+
+  line-height: 1.4;
+}
+
+
+/* Trophy Showcase */
+
+.trophy-showcase-settings h1 {
+  margin-bottom: 10px;
+}
+
+.trophy-instructions {
+  margin: 0 0 25px;
+
+  color: #405344;
+
+  font-size: 14px;
+}
+
+
+/* Trophy Grid */
+
+.trophy-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 20px;
+}
+
+
+/* Trophy Card */
+
+.settings-trophy-card {
+  text-align: center;
+
+  cursor: pointer;
+}
+
+.settings-trophy-image {
+  position: relative;
+
+  width: 100%;
+  height: 130px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: white;
+
+  border: 2px solid transparent;
+
+  border-radius: 12px;
+
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.settings-trophy-image:hover {
+  transform: translateY(-3px);
+}
+
+
+/* Selected Trophy */
+
+.settings-trophy-card.selected .settings-trophy-image {
+  border-color: #4ade80;
+
+  box-shadow:
+    0 0 0 2px #4ade80,
+    0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+
+/* Trophy Image */
+
+.settings-trophy-image img {
+  width: 90px;
+  height: 90px;
+
+  object-fit: contain;
+}
+
+
+/* Trophy Name */
+
+.settings-trophy-card p {
+  margin: 10px 0 0;
+
+  color: #354f52;
+
+  font-weight: bold;
+}
+
+
+/* Trophy Tooltip */
+
+.settings-trophy-tooltip {
+  position: absolute;
+
+  bottom: calc(100% + 10px);
+  left: 50%;
+
+  width: 220px;
+
+  padding: 12px;
+
+  transform: translateX(-50%);
+
+  background: #2f3e46;
+  color: white;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  line-height: 1.4;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+
+  z-index: 10;
+}
+
+.settings-trophy-image:hover .settings-trophy-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* Save Button */
+
+.settings-save-container {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 25px;
+}
+
+/* Save Confirmation */
+
+.save-message {
+  margin-left: 15px;
+
+  display: flex;
+  align-items: center;
+
+  color: #01796f;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  animation: save-message-appear 0.2s ease;
+}
+
+@keyframes save-message-appear {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.settings-button {
+  padding: 10px 18px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #4ade80;
+
+  color: #26352a;
+
+  font-size: 14px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.settings-button:hover {
+  transform: translateY(-2px);
+
+  background: #3bdc72;
+}
+
+
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+  .account-settings-page {
+    padding: 25px 15px;
+  }
+
+  .settings-layout-container {
+    flex-direction: column;
+
+    gap: 20px;
+  }
+
+  .settings-sidebar {
+    width: 100%;
+  }
+
+  .settings-option {
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+
+    padding: 25px 0;
+  }
+
+  .settings-label {
+    padding-right: 0;
+  }
+
+  .settings-control {
+    width: 100%;
+  }
+
+  .profile-picture-control {
+    flex-wrap: wrap;
+  }
+
+  .avatar-options {
+    width: 100%;
+  }
+
+  .username-input {
+    width: 100%;
+
+    max-width: 280px;
+  }
+
+  .favorite-game-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trophy-grid {
+    grid-template-columns: 1fr;
+  }
+
+}

@@ -4,6 +4,7 @@ import Home from "./pages-jsx/Home";
 import DailyGame from "./pages-jsx/DailyGame";
 import Puzzles from "./pages-jsx/Puzzles";
 import Account from "./pages-jsx/Account";
+import AccountSettings from "./pages-jsx/AccountSettings";
 import Challenges from "./pages-jsx/Challenges";
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/puzzles" element={<Puzzles />} />
           <Route path="/challenges" element={<Challenges />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/account/settings" element={<AccountSettings />} />
         </Routes>
 
         <footer>

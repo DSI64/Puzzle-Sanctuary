@@ -1,19 +1,42 @@
 // Account Page of the website; Displays the user's profile and progress
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import "../pages-css/Account.css";
+
 import profilePlaceholder from "../assets/profile-placeholder.png";
 import gamePlaceholder from "../assets/placeholder.png";
 import badgePlaceholder from "../assets/badge-placeholder.png";
 
-
 function Account() {
-  // Placeholder account information for now
+  // Get saved profile settings from localStorage
+  const savedProfileName =
+    localStorage.getItem("profileName") || "PuzzlePlayer";
+
+  const savedProfileBackground =
+    localStorage.getItem("profileBackground") || "#f5f5f5";
+
+  const savedFavoriteGame =
+    localStorage.getItem("favoriteGame") || "Word Puzzle";
+
+  const savedAvatar =
+    localStorage.getItem("profileAvatar") || profilePlaceholder;
+
+  // Get saved trophy showcase
+  const savedTrophies = JSON.parse(
+    localStorage.getItem("trophyShowcase") || "[]"
+  );
+
+  // Placeholder account information
   const user = {
-    username: "PuzzlePlayer",
+    username: savedProfileName,
     level: 12,
-    favoriteGame: "Word Puzzle",
-    profilePicture: profilePlaceholder,
+    favoriteGame: savedFavoriteGame,
+    profilePicture: savedAvatar,
     favoriteGameImage: gamePlaceholder,
   };
+
+  // Profile background
+  const [profileBackground] = useState(savedProfileBackground);
 
   // Placeholder statistics
   const statistics = [
@@ -35,8 +58,8 @@ function Account() {
     },
   ];
 
-  // Placeholder badges
-  const badges = [
+  // All available badges
+  const allBadges = [
     {
       name: "First Puzzle",
       description: "Awarded for completing your first puzzle.",
@@ -64,8 +87,18 @@ function Account() {
     },
   ];
 
+  // If trophies have been saved, use those.
+  // Otherwise, show all trophies for the initial account.
+  const badges =
+    savedTrophies.length > 0
+      ? allBadges.filter((badge) => savedTrophies.includes(badge.name))
+      : allBadges;
+
   return (
-    <main className="account-page">
+    <main
+      className="account-page"
+      style={{ backgroundColor: profileBackground }}
+    >
 
       {/* Profile */}
       <section className="profile-section">
@@ -75,6 +108,7 @@ function Account() {
 
         <div className="profile-info">
           <p className="account-label">PUZZLE SANCTUARY</p>
+
           <h1>{user.username}</h1>
 
           <p className="profile-level">
@@ -86,9 +120,9 @@ function Account() {
           </p>
         </div>
 
-        <button className="settings-button">
+        <Link to="/account/settings" className="settings-button">
           Settings
-        </button>
+        </Link>
       </section>
 
       {/* Middle Dashboard Row (Stats & Favorite Side-by-Side) */}
@@ -128,7 +162,6 @@ function Account() {
         </section>
 
       </div>
-      {/* --- End Dashboard Row --- */}
 
       {/* Badges */}
       <section className="badges-section">
@@ -137,6 +170,7 @@ function Account() {
         <div className="badge-grid">
           {badges.map((badge) => (
             <div className="badge-card" key={badge.name}>
+
               <div className="badge-image-container">
                 <img
                   src={badge.image}
@@ -149,6 +183,7 @@ function Account() {
               </div>
 
               <p>{badge.name}</p>
+
             </div>
           ))}
         </div>
