@@ -1,11 +1,16 @@
 // Account Page of the website; Displays the user's profile and progress
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Style, Avatar } from "@dicebear/core";
+import definition from "@dicebear/styles/critters.json" with { type: "json" };
+
 import "../pages-css/Account.css";
 
-import profilePlaceholder from "../assets/profile-placeholder.png";
 import gamePlaceholder from "../assets/placeholder.png";
 import badgePlaceholder from "../assets/badge-placeholder.png";
+
+// Create the DiceBear Critters style
+const crittersStyle = new Style(definition);
 
 function Account() {
   // Get saved profile settings from localStorage
@@ -18,8 +23,15 @@ function Account() {
   const savedFavoriteGame =
     localStorage.getItem("favoriteGame") || "Word Puzzle";
 
+  // The saved value is now a DiceBear seed
   const savedAvatar =
-    localStorage.getItem("profileAvatar") || profilePlaceholder;
+    localStorage.getItem("profileAvatar") || "Felix";
+
+  // Generate the saved DiceBear Critters avatar
+  const profilePicture = new Avatar(crittersStyle, {
+    seed: savedAvatar,
+    size: 160,
+  }).toDataUri();
 
   // Get saved trophy showcase
   const savedTrophies = JSON.parse(
@@ -31,7 +43,7 @@ function Account() {
     username: savedProfileName,
     level: 12,
     favoriteGame: savedFavoriteGame,
-    profilePicture: savedAvatar,
+    profilePicture: profilePicture,
     favoriteGameImage: gamePlaceholder,
   };
 
@@ -102,8 +114,12 @@ function Account() {
 
       {/* Profile */}
       <section className="profile-section">
+
         <div className="profile-picture">
-          <img src={user.profilePicture} alt="Profile" />
+          <img
+            src={user.profilePicture}
+            alt={`${user.username}'s profile avatar`}
+          />
         </div>
 
         <div className="profile-info">
@@ -123,6 +139,7 @@ function Account() {
         <Link to="/account/settings" className="settings-button">
           Settings
         </Link>
+
       </section>
 
       {/* Middle Dashboard Row (Stats & Favorite Side-by-Side) */}
@@ -147,6 +164,7 @@ function Account() {
           <h2>Favorite Game</h2>
 
           <div className="favorite-game-card">
+
             <div className="favorite-game-image">
               <img
                 src={user.favoriteGameImage}
@@ -158,6 +176,7 @@ function Account() {
               <h3>{user.favoriteGame}</h3>
               <p>Your favorite puzzle game.</p>
             </div>
+
           </div>
         </section>
 
@@ -168,10 +187,12 @@ function Account() {
         <h2>Badges</h2>
 
         <div className="badge-grid">
+
           {badges.map((badge) => (
             <div className="badge-card" key={badge.name}>
 
               <div className="badge-image-container">
+
                 <img
                   src={badge.image}
                   alt={badge.name}
@@ -180,12 +201,14 @@ function Account() {
                 <div className="badge-tooltip">
                   {badge.description}
                 </div>
+
               </div>
 
               <p>{badge.name}</p>
 
             </div>
           ))}
+
         </div>
       </section>
 

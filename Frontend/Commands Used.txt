@@ -13,5 +13,6 @@ In Home return above welcome to:
         </div> */}
 
 Used this command for page routing: npm install react-router-dom
+Used this command for Account Profile Icons: npm install @dicebear/core @dicebear/styles --save
 
 Starting React Frontend: npm run dev

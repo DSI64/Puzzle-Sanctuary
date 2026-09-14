@@ -1,11 +1,16 @@
 // Account Settings Page
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Style, Avatar } from "@dicebear/core";
+import definition from "@dicebear/styles/critters.json" with { type: "json" };
+
 import "../pages-css/AccountSettings.css";
 
-import profilePlaceholder from "../assets/profile-placeholder.png";
 import gamePlaceholder from "../assets/placeholder.png";
 import badgePlaceholder from "../assets/badge-placeholder.png";
+
+// Create the DiceBear Critters style
+const crittersStyle = new Style(definition);
 
 function AccountSettings() {
   const [activeSection, setActiveSection] = useState("General");
@@ -22,8 +27,9 @@ function AccountSettings() {
     localStorage.getItem("profileBackground") || "#f5f5f5"
   );
 
+  // Store the DiceBear seed instead of an image path
   const [profileAvatar, setProfileAvatar] = useState(
-    localStorage.getItem("profileAvatar") || profilePlaceholder
+    localStorage.getItem("profileAvatar") || "Felix"
   );
 
   const [favoriteGame, setFavoriteGame] = useState(
@@ -56,11 +62,39 @@ function AccountSettings() {
     "Trophy Showcase",
   ];
 
-  // Available avatar choices
+  // Available DiceBear Critters avatars
   const avatars = [
     {
-      name: "Default Avatar",
-      image: profilePlaceholder,
+      name: "Felix",
+      seed: "Felix",
+    },
+    {
+      name: "Puzzle",
+      seed: "Puzzle",
+    },
+    {
+      name: "Forest",
+      seed: "Forest",
+    },
+    {
+      name: "Sunny",
+      seed: "Sunny",
+    },
+    {
+      name: "Explorer",
+      seed: "Explorer",
+    },
+    {
+      name: "Mystery",
+      seed: "Mystery",
+    },
+    {
+      name: "Garden",
+      seed: "Garden",
+    },
+    {
+      name: "Lucky",
+      seed: "Lucky",
     },
   ];
 
@@ -121,6 +155,14 @@ function AccountSettings() {
     "#d8e8e0",
     "#dce8f5",
   ];
+
+  // Generate a DiceBear Critters avatar
+  const generateAvatar = (seed, size = 100) => {
+  return new Avatar(crittersStyle, {
+    seed: seed,
+    size: size,
+  }).toDataUri();
+};
 
   // Show saved message
   const showSaveMessage = () => {
@@ -279,35 +321,39 @@ function AccountSettings() {
                   <h2>Profile Picture</h2>
 
                   <p>
-                    Choose the picture displayed on your profile.
+                    Choose the picture displayed on your Puzzle Sanctuary profile.
                   </p>
                 </div>
 
                 <div className="settings-control profile-picture-control">
 
+                  {/* Current Avatar */}
                   <div className="current-avatar">
                     <img
-                      src={profileAvatar}
+                      src={generateAvatar(profileAvatar, 160)}
                       alt="Current profile avatar"
                     />
                   </div>
 
+                  {/* Avatar Choices */}
                   <div className="avatar-options">
 
                     {avatars.map((avatar) => (
                       <button
                         key={avatar.name}
                         className={`avatar-option ${
-                          profileAvatar === avatar.image
+                          profileAvatar === avatar.seed
                             ? "selected"
                             : ""
                         }`}
                         onClick={() =>
-                          setProfileAvatar(avatar.image)
+                          setProfileAvatar(avatar.seed)
                         }
+                        aria-label={`Select ${avatar.name} avatar`}
+                        title={avatar.name}
                       >
                         <img
-                          src={avatar.image}
+                          src={generateAvatar(avatar.seed, 100)}
                           alt={avatar.name}
                         />
                       </button>

@@ -234,9 +234,9 @@
 /* Avatar Choices */
 
 .avatar-options {
-  display: flex;
+  display: grid;
 
-  align-items: center;
+  grid-template-columns: repeat(4, 65px);
 
   gap: 12px;
 }

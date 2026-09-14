@@ -6,10 +6,11 @@ import puzzlePlaceholder from "../assets/placeholder.png";
 function Puzzles() {
   const puzzles = [ //Gives the name, desciption, and the type of puzzle game it is
     {
-      name: "Game Name",
+      name: "Jigsaw",
       description: "This is a description for the game",
       type: "Puzzle Type",
       image: puzzlePlaceholder,
+      path: "/puzzles/jigsaw",
     },
     {
       name: "",
@@ -96,6 +97,7 @@ function Puzzles() {
                 description={puzzle.description}
                 type={puzzle.type}
                 image={puzzle.image}
+                path={puzzle.path}
             />
           ))}
         </div>
