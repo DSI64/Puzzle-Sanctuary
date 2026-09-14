@@ -4,30 +4,30 @@ function Home() {
   return (
     <main className="home-page">
       <section className="hero">
-        
+
         {/* <div className="tree">
           <div className="tree-leaves"></div>
           <div className="tree-trunk"></div>
         </div> */}
-      
-{/* Background Decorations */}
 
-<div className="background-decoration puzzle-bg puzzle-bg-1"></div>
-<div className="background-decoration puzzle-bg puzzle-bg-2"></div>
-<div className="background-decoration puzzle-bg puzzle-bg-3"></div>
-<div className="background-decoration puzzle-bg puzzle-bg-5"></div>
-<div className="background-decoration puzzle-bg puzzle-bg-6"></div>
-<div className="background-decoration puzzle-bg puzzle-bg-7"></div>
-<div className="background-decoration puzzle-bg puzzle-bg-8"></div>
-<div className="background-decoration puzzle-bg puzzle-bg-9"></div>
-<div className="background-decoration leaf-bg leaf-bg-1">🍃</div>
-<div className="background-decoration leaf-bg leaf-bg-2">🍃</div>
+        {/* Background Decorations */}
+
+        <div className="background-decoration puzzle-bg puzzle-bg-1"></div>
+        <div className="background-decoration puzzle-bg puzzle-bg-2"></div>
+        <div className="background-decoration puzzle-bg puzzle-bg-3"></div>
+        <div className="background-decoration puzzle-bg puzzle-bg-5"></div>
+        <div className="background-decoration puzzle-bg puzzle-bg-6"></div>
+        <div className="background-decoration puzzle-bg puzzle-bg-7"></div>
+        <div className="background-decoration puzzle-bg puzzle-bg-8"></div>
+        <div className="background-decoration puzzle-bg puzzle-bg-9"></div>
+        <div className="background-decoration leaf-bg leaf-bg-1">🍃</div>
+        <div className="background-decoration leaf-bg leaf-bg-2">🍃</div>
 
         <p className="hero-label puzzle-piece-1">WELCOME TO</p>
         <h1 className="puzzle-piece-2">PUZZLE SANCTUARY</h1>
 
         <p className="puzzle-piece-3">
-          Relax, challenge yourself, and enjoy a collection of 
+          Relax, challenge yourself, and enjoy a collection of
           relaxing and entertaining puzzles.
         </p>
 

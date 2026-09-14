@@ -7,7 +7,10 @@ import definition from "@dicebear/styles/critters.json" with { type: "json" };
 import "../pages-css/AccountSettings.css";
 
 import gamePlaceholder from "../assets/placeholder.png";
-import badgePlaceholder from "../assets/badge-placeholder.png";
+//import badgePlaceholder from "../assets/badge-placeholder.png";
+import bronzeTrophy from "../assets/bronze-trophy.png";
+import silverTrophy from "../assets/silver-trophy.png";
+import goldTrophy from "../assets/gold-trophy.png";
 
 // Create the DiceBear Critters style
 const crittersStyle = new Style(definition);
@@ -122,47 +125,51 @@ function AccountSettings() {
     {
       name: "First Puzzle",
       description: "Awarded for completing your first puzzle.",
-      image: badgePlaceholder,
+      image: bronzeTrophy,
     },
     {
       name: "Puzzle Master",
       description: "Awarded for completing 50 puzzles.",
-      image: badgePlaceholder,
+      image: goldTrophy,
     },
     {
       name: "Daily Solver",
       description: "Awarded for maintaining a 7 day login streak.",
-      image: badgePlaceholder,
+      image: bronzeTrophy,
     },
     {
       name: "Logic Expert",
       description: "Awarded for completing 25 logic puzzles.",
-      image: badgePlaceholder,
+      image: silverTrophy,
     },
     {
       name: "Dedicated Solver",
       description: "Awarded for playing puzzles on 30 different days.",
-      image: badgePlaceholder,
+      image: silverTrophy,
     },
   ];
 
   // Profile background choices
   const backgroundChoices = [
-    "#f5f5f5",
-    "#f7f4e9",
-    "#dde8d5",
-    "#cad2c5",
-    "#d8e8e0",
-    "#dce8f5",
+    "#b6d2a0",
+    "#ebd78e",
+    "#a1d9cf",
+    "#c09fca",
+    "#a0d2b9",
+    "#e9afaf",
+    "#d2a0c3",
+    "#dce9af",
+    "#aba7aa",
+    "#e3e4df",
   ];
 
   // Generate a DiceBear Critters avatar
   const generateAvatar = (seed, size = 100) => {
-  return new Avatar(crittersStyle, {
-    seed: seed,
-    size: size,
-  }).toDataUri();
-};
+    return new Avatar(crittersStyle, {
+      seed: seed,
+      size: size,
+    }).toDataUri();
+  };
 
   // Show saved message
   const showSaveMessage = () => {
@@ -341,11 +348,10 @@ function AccountSettings() {
                     {avatars.map((avatar) => (
                       <button
                         key={avatar.name}
-                        className={`avatar-option ${
-                          profileAvatar === avatar.seed
-                            ? "selected"
-                            : ""
-                        }`}
+                        className={`avatar-option ${profileAvatar === avatar.seed
+                          ? "selected"
+                          : ""
+                          }`}
                         onClick={() =>
                           setProfileAvatar(avatar.seed)
                         }
@@ -408,11 +414,10 @@ function AccountSettings() {
                     {backgroundChoices.map((color) => (
                       <button
                         key={color}
-                        className={`background-color-option ${
-                          profileBackground === color
-                            ? "selected"
-                            : ""
-                        }`}
+                        className={`background-color-option ${profileBackground === color
+                          ? "selected"
+                          : ""
+                          }`}
                         style={{
                           backgroundColor: color,
                         }}
@@ -471,11 +476,10 @@ function AccountSettings() {
 
                 {games.map((game) => (
                   <div
-                    className={`settings-game-card ${
-                      favoriteGame === game.name
-                        ? "selected"
-                        : ""
-                    }`}
+                    className={`settings-game-card ${favoriteGame === game.name
+                      ? "selected"
+                      : ""
+                      }`}
                     key={game.name}
                     onClick={() => setFavoriteGame(game.name)}
                   >
@@ -539,11 +543,10 @@ function AccountSettings() {
                 {badges.map((badge) => (
 
                   <div
-                    className={`settings-trophy-card ${
-                      selectedTrophies.includes(badge.name)
-                        ? "selected"
-                        : ""
-                    }`}
+                    className={`settings-trophy-card ${selectedTrophies.includes(badge.name)
+                      ? "selected"
+                      : ""
+                      }`}
                     key={badge.name}
                     onClick={() => toggleTrophy(badge.name)}
                   >

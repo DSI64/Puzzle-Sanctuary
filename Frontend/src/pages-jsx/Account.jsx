@@ -3,11 +3,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Style, Avatar } from "@dicebear/core";
 import definition from "@dicebear/styles/critters.json" with { type: "json" };
-
 import "../pages-css/Account.css";
-
 import gamePlaceholder from "../assets/placeholder.png";
-import badgePlaceholder from "../assets/badge-placeholder.png";
+// import badgePlaceholder from "../assets/badge-placeholder.png";
+import bronzeTrophy from "../assets/bronze-trophy.png";
+import silverTrophy from "../assets/silver-trophy.png";
+import goldTrophy from "../assets/gold-trophy.png";
 
 // Create the DiceBear Critters style
 const crittersStyle = new Style(definition);
@@ -41,7 +42,7 @@ function Account() {
   // Placeholder account information
   const user = {
     username: savedProfileName,
-    level: 12,
+    level: 7,
     favoriteGame: savedFavoriteGame,
     profilePicture: profilePicture,
     favoriteGameImage: gamePlaceholder,
@@ -54,19 +55,19 @@ function Account() {
   const statistics = [
     {
       label: "Puzzles Completed",
-      value: "37",
+      value: "60",
     },
     {
       label: "Puzzles Played",
-      value: "52",
+      value: "60",
     },
     {
       label: "Best Score",
-      value: "982",
+      value: "1983",
     },
     {
       label: "Current Streak",
-      value: "6",
+      value: "7",
     },
   ];
 
@@ -75,27 +76,27 @@ function Account() {
     {
       name: "First Puzzle",
       description: "Awarded for completing your first puzzle.",
-      image: badgePlaceholder,
+      image: bronzeTrophy,
     },
     {
       name: "Puzzle Master",
       description: "Awarded for completing 50 puzzles.",
-      image: badgePlaceholder,
+      image: goldTrophy,
     },
     {
       name: "Daily Solver",
       description: "Awarded for maintaining a 7 day login streak.",
-      image: badgePlaceholder,
+      image: bronzeTrophy,
     },
     {
       name: "Logic Expert",
       description: "Awarded for completing 25 logic puzzles.",
-      image: badgePlaceholder,
+      image: silverTrophy,
     },
     {
       name: "Dedicated Solver",
       description: "Awarded for playing puzzles on 30 different days.",
-      image: badgePlaceholder,
+      image: silverTrophy,
     },
   ];
 
@@ -182,9 +183,9 @@ function Account() {
 
       </div>
 
-      {/* Badges */}
+      {/* Badges / Trophies */}
       <section className="badges-section">
-        <h2>Badges</h2>
+        <h2>Trophies</h2>
 
         <div className="badge-grid">
 
