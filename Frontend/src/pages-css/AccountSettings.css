@@ -314,7 +314,7 @@
 .background-color-grid {
   display: grid;
 
-  grid-template-columns: repeat(5, 50px);
+  grid-template-columns: repeat(7, 50px);
 
   gap: 12px;
 }

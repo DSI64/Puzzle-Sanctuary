@@ -152,15 +152,19 @@ function AccountSettings() {
   // Profile background choices
   const backgroundChoices = [
     "#b6d2a0",
-    "#ebd78e",
-    "#a1d9cf",
-    "#c09fca",
+    "#bbe9af",
     "#a0d2b9",
-    "#e9afaf",
-    "#d2a0c3",
-    "#dce9af",
-    "#aba7aa",
+    "#a1d9cf",
+    "#a0cbd2",
+    "#a9b8d6",
     "#e3e4df",
+    "#e9afaf",
+    "#d9b38c",
+    "#d99a6c",
+    "#ebd78e",
+    "#e2a0d2",
+    "#b3a0d1",
+    "#aba7aa",
   ];
 
   // Generate a DiceBear Critters avatar
