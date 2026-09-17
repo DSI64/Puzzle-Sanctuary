@@ -28,7 +28,7 @@ function Account() {
   const savedAvatar =
     localStorage.getItem("profileAvatar") || "Felix";
 
-  // Generate the saved DiceBear Critters avatar
+  // Generate the saved DiceBear Critters avatars
   const profilePicture = new Avatar(crittersStyle, {
     seed: savedAvatar,
     size: 160,
@@ -54,7 +54,7 @@ function Account() {
   // Placeholder statistics
   const statistics = [
     {
-      label: "Puzzles Completed",
+      label: "Daily Puzzles Completed",
       value: "60",
     },
     {
@@ -62,11 +62,11 @@ function Account() {
       value: "60",
     },
     {
-      label: "Best Score",
-      value: "1983",
+      label: "Highest Score",
+      value: "1987",
     },
     {
-      label: "Current Streak",
+      label: "Daily Streak",
       value: "7",
     },
   ];
@@ -90,7 +90,7 @@ function Account() {
     },
     {
       name: "Logic Expert",
-      description: "Awarded for completing 25 logic puzzles.",
+      description: "Awarded for completing 25 puzzles.",
       image: silverTrophy,
     },
     {

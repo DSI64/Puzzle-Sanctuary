@@ -15,13 +15,15 @@ function Home() {
         <div className="background-decoration puzzle-bg puzzle-bg-1"></div>
         <div className="background-decoration puzzle-bg puzzle-bg-2"></div>
         <div className="background-decoration puzzle-bg puzzle-bg-3"></div>
+        <div className="background-decoration puzzle-bg puzzle-bg-4"></div>
         <div className="background-decoration puzzle-bg puzzle-bg-5"></div>
         <div className="background-decoration puzzle-bg puzzle-bg-6"></div>
         <div className="background-decoration puzzle-bg puzzle-bg-7"></div>
         <div className="background-decoration puzzle-bg puzzle-bg-8"></div>
-        <div className="background-decoration puzzle-bg puzzle-bg-9"></div>
         <div className="background-decoration leaf-bg leaf-bg-1">🍃</div>
         <div className="background-decoration leaf-bg leaf-bg-2">🍃</div>
+        <div className="background-decoration leaf-bg leaf-bg-3">🍃</div>
+        <div className="background-decoration leaf-bg leaf-bg-4">🍃</div>
 
         <p className="hero-label puzzle-piece-1">WELCOME TO</p>
         <h1 className="puzzle-piece-2">PUZZLE SANCTUARY</h1>

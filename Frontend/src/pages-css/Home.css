@@ -336,9 +336,9 @@
   animation-delay: -3s;
 }
 
-/* Puzzle 5 - Purple (Left Middle) */
+/* Puzzle 4 - Purple (Left Middle) */
 
-.puzzle-bg-5 {
+.puzzle-bg-4 {
   --rotation: -10deg;
 
   top: 35%;
@@ -363,9 +363,9 @@
   animation-delay: -2s;
 }
 
-/* Puzzle 6 - Teal (Right Top) */
+/* Puzzle 5 - Teal (Right Top) */
 
-.puzzle-bg-6 {
+.puzzle-bg-5 {
   --rotation: 18deg;
 
   top: 3%;
@@ -386,9 +386,9 @@
   animation-delay: -7s;
 }
 
-/* Puzzle 7 - Bright Yellow (Left Bottom Middle) */
+/* Puzzle 6 - Bright Yellow (Left Bottom Middle) */
 
-.puzzle-bg-7 {
+.puzzle-bg-6 {
   --rotation: -25deg;
 
   bottom: 5%;
@@ -413,9 +413,9 @@
       20% 62%, 10% 62%, 0% 58%, 0% 42%, 10% 38%, 20% 38%);
 }
 
-/*  Puzzle 8 - Bright Pink (Right Middle Bottom) */
+/*  Puzzle 7 - Bright Pink (Right Middle Bottom) */
 
-.puzzle-bg-8 {
+.puzzle-bg-7 {
   --rotation: 12deg;
 
   right: 25%;
@@ -457,9 +457,9 @@
   animation-delay: -8s;
 }
 
-/*  Puzzle 9 - Dark Blue */
+/*  Puzzle 8 - Dark Blue */
 
-.puzzle-bg-9 {
+.puzzle-bg-8 {
   --rotation: -18deg;
 
   top: 7%;
@@ -513,6 +513,23 @@
   --rotation: 25deg;
 
   animation-delay: -4s;
+}
+
+.leaf-bg-3 {
+  left: 10%;
+  bottom: 80px;
+
+  --rotation: 95deg;
+
+}
+
+.leaf-bg-4 {
+  right: 35%;
+  top: 70px;
+
+  --rotation: 200deg;
+
+  animation-delay: -2s;
 }
 
 
@@ -695,41 +712,41 @@
   }
 
 
+  /* Puzzle 4 */
+
+  .puzzle-bg-4 {
+    width: 90px;
+    height: 90px;
+  }
+
+
   /* Puzzle 5 */
 
   .puzzle-bg-5 {
-    width: 90px;
-    height: 90px;
+    width: 75px;
+    height: 75px;
   }
 
 
   /* Puzzle 6 */
 
   .puzzle-bg-6 {
-    width: 75px;
-    height: 75px;
+    width: 60px;
+    height: 60px;
   }
 
 
   /* Puzzle 7 */
 
   .puzzle-bg-7 {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
   }
 
 
   /* Puzzle 8 */
 
   .puzzle-bg-8 {
-    width: 70px;
-    height: 70px;
-  }
-
-
-  /* Puzzle 9 */
-
-  .puzzle-bg-9 {
     width: 85px;
     height: 85px;
   }

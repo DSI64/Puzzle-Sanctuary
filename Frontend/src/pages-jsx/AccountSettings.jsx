@@ -5,9 +5,7 @@ import { Style, Avatar } from "@dicebear/core";
 import definition from "@dicebear/styles/critters.json" with { type: "json" };
 
 import "../pages-css/AccountSettings.css";
-
 import gamePlaceholder from "../assets/placeholder.png";
-//import badgePlaceholder from "../assets/badge-placeholder.png";
 import bronzeTrophy from "../assets/bronze-trophy.png";
 import silverTrophy from "../assets/silver-trophy.png";
 import goldTrophy from "../assets/gold-trophy.png";
@@ -104,12 +102,12 @@ function AccountSettings() {
   // Available games
   const games = [
     {
-      name: "Word Puzzle",
+      name: "Word Search",
       description: "A puzzle game focused on words and vocabulary.",
       image: gamePlaceholder,
     },
     {
-      name: "Jigsaw Puzzle",
+      name: "Jigsaw",
       description: "Piece together images to complete the puzzle.",
       image: gamePlaceholder,
     },
@@ -139,7 +137,7 @@ function AccountSettings() {
     },
     {
       name: "Logic Expert",
-      description: "Awarded for completing 25 logic puzzles.",
+      description: "Awarded for completing 25 puzzles.",
       image: silverTrophy,
     },
     {
