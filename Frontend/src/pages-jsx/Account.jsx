@@ -39,19 +39,59 @@ function Account() {
     localStorage.getItem("trophyShowcase") || "[]"
   );
 
+const savedFavoriteGameImage =
+  localStorage.getItem("favoriteGameImage") || gamePlaceholder;
+
   // Placeholder account information
   const user = {
     username: savedProfileName,
     level: 7,
     favoriteGame: savedFavoriteGame,
     profilePicture: profilePicture,
-    favoriteGameImage: gamePlaceholder,
+    favoriteGameImage: savedFavoriteGameImage,
   };
+
+
 
   // Profile background
   const [profileBackground] = useState(savedProfileBackground);
 
-  // Placeholder statistics
+  // Get the highest Sliding Puzzle score from all difficulties.
+  const getSlidingPuzzleHighestScore = () => {
+    const easyScore =
+      Number(
+        localStorage.getItem("slidingPuzzleHighScore_easy")
+      ) || 0;
+
+    const mediumScore =
+      Number(
+        localStorage.getItem("slidingPuzzleHighScore_medium")
+      ) || 0;
+
+    const hardScore =
+      Number(
+        localStorage.getItem("slidingPuzzleHighScore_hard")
+      ) || 0;
+
+    return Math.max(
+      easyScore,
+      mediumScore,
+      hardScore
+    );
+  };
+
+  // Get the highest score for the user's favorite game.
+  const getFavoriteGameHighestScore = () => {
+    if (user.favoriteGame === "Sliding Puzzle") {
+      return getSlidingPuzzleHighestScore();
+    }
+
+    // Placeholder score for other games until their
+    // scoring systems are created.
+    return 1987;
+  };
+
+  // Puzzle statistics
   const statistics = [
     {
       label: "Daily Puzzles Completed",
@@ -63,7 +103,7 @@ function Account() {
     },
     {
       label: "Highest Score",
-      value: "1987",
+      value: getFavoriteGameHighestScore(),
     },
     {
       label: "Daily Streak",

@@ -2,15 +2,35 @@
 import PuzzleCard from "../components/PuzzleCard";
 import "../pages-css/Puzzles.css"
 import puzzlePlaceholder from "../assets/placeholder.png";
+import slidingPuzzle from "../assets/slidingPuzzle.png";
+
 
 function Puzzles() {
   const puzzles = [ //Gives the name, desciption, and the type of puzzle game it is
     {
-      name: "Jigsaw",
-      description: "This is a description for the game",
+      name: "Sliding Puzzle",
+      description: "Slide the pieces into place to recreate the image.",
       type: "Puzzle Type",
-      image: puzzlePlaceholder,
+      image: slidingPuzzle,
       path: "/puzzles/jigsaw",
+    },
+    {
+      name: "",
+      description: "",
+      type: "",
+      image: puzzlePlaceholder,
+    },
+    {
+      name: "",
+      description: "",
+      type: "",
+      image: puzzlePlaceholder,
+    },
+    {
+      name: "",
+      description: "",
+      type: "",
+      image: puzzlePlaceholder,
     },
     {
       name: "",

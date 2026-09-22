@@ -6,6 +6,7 @@ import definition from "@dicebear/styles/critters.json" with { type: "json" };
 
 import "../pages-css/AccountSettings.css";
 import gamePlaceholder from "../assets/placeholder.png";
+import slidingPuzzle from "../assets/slidingPuzzle.png";
 import bronzeTrophy from "../assets/bronze-trophy.png";
 import silverTrophy from "../assets/silver-trophy.png";
 import goldTrophy from "../assets/gold-trophy.png";
@@ -107,9 +108,9 @@ function AccountSettings() {
       image: gamePlaceholder,
     },
     {
-      name: "Jigsaw",
-      description: "Piece together images to complete the puzzle.",
-      image: gamePlaceholder,
+      name: "Sliding Puzzle",
+      description: "Slide the pieces into place to recreate the image.",
+      image: slidingPuzzle,
     },
     {
       name: "Game Name",
@@ -203,12 +204,23 @@ function AccountSettings() {
     showSaveMessage();
   };
 
-  // Save Favorite Game
-  const saveFavoriteGame = () => {
-    localStorage.setItem("favoriteGame", favoriteGame);
+// Save Favorite Game
+const saveFavoriteGame = () => {
+  const selectedGame = games.find(
+    (game) => game.name === favoriteGame
+  );
 
-    showSaveMessage();
-  };
+  localStorage.setItem("favoriteGame", favoriteGame);
+
+  if (selectedGame) {
+    localStorage.setItem(
+      "favoriteGameImage",
+      selectedGame.image
+    );
+  }
+
+  showSaveMessage();
+};
 
   // Save Trophy Showcase
   const saveTrophyShowcase = () => {

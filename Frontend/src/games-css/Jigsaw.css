@@ -1,3 +1,5 @@
+/* Main page */
+
 .jigsaw-page {
   min-height: 100vh;
   padding: 40px;
@@ -21,14 +23,19 @@
   min-height: 570px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  gap: 70px;
-  padding: 20px 40px;
+  justify-content: center;
+  padding: 10px 20px;
+}
+
+.jigsaw-title-main {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 65px;
 }
 
 .jigsaw-title-content {
-  flex: 1;
-  max-width: 450px;
   text-align: left;
 }
 
@@ -50,6 +57,138 @@
   color: #405344;
   font-size: 19px;
   line-height: 1.6;
+}
+
+/* Main menu buttons */
+
+.title-menu-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.jigsaw-play-button {
+  width: 260px;
+  padding: 15px 42px;
+  border: none;
+  border-radius: 10px;
+  background: #4ade80;
+  color: #2f3e46;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 5px 0 #2f3e46;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.jigsaw-play-button:hover {
+  background: #22c55e;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 #2f3e46;
+}
+
+.jigsaw-play-button:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #2f3e46;
+}
+
+/* Options button */
+
+.jigsaw-options-button {
+  width: 260px;
+  padding: 13px 42px;
+  border: 2px solid #2f3e46;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #2f3e46;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.jigsaw-options-button:hover {
+  background: #dde8d5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 #2f3e46;
+}
+
+.jigsaw-options-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #2f3e46;
+}
+
+/* How to Play */
+
+.how-to-play {
+  margin-top: 32px;
+  max-width: 470px;
+}
+
+.how-to-play h2 {
+  margin: 0 0 18px;
+  color: #01796f;
+  font-size: 21px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.how-to-play-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.how-to-play-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.how-to-play-number {
+  flex-shrink: 0;
+  width: 31px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #4ade80;
+  color: #2f3e46;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 2px 5px rgba(47, 62, 70, 0.12);
+}
+
+.how-to-play-step strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #01796f;
+  font-size: 15px;
+}
+
+.how-to-play-step p {
+  margin: 0;
+  color: #405344;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+/* Right side of title screen */
+
+.jigsaw-title-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Title puzzle preview */
@@ -78,7 +217,9 @@
   color: #2f3e46;
   font-size: 34px;
   font-weight: 700;
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
 }
 
 .preview-piece:nth-child(2),
@@ -102,31 +243,62 @@
   background: #f5f5f5;
 }
 
-/* Play button */
+/* High Scores */
 
-.jigsaw-play-button {
-  padding: 15px 42px;
-  border: none;
-  border-radius: 10px;
-  background: #4ade80;
+.high-scores {
+  width: 360px;
+  margin-top: 28px;
+}
+
+.high-scores h2 {
+  margin: 0 0 12px;
+  text-align: center;
+  color: #01796f;
+  font-size: 21px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.high-score-table {
+  width: 100%;
   color: #2f3e46;
-  cursor: pointer;
-  font-size: 18px;
+}
+
+.high-score-row {
+  display: grid;
+  grid-template-columns: 55px 1fr 105px;
+  align-items: center;
+  padding: 5px 4px;
+  color: #2f3e46;
+  font-family: monospace;
+  font-size: 16px;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  box-shadow: 0 5px 0 #2f3e46;
-  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.jigsaw-play-button:hover {
-  background: #22c55e;
-  transform: translateY(-2px);
-  box-shadow: 0 7px 0 #2f3e46;
+.high-score-row span:first-child {
+  text-align: left;
 }
 
-.jigsaw-play-button:active {
-  transform: translateY(3px);
-  box-shadow: 0 2px 0 #2f3e46;
+.high-score-row span:nth-child(2) {
+  text-align: center;
+  letter-spacing: 3px;
+}
+
+.high-score-row span:last-child {
+  text-align: right;
+}
+
+.high-score-header {
+  margin-bottom: 3px;
+  padding-bottom: 7px;
+  border-bottom: 2px solid #4ade80;
+  color: #52796f;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.high-score-header span:nth-child(2) {
+  letter-spacing: 1px;
 }
 
 /* Game header */
@@ -145,23 +317,39 @@
   margin-bottom: 20px;
 }
 
-.jigsaw-new-button {
-  padding: 12px 28px;
-  border: none;
-  border-radius: 8px;
-  background: #4ade80;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
+/* Game statistics */
+
+.jigsaw-stats {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 25px 0;
+  flex-wrap: wrap;
 }
 
-.jigsaw-new-button:hover {
-  background: #22c55e;
+.jigsaw-stat {
+  min-width: 120px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 2px solid #cad2c5;
+  box-shadow: 0 3px 8px rgba(47, 62, 70, 0.08);
 }
 
-.jigsaw-new-button:disabled {
-  background: #cad2c5;
-  cursor: not-allowed;
+.jigsaw-stat-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #52796f;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.jigsaw-stat-value {
+  display: block;
+  color: #2f3e46;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 /* Puzzle board */
@@ -176,8 +364,6 @@
   width: 450px;
   height: 450px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
   border: 3px solid #2f3e46;
   border-radius: 16px;
   background: #ffffff;
@@ -190,26 +376,11 @@
   box-sizing: border-box;
   border: 1px dashed #cad2c5;
   overflow: hidden;
-  transition: background 0.15s ease, border 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    background 0.15s ease,
+    border 0.15s ease,
+    box-shadow 0.15s ease;
 }
-
-.jigsaw-board-space:nth-child(1) {
-  border-top-left-radius: 13px;
-}
-
-.jigsaw-board-space:nth-child(3) {
-  border-top-right-radius: 13px;
-}
-
-.jigsaw-board-space:nth-child(7) {
-  border-bottom-left-radius: 13px;
-}
-
-.jigsaw-board-space:nth-child(9) {
-  border-bottom-right-radius: 13px;
-}
-
-/* Movable pieces */
 
 .jigsaw-board-space.movable {
   cursor: pointer;
@@ -228,6 +399,25 @@
   border: 1px dashed #cad2c5;
 }
 
+/* Pexels attribution */
+
+.pexels-credit {
+  margin: 12px 0 0;
+  color: #52796f;
+  font-size: 12px;
+  text-align: center;
+}
+
+.pexels-credit a {
+  color: #01796f;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pexels-credit a:hover {
+  text-decoration: underline;
+}
+
 /* Puzzle pieces */
 
 .jigsaw-piece {
@@ -237,7 +427,6 @@
   border: none;
   border-radius: 0;
   background-repeat: no-repeat;
-  background-size: 300% 300%;
   box-sizing: border-box;
 }
 
@@ -260,21 +449,478 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
 
-/* Piece tray */
+/* Give Up button */
 
-.jigsaw-piece-tray {
-  width: 100%;
-  margin-top: 35px;
+.jigsaw-give-up-button {
+  margin-top: 25px;
+  padding: 11px 28px;
+  border: 2px solid #2f3e46;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #2f3e46;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
 }
 
-.jigsaw-piece-tray h2 {
+.jigsaw-give-up-button:hover {
+  background: #dde8d5;
+  transform: translateY(-1px);
+}
+
+.jigsaw-give-up-button:disabled {
+  background: #f5f5f5;
+  color: #9ca3af;
+  border-color: #cad2c5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Modal overlay */
+
+.give-up-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(47, 62, 70, 0.45);
+}
+
+/* Give Up dialog */
+
+.give-up-dialog {
+  width: 420px;
+  max-width: 100%;
+  padding: 35px;
+  border: 3px solid #2f3e46;
+  border-radius: 16px;
+  background: #f7f4e9;
   text-align: center;
-  margin-bottom: 20px;
+  box-shadow: 0 12px 30px rgba(47, 62, 70, 0.25);
 }
 
-.jigsaw-pieces {
+.give-up-dialog h2 {
+  margin: 0 0 15px;
+  color: #2f3e46;
+  font-size: 30px;
+}
+
+.give-up-dialog p {
+  margin: 8px 0;
+  color: #405344;
+  line-height: 1.5;
+}
+
+.give-up-buttons {
   display: flex;
   justify-content: center;
+  gap: 15px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.jigsaw-keep-playing-button {
+  padding: 12px 22px;
+  border: 2px solid #2f3e46;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #2f3e46;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.jigsaw-keep-playing-button:hover {
+  background: #dde8d5;
+  transform: translateY(-1px);
+}
+
+.jigsaw-confirm-give-up-button {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 8px;
+  background: #4ade80;
+  color: #2f3e46;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.jigsaw-confirm-give-up-button:hover {
+  background: #22c55e;
+  transform: translateY(-1px);
+}
+
+/* Options dialog */
+
+.jigsaw-options-dialog {
+  width: 560px;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 35px;
+  border: 3px solid #2f3e46;
+  border-radius: 16px;
+  background: #f7f4e9;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(47, 62, 70, 0.25);
+  box-sizing: border-box;
+}
+
+.jigsaw-options-dialog h2 {
+  margin: 0 0 8px;
+  color: #2f3e46;
+  font-size: 32px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.options-description {
+  margin: 0 0 28px;
+  color: #52796f;
+  font-size: 15px;
+}
+
+/* Options groups */
+
+.options-group {
+  margin-bottom: 28px;
+}
+
+.options-group h3 {
+  margin: 0 0 14px;
+  color: #2f3e46;
+  font-size: 18px;
+  text-align: left;
+}
+
+/* Difficulty choices */
+
+.options-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.options-choice {
+  min-height: 105px;
+  padding: 15px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 2px solid #cad2c5;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #2f3e46;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.options-choice strong {
+  font-size: 17px;
+}
+
+.options-choice span {
+  color: #52796f;
+  font-size: 14px;
+}
+
+.options-choice small {
+  color: #6b7c72;
+  font-size: 12px;
+}
+
+.options-choice:hover {
+  border-color: #4ade80;
+  background: #f1f8f2;
+  transform: translateY(-2px);
+}
+
+.options-choice.selected {
+  border-color: #4ade80;
+  background: #dde8d5;
+  box-shadow: inset 0 0 0 2px #4ade80;
+}
+
+.options-choice.selected strong {
+  color: #01796f;
+}
+
+/* Category choices */
+
+.options-category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  width: 100%;
+}
+
+.options-category {
+  min-height: 52px;
+  padding: 10px;
+  border: 2px solid #cad2c5;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #2f3e46;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    background 0.15s ease,
+    border 0.15s ease,
+    transform 0.15s ease;
+}
+
+.options-category:hover {
+  border-color: #4ade80;
+  background: #f1f8f2;
+  transform: translateY(-1px);
+}
+
+.options-category.selected {
+  border-color: #4ade80;
+  background: #dde8d5;
+  color: #01796f;
+  box-shadow: inset 0 0 0 1px #4ade80;
+}
+
+/* Options buttons */
+
+.options-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+  padding-top: 20px;
+  border-top: 2px solid #cad2c5;
+  flex-wrap: wrap;
+}
+
+/* Completion and abandoned screens */
+
+.jigsaw-complete-screen {
+  min-height: 570px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.jigsaw-complete-screen h1 {
+  margin: 10px 0 15px;
+  font-size: 48px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #2f3e46;
+}
+
+.complete-description {
+  margin: 0 0 30px;
+  color: #405344;
+  font-size: 18px;
+}
+
+/* Completion statistics */
+
+.completion-stats {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.completion-stat {
+  min-width: 140px;
+  padding: 18px 25px;
+  border: 2px solid #cad2c5;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 5px 12px rgba(47, 62, 70, 0.1);
+}
+
+.completion-stat-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #52796f;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.completion-stat-value {
+  display: block;
+  color: #2f3e46;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.new-high-score {
+  margin: 0 0 20px;
+  color: #01796f;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.completion-question {
+  margin: 0 0 20px;
+  color: #405344;
+  font-size: 17px;
+}
+
+/* Abandoned puzzle */
+
+.abandoned-difficulty {
+  margin-bottom: 30px;
+  color: #405344;
+  font-size: 18px;
+}
+
+/* Completion buttons */
+
+.jigsaw-completion-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* Main menu button */
+
+.jigsaw-main-menu-button {
+  padding: 15px 42px;
+  border: 2px solid #2f3e46;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #2f3e46;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.jigsaw-main-menu-button:hover {
+  background: #dde8d5;
+  transform: translateY(-2px);
+}
+
+/* Responsive layout */
+
+@media (max-width: 850px) {
+  .jigsaw-page {
+    padding: 20px;
+  }
+
+  .jigsaw-game {
+    padding: 25px;
+  }
+
+  .jigsaw-title-screen {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .jigsaw-title-main {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .jigsaw-title-content {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .title-menu-buttons {
+    align-items: center;
+  }
+
+  .how-to-play {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+  }
+
+  .jigsaw-title-right {
+    width: 100%;
+  }
+
+  .title-puzzle-preview {
+    width: 300px;
+    height: 300px;
+  }
+
+  .high-scores {
+    width: min(360px, 100%);
+  }
+}
+
+@media (max-width: 600px) {
+  .jigsaw-page {
+    padding: 10px;
+  }
+
+  .jigsaw-game {
+    padding: 20px 15px;
+    border-width: 2px;
+  }
+
+  .jigsaw-title-screen h1 {
+    font-size: 38px;
+  }
+
+  .title-puzzle-preview {
+    width: 250px;
+    height: 250px;
+  }
+
+  .jigsaw-board {
+    width: min(450px, 90vw);
+    height: min(450px, 90vw);
+  }
+
+  .jigsaw-options-dialog {
+    padding: 25px 18px;
+  }
+
+  .options-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .options-category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .high-scores {
+    width: 100%;
+  }
+
+  .high-score-row {
+    grid-template-columns: 45px 1fr 95px;
+    font-size: 14px;
+    padding: 6px 3px;
+  }
 }
