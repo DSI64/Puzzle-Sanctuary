@@ -1,4 +1,5 @@
 import "../pages-css/Home.css";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -33,8 +34,7 @@ function Home() {
           relaxing and entertaining puzzles.
         </p>
 
-        <button className="puzzle-piece-4">Play Today's Puzzle</button>
-      </section>
+        <Link to="/daily" className="puzzle-piece-4"> Play Today's Puzzle </Link>      </section>
 
       <section className="featured">
         <h2>Explore Puzzles</h2>

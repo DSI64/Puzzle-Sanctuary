@@ -191,6 +191,41 @@
   transform: translateY(-3px);
 }
 
+/* ============================================================
+   Daily Puzzle Button
+   ============================================================ */
+
+.hero .puzzle-piece-4 {
+  margin-top: 20px;
+  padding: 18px 38px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #4ade80;
+  color: #26352a;
+
+  font-size: 19px;
+  font-weight: bold;
+  font-family: inherit;
+
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+
+  box-shadow: 0 4px 10px rgba(47, 93, 58, 0.2);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.hero .puzzle-piece-4:hover {
+  background: #22c55e;
+  transform: translateY(-5px) scale(1.04);
+  box-shadow: 0 8px 18px rgba(47, 93, 58, 0.3);
+}
 
 /* ============================================================
    Background Decorations

@@ -2,35 +2,25 @@ import { useState } from "react";
 import "../pages-css/DailyGame.css";
 
 function DailyGame() {
-  const [isSpinning, setIsSpinning] = useState(false);
-  const [revealedGame, setRevealedGame] = useState(null);
+  const [revealedGame, setRevealedGame] = useState(false);
 
-  // Area for games on the Wheel
-  const puzzleGames = [
-    "Sliding Puzzle",
-    "Placeholder"
-  ];
-
-  const handleRevealGame = () => {
-    if (isSpinning || revealedGame) {
-      return;
-    }
-
-    setIsSpinning(true);
-
-    setTimeout(() => {
-      setRevealedGame("Sliding Puzzle");
-      setIsSpinning(false);
-    }, 2500);
+  const todaysGame = {
+    name: "Sliding Puzzle",
+    description:
+      "Slide the pieces into place to recreate the image.",
   };
 
-  // Current Time based on US EST
   const today = new Date();
+
   const formattedDate = today.toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
   });
+
+  const handleRevealGame = () => {
+    setRevealedGame(true);
+  };
 
   return (
     <main className="daily-game-page">
@@ -48,64 +38,46 @@ function DailyGame() {
           </p>
         </header>
 
-        {/* Daily Game Wheel */}
+        {/* Daily Puzzle */}
 
-        <section className="daily-wheel-section">
-
-          <h2>What Will Today's Puzzle Be?</h2>
-
-          <p className="daily-wheel-description">
-            Reveal today's puzzle to find out which game
-            awaits you.
-          </p>
-
-          <div
-            className={`daily-wheel-container ${
-              isSpinning ? "spinning" : ""
-            }`}
-          >
-            <div className="wheel-pointer">
-              ▼
-            </div>
-
-            <div className="daily-wheel">
-              {puzzleGames.map((game, index) => (
-                <div
-                  key={game}
-                  className="wheel-section"
-                  style={{
-                    transform: `rotate(${
-                      index * (360 / puzzleGames.length)
-                    }deg)`,
-                  }}
-                >
-                  <span>
-                    {game}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+        <section className="daily-puzzle-section">
 
           {!revealedGame ? (
-            <button
-              className="reveal-daily-button"
-              onClick={handleRevealGame}
-              disabled={isSpinning}
-            >
-              {isSpinning
-                ? "Revealing..."
-                : "Reveal Daily Game"}
-            </button>
-          ) : (
-            <div className="daily-result">
-              <p>Today's Puzzle</p>
+            <>
+              <div className="daily-puzzle-preview">
+                <span className="daily-puzzle-icon">?</span>
 
-              <h3>{revealedGame}</h3>
+                <h2>Today's Puzzle</h2>
+
+                <p>
+                  Discover which puzzle awaits you today.
+                </p>
+              </div>
+
+              <button
+                className="reveal-daily-button"
+                onClick={handleRevealGame}
+              >
+                Reveal Today's Puzzle
+              </button>
+            </>
+          ) : (
+            <div className="daily-puzzle-revealed">
+
+              <p className="daily-result-label">
+                TODAY'S PUZZLE
+              </p>
+
+              <h2>{todaysGame.name}</h2>
+
+              <p className="daily-puzzle-description">
+                {todaysGame.description}
+              </p>
 
               <button className="play-daily-button">
                 Play Today's Game
               </button>
+
             </div>
           )}
 
