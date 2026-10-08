@@ -1,0 +1,1448 @@
+.maze-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  background:
+    radial-gradient(circle at 15% 15%, rgba(74, 222, 128, 0.12), transparent 25%),
+    radial-gradient(circle at 85% 80%, rgba(1, 121, 111, 0.10), transparent 25%),
+    #f7f4e9;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   MAZE HOME MENU ICON
+   ========================================================= */
+
+.maze-header h1 {
+  position: relative;
+}
+
+/*
+  CSS-only maze icon.
+  The different background layers form
+  a simple maze/path illustration.
+*/
+.maze-header h1::before {
+  content: "";
+
+  display: inline-block;
+
+  width: 38px;
+  height: 38px;
+
+  margin-right: 12px;
+
+  vertical-align: middle;
+
+  border: 3px solid #2f3e46;
+  border-radius: 9px;
+
+  background:
+    /* horizontal paths */
+    linear-gradient(
+      #01796f,
+      #01796f
+    ) 7px 7px / 18px 4px no-repeat,
+
+    linear-gradient(
+      #01796f,
+      #01796f
+    ) 15px 16px / 16px 4px no-repeat,
+
+    linear-gradient(
+      #01796f,
+      #01796f
+    ) 7px 25px / 18px 4px no-repeat,
+
+    /* vertical paths */
+    linear-gradient(
+      #01796f,
+      #01796f
+    ) 7px 7px / 4px 14px no-repeat,
+
+    linear-gradient(
+      #01796f,
+      #01796f
+    ) 27px 10px / 4px 19px no-repeat,
+
+    linear-gradient(
+      #01796f,
+      #01796f
+    ) 15px 16px / 4px 13px no-repeat,
+
+    #dde8d5;
+
+  box-shadow:
+    0 4px 0 #2f3e46,
+    0 6px 12px rgba(47, 62, 70, 0.16);
+
+  transform: rotate(-3deg);
+
+  animation:
+    maze-icon-bounce 2.5s ease-in-out infinite;
+}
+
+@keyframes maze-icon-bounce {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+
+  50% {
+    transform: translateY(-3px) rotate(3deg);
+  }
+}
+
+/* =========================================================
+   GAME CONTAINER
+   ========================================================= */
+
+.maze-game {
+  width: 100%;
+  max-width: 900px;
+  padding: 42px;
+
+  border: 3px solid #2f3e46;
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(247, 244, 233, 0.98)
+    );
+
+  box-shadow:
+    0 18px 45px rgba(47, 62, 70, 0.16),
+    0 4px 12px rgba(47, 62, 70, 0.10);
+
+  box-sizing: border-box;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.maze-game::before,
+.maze-game::after {
+  content: "🍃";
+
+  position: absolute;
+
+  font-size: 42px;
+
+  opacity: 0.16;
+
+  pointer-events: none;
+}
+
+.maze-game::before {
+  top: 18px;
+  left: 22px;
+
+  transform: rotate(-25deg);
+}
+
+.maze-game::after {
+  right: 22px;
+  bottom: 18px;
+
+  transform: rotate(25deg);
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.maze-header {
+  text-align: center;
+  margin-bottom: 32px;
+
+  position: relative;
+  z-index: 1;
+}
+
+.maze-header .page-label {
+  margin: 0 0 10px;
+
+  color: #03ac13;
+
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 4px;
+}
+
+.maze-header h1 {
+  margin: 0;
+
+  color: #01796f;
+
+  font-size: clamp(38px, 7vw, 52px);
+  font-weight: 800;
+
+  letter-spacing: -1px;
+
+  text-shadow:
+    0 2px 0 rgba(1, 121, 111, 0.08);
+}
+
+.maze-header h1::after {
+  content: "✦";
+
+  display: inline-block;
+
+  margin-left: 10px;
+
+  color: #4ade80;
+
+  font-size: 22px;
+
+  vertical-align: middle;
+
+  animation: maze-sparkle 2.5s ease-in-out infinite;
+}
+
+.maze-header p {
+  margin: 10px 0 0;
+
+  color: #405344;
+
+  line-height: 1.6;
+
+  font-size: 16px;
+}
+
+@keyframes maze-sparkle {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.65;
+  }
+
+  50% {
+    transform: scale(1.25) rotate(15deg);
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   GAME INFO
+   ========================================================= */
+
+.maze-info {
+  margin-bottom: 26px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 20px;
+
+  position: relative;
+  z-index: 1;
+}
+
+.maze-stat {
+  min-width: 130px;
+
+  padding: 13px 20px;
+
+  border: 2px solid #cad2c5;
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #eef4e9
+    );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  box-shadow:
+    0 4px 10px rgba(47, 62, 70, 0.08);
+
+  box-sizing: border-box;
+}
+
+.maze-stat span {
+  color: #405344;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.maze-stat strong {
+  color: #01796f;
+
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+}
+
+.maze-new-button,
+.maze-play-again-button {
+  padding: 13px 24px;
+
+  border: 2px solid #2f3e46;
+  border-radius: 12px;
+
+  background: #4ade80;
+  color: #26352a;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 0 #2f3e46,
+    0 7px 12px rgba(47, 62, 70, 0.14);
+
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.maze-new-button:hover,
+.maze-play-again-button:hover {
+  background: #65ed92;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 0 #2f3e46,
+    0 10px 16px rgba(47, 62, 70, 0.16);
+}
+
+.maze-new-button:active,
+.maze-play-again-button:active {
+  transform: translateY(3px);
+
+  box-shadow:
+    0 2px 0 #2f3e46,
+    0 4px 8px rgba(47, 62, 70, 0.12);
+}
+
+/* =========================================================
+   MAZE BOARD
+   ========================================================= */
+
+.maze-board-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+  z-index: 1;
+}
+
+.maze-board {
+  width: min(600px, 90vw);
+  aspect-ratio: 1 / 1;
+
+  display: grid;
+
+  /*
+    minmax(0, 1fr) prevents the contents of
+    individual cells from changing the grid size.
+  */
+  grid-template-columns: repeat(21, minmax(0, 1fr));
+  grid-template-rows: repeat(21, minmax(0, 1fr));
+
+  border: 7px solid #354f52;
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  background: #354f52;
+
+  box-shadow:
+    0 0 0 3px #cad2c5,
+    0 10px 25px rgba(47, 62, 70, 0.22),
+    inset 0 0 25px rgba(0, 0, 0, 0.18);
+
+  box-sizing: border-box;
+
+  position: relative;
+}
+
+.maze-board::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  border-radius: 10px;
+
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.12);
+}
+
+/* =========================================================
+   REAL MODE
+   ========================================================= */
+
+.maze-board-real {
+  /*
+    Real mode always displays a small 9x9
+    viewport, making the maze feel much
+    more zoomed-in around the slime.
+  */
+  width: min(600px, 90vw);
+
+  aspect-ratio: 1 / 1;
+
+  /*
+    Slightly stronger framing helps distinguish
+    Real mode from the regular full-maze view.
+  */
+  box-shadow:
+    0 0 0 4px #01796f,
+    0 0 20px rgba(1, 121, 111, 0.25),
+    0 10px 25px rgba(47, 62, 70, 0.22),
+    inset 0 0 25px rgba(0, 0, 0, 0.18);
+}
+
+/* =========================================================
+   CELLS
+   ========================================================= */
+
+.maze-cell {
+  min-width: 0;
+  min-height: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.maze-path {
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.32),
+      transparent 35%
+    ),
+    linear-gradient(
+      145deg,
+      #f7f4e9,
+      #e9e4d3
+    );
+}
+
+.maze-path::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at 70% 75%,
+      rgba(64, 83, 68, 0.08) 0 1px,
+      transparent 2px
+    );
+
+  background-size: 7px 7px;
+
+  opacity: 0.35;
+
+  pointer-events: none;
+}
+
+.maze-wall {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08),
+      transparent 45%
+    ),
+    linear-gradient(
+      315deg,
+      rgba(0, 0, 0, 0.18),
+      transparent 55%
+    ),
+    #354f52;
+
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.08),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.14);
+}
+
+/* =========================================================
+   SLIME PLAYER
+   ========================================================= */
+
+.maze-player {
+  width: 78%;
+  height: auto;
+
+  aspect-ratio: 1 / 0.86;
+
+  min-width: 0;
+  min-height: 0;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /*
+    Hide the existing "●" from Maze.jsx.
+  */
+  font-size: 0;
+
+  border: 2px solid #ffffff;
+
+  border-radius:
+    48% 52%
+    58% 42%
+    46% 54%;
+
+  background:
+    radial-gradient(
+      circle at 34% 24%,
+      #e5ffec 0%,
+      #b8ffc9 13%,
+      #72ef98 34%,
+      #4ade80 58%,
+      #22c55e 100%
+    );
+
+  box-shadow:
+    0 0 0 2px rgba(74, 222, 128, 0.24),
+    0 0 12px rgba(74, 222, 128, 0.72),
+    0 4px 7px rgba(47, 62, 70, 0.28);
+
+  animation:
+    maze-slime-bounce 1.35s ease-in-out infinite;
+
+  position: relative;
+  z-index: 2;
+
+  transform-origin: center bottom;
+}
+
+/* =========================================================
+   SLIME EYES
+   ========================================================= */
+
+.maze-player::before {
+  content: "";
+
+  position: absolute;
+
+  width: 48%;
+  height: 26%;
+
+  top: 35%;
+  left: 26%;
+
+  background:
+    radial-gradient(
+      circle at 18% 50%,
+      #26352a 0 15%,
+      transparent 17%
+    ),
+    radial-gradient(
+      circle at 82% 50%,
+      #26352a 0 15%,
+      transparent 17%
+    );
+
+  pointer-events: none;
+
+  transition:
+    transform 0.12s ease;
+}
+
+/* Eyes follow movement direction */
+
+.maze-player-up::before {
+  transform: translateY(-20%);
+}
+
+.maze-player-down::before {
+  transform: translateY(20%);
+}
+
+.maze-player-left::before {
+  transform: translateX(-12%);
+}
+
+.maze-player-right::before {
+  transform: translateX(12%);
+}
+
+.maze-player-won::before {
+  content: "⌒  ⌒";
+
+  position: absolute;
+
+  width: 100%;
+  height: auto;
+
+  top: 34%;
+  left: 0;
+
+  background: none;
+
+  color: #26352a;
+
+  font-size: 6px;
+  font-weight: 900;
+
+  letter-spacing: 0;
+
+  line-height: 1;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  transform: none;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   SLIME SHINE
+   ========================================================= */
+
+.maze-player::after {
+  content: "";
+
+  position: absolute;
+
+  width: 34%;
+  height: 24%;
+
+  top: 13%;
+  left: 18%;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  filter: blur(0.5px);
+
+  transform: rotate(-18deg);
+
+  pointer-events: none;
+}
+
+@keyframes maze-slime-bounce {
+  0%,
+  100% {
+    transform: translateY(1px) scale(0.98);
+  }
+
+  50% {
+    transform: translateY(-2px) scale(1.02);
+  }
+}
+
+/* =========================================================
+   START
+   ========================================================= */
+
+.maze-start {
+  max-width: 100%;
+  max-height: 100%;
+
+  color: #01796f;
+
+  font-size: clamp(3px, 0.55vw, 7px);
+  font-weight: 900;
+
+  text-align: center;
+
+  letter-spacing: 0.35px;
+
+  line-height: 1;
+
+  overflow: hidden;
+
+  white-space: nowrap;
+
+  text-shadow:
+    0 1px 0 #ffffff;
+}
+
+/* =========================================================
+   GOAL
+   ========================================================= */
+
+.maze-goal {
+  max-width: 100%;
+  max-height: 100%;
+
+  color: #f59e0b;
+
+  font-size: clamp(10px, 2.5vw, 28px);
+
+  line-height: 1;
+
+  text-shadow:
+    0 1px 0 #ffffff,
+    0 0 8px rgba(245, 158, 11, 0.65);
+
+  animation: maze-goal-pulse 1.4s ease-in-out infinite;
+
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes maze-goal-pulse {
+  0%,
+  100% {
+    transform: scale(0.9);
+    filter: brightness(0.95);
+  }
+
+  50% {
+    transform: scale(1.15);
+    filter: brightness(1.2);
+  }
+}
+
+ /* =========================================================
+    DIFFICULTY-BASED START + GOAL SIZING
+    ========================================================= */
+
+.maze-board-size-15 .maze-start {
+  font-size: 8px;
+}
+
+.maze-board-size-21 .maze-start {
+  font-size: 7px;
+}
+
+.maze-board-size-27 .maze-start {
+  font-size: 5px;
+}
+
+.maze-board-size-33 .maze-start {
+  font-size: 4px;
+}
+
+
+.maze-board-size-15 .maze-goal {
+  font-size: 35px;
+}
+
+.maze-board-size-21 .maze-goal {
+  font-size: 25px;
+}
+
+.maze-board-size-27 .maze-goal {
+  font-size: 19px;
+}
+
+.maze-board-size-33 .maze-goal {
+  font-size: 17px;
+}
+
+.maze-board-real .maze-start {
+  font-size: 10px;
+}
+
+.maze-board-real .maze-goal {
+  font-size: 58px;
+}
+
+/* =========================================================
+   INSTRUCTIONS
+   ========================================================= */
+
+.maze-instructions {
+  margin: 22px 0 0;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  background: #dde8d5;
+
+  color: #405344;
+
+  text-align: center;
+
+  font-size: 14px;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(47, 62, 70, 0.08);
+}
+
+.maze-instructions strong {
+  color: #01796f;
+}
+
+.maze-mobile-instructions {
+  display: none;
+}
+
+/* =========================================================
+   MOBILE CONTROLS
+   ========================================================= */
+
+.maze-controls {
+  margin-top: 24px;
+
+  display: none;
+
+  flex-direction: column;
+  align-items: center;
+
+  gap: 9px;
+}
+
+.maze-controls > button,
+.maze-horizontal-controls button {
+  width: 56px;
+  height: 56px;
+
+  border: 2px solid #2f3e46;
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #dde8d5
+    );
+
+  color: #26352a;
+
+  font-size: 21px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 0 #2f3e46,
+    0 6px 10px rgba(47, 62, 70, 0.12);
+
+  transition:
+    transform 0.12s ease,
+    background 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.maze-controls button:hover {
+  background: #4ade80;
+}
+
+.maze-controls button:active {
+  transform: translateY(3px);
+
+  box-shadow:
+    0 1px 0 #2f3e46;
+}
+
+.maze-horizontal-controls {
+  display: flex;
+
+  gap: 9px;
+}
+
+
+/* =========================================================
+   COMPLETION
+   ========================================================= */
+
+.maze-complete {
+  margin-top: 32px;
+  padding: 32px;
+
+  border: 2px solid #cad2c5;
+  border-radius: 18px;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(74, 222, 128, 0.18),
+      transparent 55%
+    ),
+    #dde8d5;
+
+  text-align: center;
+
+  box-shadow:
+    0 8px 20px rgba(47, 62, 70, 0.10);
+
+  position: relative;
+  z-index: 1;
+
+  animation: maze-complete-appear 0.35s ease-out;
+}
+
+@keyframes maze-complete-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.maze-complete-label {
+  margin: 0 0 8px;
+
+  color: #03ac13;
+
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+.maze-complete h2 {
+  margin: 0 0 10px;
+
+  color: #01796f;
+
+  font-size: 32px;
+}
+
+.maze-complete p {
+  margin: 0 0 22px;
+
+  color: #405344;
+
+  line-height: 1.5;
+}
+
+/* =========================================================
+   WON BOARD
+   ========================================================= */
+
+.maze-board-won {
+  box-shadow:
+    0 0 0 4px #4ade80,
+    0 0 25px rgba(74, 222, 128, 0.45),
+    0 12px 30px rgba(47, 62, 70, 0.22);
+
+  animation: maze-board-success 0.7s ease-in-out;
+}
+
+@keyframes maze-board-success {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.015);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .maze-controls {
+    display: flex;
+  }
+
+  .maze-pc-instructions {
+    display: none;
+  }
+
+  .maze-mobile-instructions {
+    display: block;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .maze-page {
+    padding: 20px 10px;
+  }
+
+  .maze-game {
+    padding: 28px 14px;
+
+    border-radius: 18px;
+  }
+
+  .maze-game::before,
+  .maze-game::after {
+    font-size: 30px;
+  }
+
+  .maze-header {
+    margin-bottom: 24px;
+  }
+
+  .maze-header h1 {
+    font-size: 36px;
+  }
+
+  .maze-header h1::after {
+    font-size: 17px;
+  }
+
+  .maze-header p {
+    font-size: 14px;
+  }
+
+  .maze-info {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 12px;
+  }
+
+  .maze-stat {
+    width: 100%;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+  }
+
+  .maze-new-button {
+    width: 100%;
+  }
+
+  .maze-board {
+    width: 100%;
+    max-width: 560px;
+
+    border-width: 5px;
+    border-radius: 14px;
+  }
+
+  .maze-instructions {
+    font-size: 13px;
+  }
+
+  .maze-complete {
+    padding: 25px 18px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .maze-header h1::after,
+  .maze-player,
+  .maze-goal,
+  .maze-board-won,
+  .maze-complete {
+    animation: none;
+  }
+
+  .maze-player::before {
+    transition: none;
+  }
+
+  .maze-new-button,
+  .maze-play-again-button,
+  .maze-controls button {
+    transition: none;
+  }
+}
+
+
+/* =========================================================
+   PHASE 2 - MAIN MENU
+   ========================================================= */
+
+.maze-menu {
+  width: min(560px, 100%);
+  margin: 26px auto 0;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+
+  position: relative;
+  z-index: 1;
+}
+
+.maze-menu-button {
+  width: 100%;
+  min-height: 125px;
+  padding: 22px 20px;
+
+  border: 2px solid #cad2c5;
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f5f7f1
+    );
+
+  color: #26352a;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 0 rgba(47, 62, 70, 0.08),
+    0 10px 20px rgba(47, 62, 70, 0.08);
+
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+
+  box-sizing: border-box;
+}
+
+.maze-menu-button:hover {
+  transform: translateY(-4px);
+
+  border-color: #4ade80;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #eef9f0
+    );
+
+  box-shadow:
+    0 9px 0 rgba(47, 62, 70, 0.08),
+    0 15px 24px rgba(47, 62, 70, 0.12);
+}
+
+.maze-menu-button:active {
+  transform: translateY(1px);
+}
+
+.maze-menu-title {
+  color: #01796f;
+
+  font-size: 1.3rem;
+  font-weight: 900;
+
+  margin-bottom: 7px;
+}
+
+.maze-menu-description {
+  color: #405344;
+
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.maze-menu-button-disabled,
+.maze-menu-button-disabled:hover {
+  cursor: not-allowed;
+
+  transform: none;
+
+  border-color: #d6ddd5;
+
+  background: #eef0eb;
+
+  box-shadow:
+    0 4px 0 rgba(47, 62, 70, 0.05);
+
+  opacity: 0.68;
+}
+
+.maze-menu-button-disabled .maze-menu-title {
+  color: #62736a;
+}
+
+.maze-menu-button-disabled .maze-menu-description {
+  color: #7c8982;
+}
+
+
+/* =========================================================
+   MENU / SCREEN NAVIGATION
+   ========================================================= */
+
+.maze-back-button {
+  display: block;
+
+  margin: 26px auto 0;
+  padding: 11px 20px;
+
+  border: 2px solid #cad2c5;
+  border-radius: 12px;
+
+  background: #ffffff;
+  color: #2f3e46;
+
+  font-size: 0.95rem;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+
+  position: relative;
+  z-index: 1;
+}
+
+.maze-back-button:hover {
+  transform: translateY(-2px);
+
+  border-color: #4ade80;
+
+  background: #f0fff3;
+}
+
+
+/* =========================================================
+   PLAY SCREEN ACTIONS
+   ========================================================= */
+
+.maze-game-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.maze-menu-small-button {
+  padding: 10px 16px;
+
+  border: 2px solid #cad2c5;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #2f3e46;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.maze-menu-small-button:hover {
+  transform: translateY(-2px);
+
+  border-color: #4ade80;
+
+  background: #f0fff3;
+}
+
+.maze-complete-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   COMING SOON SCREENS
+   ========================================================= */
+
+.maze-coming-soon {
+  width: min(560px, 100%);
+  margin: 28px auto 0;
+  padding: 34px 28px;
+
+  border: 2px solid #cad2c5;
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f5f7f1
+    );
+
+  box-shadow:
+    0 8px 18px rgba(47, 62, 70, 0.08);
+
+  text-align: center;
+
+  position: relative;
+  z-index: 1;
+}
+
+.maze-coming-icon {
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto 15px;
+
+  border-radius: 50%;
+
+  background: #dde8d5;
+  color: #01796f;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+.maze-coming-soon h2 {
+  margin: 0 0 10px;
+
+  color: #01796f;
+
+  font-size: 1.5rem;
+}
+
+.maze-coming-soon p {
+  margin: 7px auto;
+
+  max-width: 480px;
+
+  color: #405344;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   HOW TO PLAY
+   ========================================================= */
+
+.maze-how-to-play {
+  width: min(680px, 100%);
+  margin: 28px auto 0;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+
+  position: relative;
+  z-index: 1;
+}
+
+.maze-how-to-card {
+  padding: 22px;
+
+  border: 2px solid #cad2c5;
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f5f7f1
+    );
+
+  box-shadow:
+    0 6px 14px rgba(47, 62, 70, 0.06);
+}
+
+.maze-how-to-card h2 {
+  margin: 0 0 8px;
+
+  color: #01796f;
+
+  font-size: 1.1rem;
+}
+
+.maze-how-to-card p {
+  margin: 0;
+
+  color: #405344;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   PHASE 2 MOBILE MENU STYLES
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .maze-menu {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .maze-menu-button {
+    min-height: 105px;
+  }
+
+  .maze-how-to-play {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .maze-game-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .maze-complete-actions {
+    flex-direction: column;
+  }
+
+  .maze-complete-actions button {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   PHASE 2 REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .maze-menu-button,
+  .maze-back-button,
+  .maze-menu-small-button {
+    transition: none;
+  }
+}

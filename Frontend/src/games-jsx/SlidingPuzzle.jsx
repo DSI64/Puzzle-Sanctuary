@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import "../games-css/Jigsaw.css";
+import "../games-css/SlidingPuzzle.css";
 
 const API_BASE_URL = "http://localhost:3001";
 
-function Jigsaw() {
+function SlidingPuzzle() {
   const [gameStarted, setGameStarted] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [photoCredit, setPhotoCredit] = useState(null);
@@ -570,17 +570,17 @@ function Jigsaw() {
   };
 
   return (
-    <main className="jigsaw-page">
-      <div className="jigsaw-game">
+    <main className="slidingPuzzle-page">
+      <div className="slidingPuzzle-game">
 
         {/* Main Menu */}
         {!gameStarted && (
-          <section className="jigsaw-title-screen">
+          <section className="slidingPuzzle-title-screen">
 
-            <div className="jigsaw-title-main">
+            <div className="slidingPuzzle-title-main">
 
               {/* Left Side */}
-              <div className="jigsaw-title-content">
+              <div className="slidingPuzzle-title-content">
 
                 <p className="page-label">
                   PUZZLE SANCTUARY
@@ -598,7 +598,7 @@ function Jigsaw() {
                 <div className="title-menu-buttons">
 
                   <button
-                    className="jigsaw-play-button"
+                    className="slidingPuzzle-play-button"
                     onClick={() =>
                       newPuzzle(
                         difficulty,
@@ -610,7 +610,7 @@ function Jigsaw() {
                   </button>
 
                   <button
-                    className="jigsaw-options-button"
+                    className="slidingPuzzle-options-button"
                     onClick={openOptions}
                   >
                     Options
@@ -691,7 +691,7 @@ function Jigsaw() {
               </div>
 
               {/* Right Side */}
-              <div className="jigsaw-title-right">
+              <div className="slidingPuzzle-title-right">
 
                 {/* Puzzle Preview */}
                 <div className="title-puzzle-preview">
@@ -790,7 +790,7 @@ function Jigsaw() {
           !gameComplete &&
           !gameAbandoned && (
             <>
-              <section className="jigsaw-header">
+              <section className="slidingPuzzle-header">
 
                 <p className="page-label">
                   PUZZLE SANCTUARY
@@ -806,39 +806,39 @@ function Jigsaw() {
                     : "Slide the pieces into the empty space to complete the image."}
                 </p>
 
-                <div className="jigsaw-stats">
+                <div className="slidingPuzzle-stats">
 
-                  <div className="jigsaw-stat">
+                  <div className="slidingPuzzle-stat">
 
-                    <span className="jigsaw-stat-label">
+                    <span className="slidingPuzzle-stat-label">
                       DIFFICULTY
                     </span>
 
-                    <span className="jigsaw-stat-value">
+                    <span className="slidingPuzzle-stat-value">
                       {getDifficultyName()}
                     </span>
 
                   </div>
 
-                  <div className="jigsaw-stat">
+                  <div className="slidingPuzzle-stat">
 
-                    <span className="jigsaw-stat-label">
+                    <span className="slidingPuzzle-stat-label">
                       CATEGORY
                     </span>
 
-                    <span className="jigsaw-stat-value">
+                    <span className="slidingPuzzle-stat-value">
                       {getCategoryName()}
                     </span>
 
                   </div>
 
-                  <div className="jigsaw-stat">
+                  <div className="slidingPuzzle-stat">
 
-                    <span className="jigsaw-stat-label">
+                    <span className="slidingPuzzle-stat-label">
                       TIME
                     </span>
 
-                    <span className="jigsaw-stat-value">
+                    <span className="slidingPuzzle-stat-value">
                       {timer}s
                     </span>
 
@@ -848,10 +848,10 @@ function Jigsaw() {
 
               </section>
 
-              <section className="jigsaw-board-section">
+              <section className="slidingPuzzle-board-section">
 
                 <div
-                  className={`jigsaw-board jigsaw-board-${difficulty}`}
+                  className={`slidingPuzzle-board slidingPuzzle-board-${difficulty}`}
                   style={{
                     gridTemplateColumns: `repeat(${getBoardSize(
                       difficulty
@@ -870,7 +870,7 @@ function Jigsaw() {
                         return (
                           <div
                             key={`empty-${index}`}
-                            className="jigsaw-board-space empty"
+                            className="slidingPuzzle-board-space empty"
                           />
                         );
                       }
@@ -884,7 +884,7 @@ function Jigsaw() {
                       return (
                         <div
                           key={piece.id}
-                          className={`jigsaw-board-space ${
+                          className={`slidingPuzzle-board-space ${
                             canMove
                               ? "movable"
                               : ""
@@ -895,7 +895,7 @@ function Jigsaw() {
                         >
 
                           <div
-                            className="jigsaw-piece"
+                            className="slidingPuzzle-piece"
                             style={{
                               backgroundImage: `url(${imageUrl})`,
 
@@ -919,7 +919,7 @@ function Jigsaw() {
                             }}
                           >
 
-                            <span className="jigsaw-piece-number">
+                            <span className="slidingPuzzle-piece-number">
                               {piece.correctPosition +
                                 1}
                             </span>
@@ -964,7 +964,7 @@ function Jigsaw() {
                 )}
 
                 <button
-                  className="jigsaw-give-up-button"
+                  className="slidingPuzzle-give-up-button"
                   onClick={handleGiveUp}
                   disabled={shuffling}
                 >
@@ -1002,7 +1002,7 @@ function Jigsaw() {
                     <div className="give-up-buttons">
 
                       <button
-                        className="jigsaw-keep-playing-button"
+                        className="slidingPuzzle-keep-playing-button"
                         onClick={
                           cancelGiveUp
                         }
@@ -1011,7 +1011,7 @@ function Jigsaw() {
                       </button>
 
                       <button
-                        className="jigsaw-confirm-give-up-button"
+                        className="slidingPuzzle-confirm-give-up-button"
                         onClick={
                           confirmGiveUp
                         }
@@ -1033,7 +1033,7 @@ function Jigsaw() {
         {showOptions && (
           <div className="give-up-overlay">
 
-            <div className="jigsaw-options-dialog">
+            <div className="slidingPuzzle-options-dialog">
 
               <h2>
                 Options
@@ -1222,7 +1222,7 @@ function Jigsaw() {
               <div className="options-buttons">
 
                 <button
-                  className="jigsaw-keep-playing-button"
+                  className="slidingPuzzle-keep-playing-button"
                   onClick={
                     cancelOptions
                   }
@@ -1231,7 +1231,7 @@ function Jigsaw() {
                 </button>
 
                 <button
-                  className="jigsaw-confirm-give-up-button"
+                  className="slidingPuzzle-confirm-give-up-button"
                   onClick={() =>
                     setShowOptions(false)
                   }
@@ -1248,7 +1248,7 @@ function Jigsaw() {
 
         {/* Puzzle Abandoned */}
         {gameAbandoned && (
-          <section className="jigsaw-complete-screen">
+          <section className="slidingPuzzle-complete-screen">
 
             <p className="page-label">
               PUZZLE SANCTUARY
@@ -1275,10 +1275,10 @@ function Jigsaw() {
 
             </div>
 
-            <div className="jigsaw-completion-buttons">
+            <div className="slidingPuzzle-completion-buttons">
 
               <button
-                className="jigsaw-play-button"
+                className="slidingPuzzle-play-button"
                 onClick={() =>
                   newPuzzle()
                 }
@@ -1287,7 +1287,7 @@ function Jigsaw() {
               </button>
 
               <button
-                className="jigsaw-main-menu-button"
+                className="slidingPuzzle-main-menu-button"
                 onClick={
                   returnToMainMenu
                 }
@@ -1302,7 +1302,7 @@ function Jigsaw() {
 
         {/* Completion Screen */}
         {gameComplete && (
-          <section className="jigsaw-complete-screen">
+          <section className="slidingPuzzle-complete-screen">
 
             <p className="page-label">
               PUZZLE SANCTUARY
@@ -1397,10 +1397,10 @@ function Jigsaw() {
               menu?
             </p>
 
-            <div className="jigsaw-completion-buttons">
+            <div className="slidingPuzzle-completion-buttons">
 
               <button
-                className="jigsaw-play-button"
+                className="slidingPuzzle-play-button"
                 onClick={() =>
                   newPuzzle()
                 }
@@ -1409,7 +1409,7 @@ function Jigsaw() {
               </button>
 
               <button
-                className="jigsaw-main-menu-button"
+                className="slidingPuzzle-main-menu-button"
                 onClick={
                   returnToMainMenu
                 }
@@ -1427,4 +1427,4 @@ function Jigsaw() {
   );
 }
 
-export default Jigsaw;
+export default SlidingPuzzle;

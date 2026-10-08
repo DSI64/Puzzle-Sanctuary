@@ -6,7 +6,8 @@ import Puzzles from "./pages-jsx/Puzzles";
 import Account from "./pages-jsx/Account";
 import AccountSettings from "./pages-jsx/AccountSettings";
 import Challenges from "./pages-jsx/Challenges";
-import Jigsaw from "./games-jsx/Jigsaw";
+import SlidingPuzzle from "./games-jsx/SlidingPuzzle";
+import Maze from "./games-jsx/Maze";
 
 function App() {
   return (
@@ -31,7 +32,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/daily" element={<DailyGame />} />
           <Route path="/puzzles" element={<Puzzles />} />
-          <Route path="/puzzles/jigsaw" element={<Jigsaw />} />
+          <Route path="/puzzles/SlidingPuzzle" element={<SlidingPuzzle />} />
+          <Route path="/puzzles/maze" element={<Maze />} />
           <Route path="/challenges" element={<Challenges />} />
           <Route path="/account" element={<Account />} />
           <Route path="/account/settings" element={<AccountSettings />} />

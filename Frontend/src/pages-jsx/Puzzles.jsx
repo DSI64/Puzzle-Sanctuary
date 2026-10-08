@@ -3,6 +3,7 @@ import PuzzleCard from "../components/PuzzleCard";
 import "../pages-css/Puzzles.css"
 import puzzlePlaceholder from "../assets/placeholder.png";
 import slidingPuzzle from "../assets/slidingPuzzle.png";
+import mazeIcon from "../assets/maze-icon.png";
 
 
 function Puzzles() {
@@ -12,13 +13,14 @@ function Puzzles() {
       description: "Slide the pieces into place to recreate the image.",
       type: "Puzzle Type",
       image: slidingPuzzle,
-      path: "/puzzles/jigsaw",
+      path: "/puzzles/SlidingPuzzle",
     },
     {
-      name: "",
-      description: "",
-      type: "",
-      image: puzzlePlaceholder,
+      name: "Maze",
+      description: "Find your way through the maze.",
+      type: "Maze",
+      image: mazeIcon,
+      path: "/puzzles/maze",
     },
     {
       name: "",
@@ -103,21 +105,21 @@ function Puzzles() {
   return (
     <main className="puzzles-page">
       <section className="puzzles-header">
-      <p className="page-label">PUZZLE SANCTUARY </p>
-      <h1>Puzzle Hub</h1>
-      <p>Browse all of the available puzzle games.</p>
+        <p className="page-label">PUZZLE SANCTUARY </p>
+        <h1>Puzzle Hub</h1>
+        <p>Browse all of the available puzzle games.</p>
       </section>
 
       <section className="puzzles-list">
         <div className="puzzle-grid">
           {puzzles.map((puzzle) => (
             <PuzzleCard //Here, React creates card for each puzzle on website
-                key={puzzle.name}
-                name={puzzle.name}
-                description={puzzle.description}
-                type={puzzle.type}
-                image={puzzle.image}
-                path={puzzle.path}
+              key={puzzle.name}
+              name={puzzle.name}
+              description={puzzle.description}
+              type={puzzle.type}
+              image={puzzle.image}
+              path={puzzle.path}
             />
           ))}
         </div>
