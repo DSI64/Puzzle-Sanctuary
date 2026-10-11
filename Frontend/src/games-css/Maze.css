@@ -27,6 +27,7 @@
   The different background layers form
   a simple maze/path illustration.
 */
+
 .maze-header h1::before {
   content: "";
 
@@ -44,36 +45,23 @@
 
   background:
     /* horizontal paths */
-    linear-gradient(
-      #01796f,
-      #01796f
-    ) 7px 7px / 18px 4px no-repeat,
+    linear-gradient(#01796f,
+      #01796f) 7px 7px / 18px 4px no-repeat,
+    linear-gradient(#01796f,
+      #01796f) 15px 16px / 16px 4px no-repeat,
 
-    linear-gradient(
-      #01796f,
-      #01796f
-    ) 15px 16px / 16px 4px no-repeat,
-
-    linear-gradient(
-      #01796f,
-      #01796f
-    ) 7px 25px / 18px 4px no-repeat,
+    linear-gradient(#01796f,
+      #01796f) 7px 25px / 18px 4px no-repeat,
 
     /* vertical paths */
-    linear-gradient(
-      #01796f,
-      #01796f
-    ) 7px 7px / 4px 14px no-repeat,
+    linear-gradient(#01796f,
+      #01796f) 7px 7px / 4px 14px no-repeat,
 
-    linear-gradient(
-      #01796f,
-      #01796f
-    ) 27px 10px / 4px 19px no-repeat,
+    linear-gradient(#01796f,
+      #01796f) 27px 10px / 4px 19px no-repeat,
 
-    linear-gradient(
-      #01796f,
-      #01796f
-    ) 15px 16px / 4px 13px no-repeat,
+    linear-gradient(#01796f,
+      #01796f) 15px 16px / 4px 13px no-repeat,
 
     #dde8d5;
 
@@ -88,6 +76,7 @@
 }
 
 @keyframes maze-icon-bounce {
+
   0%,
   100% {
     transform: translateY(0) rotate(-3deg);
@@ -111,11 +100,9 @@
   border-radius: 24px;
 
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       rgba(255, 255, 255, 0.98),
-      rgba(247, 244, 233, 0.98)
-    );
+      rgba(247, 244, 233, 0.98));
 
   box-shadow:
     0 18px 45px rgba(47, 62, 70, 0.16),
@@ -134,7 +121,6 @@
   position: absolute;
 
   font-size: 42px;
-
   opacity: 0.16;
 
   pointer-events: none;
@@ -170,7 +156,6 @@
   margin: 0 0 10px;
 
   color: #03ac13;
-
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 4px;
@@ -208,7 +193,6 @@
 
 .maze-header p {
   margin: 10px 0 0;
-
   color: #405344;
 
   line-height: 1.6;
@@ -217,6 +201,7 @@
 }
 
 @keyframes maze-sparkle {
+
   0%,
   100% {
     transform: scale(1) rotate(0deg);
@@ -241,7 +226,6 @@
   align-items: center;
 
   gap: 20px;
-
   position: relative;
   z-index: 1;
 }
@@ -255,11 +239,9 @@
   border-radius: 14px;
 
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       #ffffff,
-      #eef4e9
-    );
+      #eef4e9);
 
   display: flex;
   align-items: center;
@@ -355,6 +337,7 @@
     minmax(0, 1fr) prevents the contents of
     individual cells from changing the grid size.
   */
+
   grid-template-columns: repeat(21, minmax(0, 1fr));
   grid-template-rows: repeat(21, minmax(0, 1fr));
 
@@ -362,7 +345,6 @@
   border-radius: 18px;
 
   overflow: hidden;
-
   background: #354f52;
 
   box-shadow:
@@ -400,6 +382,7 @@
     viewport, making the maze feel much
     more zoomed-in around the slime.
   */
+
   width: min(600px, 90vw);
 
   aspect-ratio: 1 / 1;
@@ -408,6 +391,7 @@
     Slightly stronger framing helps distinguish
     Real mode from the regular full-maze view.
   */
+
   box-shadow:
     0 0 0 4px #01796f,
     0 0 20px rgba(1, 121, 111, 0.25),
@@ -453,16 +437,12 @@
 
 .maze-path {
   background:
-    radial-gradient(
-      circle at 30% 30%,
+    radial-gradient(circle at 30% 30%,
       rgba(255, 255, 255, 0.32),
-      transparent 35%
-    ),
-    linear-gradient(
-      145deg,
+      transparent 35%),
+    linear-gradient(145deg,
       #f7f4e9,
-      #e9e4d3
-    );
+      #e9e4d3);
 }
 
 .maze-path::after {
@@ -473,11 +453,9 @@
   inset: 0;
 
   background:
-    radial-gradient(
-      circle at 70% 75%,
+    radial-gradient(circle at 70% 75%,
       rgba(64, 83, 68, 0.08) 0 1px,
-      transparent 2px
-    );
+      transparent 2px);
 
   background-size: 7px 7px;
 
@@ -488,16 +466,12 @@
 
 .maze-wall {
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(255, 255, 255, 0.08),
-      transparent 45%
-    ),
-    linear-gradient(
-      315deg,
+      transparent 45%),
+    linear-gradient(315deg,
       rgba(0, 0, 0, 0.18),
-      transparent 55%
-    ),
+      transparent 55%),
     #354f52;
 
   box-shadow:
@@ -527,24 +501,21 @@
   /*
     Hide the existing "●" from Maze.jsx.
   */
+
   font-size: 0;
 
   border: 2px solid #ffffff;
 
   border-radius:
-    48% 52%
-    58% 42%
-    46% 54%;
+    48% 52% 58% 42% 46% 54%;
 
   background:
-    radial-gradient(
-      circle at 34% 24%,
+    radial-gradient(circle at 34% 24%,
       #e5ffec 0%,
       #b8ffc9 13%,
       #72ef98 34%,
       #4ade80 58%,
-      #22c55e 100%
-    );
+      #22c55e 100%);
 
   box-shadow:
     0 0 0 2px rgba(74, 222, 128, 0.24),
@@ -571,21 +542,16 @@
 
   width: 48%;
   height: 26%;
-
   top: 35%;
   left: 26%;
 
   background:
-    radial-gradient(
-      circle at 18% 50%,
+    radial-gradient(circle at 18% 50%,
       #26352a 0 15%,
-      transparent 17%
-    ),
-    radial-gradient(
-      circle at 82% 50%,
+      transparent 17%),
+    radial-gradient(circle at 82% 50%,
       #26352a 0 15%,
-      transparent 17%
-    );
+      transparent 17%);
 
   pointer-events: none;
 
@@ -669,6 +635,7 @@
 }
 
 @keyframes maze-slime-bounce {
+
   0%,
   100% {
     transform: translateY(1px) scale(0.98);
@@ -731,6 +698,7 @@
 }
 
 @keyframes maze-goal-pulse {
+
   0%,
   100% {
     transform: scale(0.9);
@@ -743,9 +711,9 @@
   }
 }
 
- /* =========================================================
-    DIFFICULTY-BASED START + GOAL SIZING
-    ========================================================= */
+/* =========================================================
+   DIFFICULTY-BASED START + GOAL SIZING
+   ========================================================= */
 
 .maze-board-size-15 .maze-start {
   font-size: 8px;
@@ -762,7 +730,6 @@
 .maze-board-size-33 .maze-start {
   font-size: 4px;
 }
-
 
 .maze-board-size-15 .maze-goal {
   font-size: 35px;
@@ -834,7 +801,7 @@
   gap: 9px;
 }
 
-.maze-controls > button,
+.maze-controls>button,
 .maze-horizontal-controls button {
   width: 56px;
   height: 56px;
@@ -843,11 +810,9 @@
   border-radius: 14px;
 
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       #ffffff,
-      #dde8d5
-    );
+      #dde8d5);
 
   color: #26352a;
 
@@ -883,7 +848,6 @@
   gap: 9px;
 }
 
-
 /* =========================================================
    COMPLETION
    ========================================================= */
@@ -896,11 +860,9 @@
   border-radius: 18px;
 
   background:
-    radial-gradient(
-      circle at 50% 0%,
+    radial-gradient(circle at 50% 0%,
       rgba(74, 222, 128, 0.18),
-      transparent 55%
-    ),
+      transparent 55%),
     #dde8d5;
 
   text-align: center;
@@ -910,7 +872,6 @@
 
   position: relative;
   z-index: 1;
-
   animation: maze-complete-appear 0.35s ease-out;
 }
 
@@ -1075,6 +1036,7 @@
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   .maze-header h1::after,
   .maze-player,
   .maze-goal,
@@ -1111,6 +1073,18 @@
   z-index: 1;
 }
 
+/*
+   CLASSIC MENU ADJUSTMENT:
+   The Classic menu contains exactly three buttons.
+   Display those options in three columns on wider screens.
+   Other menus retain their original two-column layout.
+*/
+
+.maze-menu:has(> .maze-menu-button:nth-child(3):last-child) {
+  width: min(760px, 100%);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .maze-menu-button {
   width: 100%;
   min-height: 125px;
@@ -1120,11 +1094,9 @@
   border-radius: 18px;
 
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       #ffffff,
-      #f5f7f1
-    );
+      #f5f7f1);
 
   color: #26352a;
 
@@ -1154,13 +1126,10 @@
   transform: translateY(-4px);
 
   border-color: #4ade80;
-
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       #ffffff,
-      #eef9f0
-    );
+      #eef9f0);
 
   box-shadow:
     0 9px 0 rgba(47, 62, 70, 0.08),
@@ -1211,7 +1180,6 @@
   color: #7c8982;
 }
 
-
 /* =========================================================
    MENU / SCREEN NAVIGATION
    ========================================================= */
@@ -1237,7 +1205,6 @@
     transform 0.18s ease,
     border-color 0.18s ease,
     background 0.18s ease;
-
   position: relative;
   z-index: 1;
 }
@@ -1266,7 +1233,6 @@
 
   border: 2px solid #cad2c5;
   border-radius: 10px;
-
   background: #ffffff;
   color: #2f3e46;
 
@@ -1297,7 +1263,6 @@
   flex-wrap: wrap;
 }
 
-
 /* =========================================================
    COMING SOON SCREENS
    ========================================================= */
@@ -1311,11 +1276,9 @@
   border-radius: 20px;
 
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       #ffffff,
-      #f5f7f1
-    );
+      #f5f7f1);
 
   box-shadow:
     0 8px 18px rgba(47, 62, 70, 0.08);
@@ -1363,7 +1326,6 @@
   line-height: 1.55;
 }
 
-
 /* =========================================================
    HOW TO PLAY
    ========================================================= */
@@ -1386,13 +1348,10 @@
 
   border: 2px solid #cad2c5;
   border-radius: 16px;
-
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       #ffffff,
-      #f5f7f1
-    );
+      #f5f7f1);
 
   box-shadow:
     0 6px 14px rgba(47, 62, 70, 0.06);
@@ -1420,7 +1379,10 @@
    ========================================================= */
 
 @media (max-width: 650px) {
-  .maze-menu {
+
+  .maze-menu,
+  .maze-menu:has(> .maze-menu-button:nth-child(3):last-child) {
+    width: min(560px, 100%);
     grid-template-columns: 1fr;
     gap: 14px;
   }
@@ -1448,12 +1410,12 @@
   }
 }
 
-
 /* =========================================================
    PHASE 2 REDUCED MOTION
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   .maze-menu-button,
   .maze-back-button,
   .maze-menu-small-button {

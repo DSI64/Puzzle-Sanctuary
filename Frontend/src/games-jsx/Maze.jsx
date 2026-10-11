@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import "../games-css/Maze.css";
 
@@ -17,9 +18,6 @@ const DIFFICULTY_LABELS = {
 
 const REAL_VIEWPORT_SIZE = 9;
 
-/*
-  Shuffle an array using Fisher-Yates.
-*/
 function shuffleArray(array) {
   const shuffled = [...array];
 
@@ -37,9 +35,7 @@ function shuffleArray(array) {
   return shuffled;
 }
 
-/*
-  Generate the maze itself.
-*/
+/* Generate the maze using recursive backtracking. */
 function generateMaze(size) {
   const maze = Array.from(
     { length: size },
@@ -56,10 +52,9 @@ function generateMaze(size) {
   const carvePath = (row, col) => {
     maze[row][col] = 0;
 
-    const shuffledDirections =
-      shuffleArray(directions);
-
-    for (const [rowChange, colChange] of shuffledDirections) {
+    for (const [rowChange, colChange] of shuffleArray(
+      directions
+    )) {
       const newRow = row + rowChange;
       const newCol = col + colChange;
 
@@ -84,104 +79,62 @@ function generateMaze(size) {
   return maze;
 }
 
-/*
-  Find possible START positions along the
-  outside edge of the maze.
-
-  The cell directly inside each candidate
-  must already be part of the maze path.
-*/
+/* Find possible entrances along the outer edge. */
 function getStartCandidates(maze) {
   const size = maze.length;
-
   const candidates = [];
 
   // Top edge
   for (let col = 1; col < size - 1; col += 2) {
     if (maze[1][col] === 0) {
-      candidates.push({
-        row: 0,
-        col,
-      });
+      candidates.push({ row: 0, col });
     }
   }
 
   // Bottom edge
   for (let col = 1; col < size - 1; col += 2) {
     if (maze[size - 2][col] === 0) {
-      candidates.push({
-        row: size - 1,
-        col,
-      });
+      candidates.push({ row: size - 1, col });
     }
   }
 
   // Left edge
   for (let row = 1; row < size - 1; row += 2) {
     if (maze[row][1] === 0) {
-      candidates.push({
-        row,
-        col: 0,
-      });
+      candidates.push({ row, col: 0 });
     }
   }
 
   // Right edge
   for (let row = 1; row < size - 1; row += 2) {
     if (maze[row][size - 2] === 0) {
-      candidates.push({
-        row,
-        col: size - 1,
-      });
+      candidates.push({ row, col: size - 1 });
     }
   }
 
   return candidates;
 }
 
-/*
-  Find interior dead-end cells.
-
-  A dead end has exactly one neighboring
-  path cell. This makes it a natural place
-  for the goal.
-*/
+/* Find interior dead ends that can be used as the goal. */
 function getGoalCandidates(maze) {
   const size = maze.length;
-
   const candidates = [];
 
   for (let row = 1; row < size - 1; row++) {
     for (let col = 1; col < size - 1; col++) {
-      // Must be a path.
       if (maze[row][col] !== 0) {
         continue;
       }
 
       let pathNeighbors = 0;
 
-      if (maze[row - 1][col] === 0) {
-        pathNeighbors++;
-      }
+      if (maze[row - 1][col] === 0) pathNeighbors++;
+      if (maze[row + 1][col] === 0) pathNeighbors++;
+      if (maze[row][col - 1] === 0) pathNeighbors++;
+      if (maze[row][col + 1] === 0) pathNeighbors++;
 
-      if (maze[row + 1][col] === 0) {
-        pathNeighbors++;
-      }
-
-      if (maze[row][col - 1] === 0) {
-        pathNeighbors++;
-      }
-
-      if (maze[row][col + 1] === 0) {
-        pathNeighbors++;
-      }
-
-      // Exactly one path neighbor = dead end.
       if (pathNeighbors === 1) {
-        candidates.push({
-          row,
-          col,
-        });
+        candidates.push({ row, col });
       }
     }
   }
@@ -189,45 +142,28 @@ function getGoalCandidates(maze) {
   return candidates;
 }
 
-/*
-  Pick a randomized entrance and randomized
-  interior dead-end goal.
-*/
+/* Select a random entrance and interior goal. */
 function chooseEndpoints(maze) {
-  const startCandidates =
-    getStartCandidates(maze);
-
-  const goalCandidates =
-    getGoalCandidates(maze);
+  const startCandidates = getStartCandidates(maze);
+  const goalCandidates = getGoalCandidates(maze);
 
   const start =
     startCandidates[
-    Math.floor(
-      Math.random() * startCandidates.length
-    )
+    Math.floor(Math.random() * startCandidates.length)
     ];
 
   const goal =
     goalCandidates[
-    Math.floor(
-      Math.random() * goalCandidates.length
-    )
+    Math.floor(Math.random() * goalCandidates.length)
     ];
 
-  return {
-    start,
-    goal,
-  };
+  return { start, goal };
 }
 
-/*
-  Generate a new maze and its endpoints.
-*/
+/* Create a new maze and its endpoints. */
 function createMaze(size) {
   const maze = generateMaze(size);
-
-  const { start, goal } =
-    chooseEndpoints(maze);
+  const { start, goal } = chooseEndpoints(maze);
 
   // Open the randomized entrance.
   maze[start.row][start.col] = 0;
@@ -239,22 +175,26 @@ function createMaze(size) {
   };
 }
 
+/* Choose the slime's starting direction based on the entrance. */
+function getInitialDirection(start, size) {
+  if (start.row === 0) return "down";
+  if (start.row === size - 1) return "up";
+  if (start.col === 0) return "right";
+  if (start.col === size - 1) return "left";
+
+  return "right";
+}
+
 function Maze() {
   const [screen, setScreen] = useState("menu");
-
-  const [difficulty, setDifficulty] =
-    useState("normal");
-
-  const [gameMode, setGameMode] =
-    useState("normal");
+  const [difficulty, setDifficulty] = useState("normal");
+  const [gameMode, setGameMode] = useState("normal");
 
   const [mazeData, setMazeData] = useState(() =>
     createMaze(MAZE_SIZES.normal)
   );
 
-  const maze = mazeData.maze;
-  const start = mazeData.start;
-  const goal = mazeData.goal;
+  const { maze, start, goal } = mazeData;
 
   const [player, setPlayer] = useState({
     row: start.row,
@@ -264,15 +204,15 @@ function Maze() {
   const [playerDirection, setPlayerDirection] =
     useState("right");
 
-  const [gameStatus, setGameStatus] =
-    useState("playing");
-
+  const [gameStatus, setGameStatus] = useState("playing");
   const [time, setTime] = useState(0);
 
+  const isRealMode = gameMode === "real";
+
   /*
-    =========================
+    ==========================================
     MENU FUNCTIONS
-    =========================
+    ==========================================
   */
 
   const openClassicMenu = () => {
@@ -284,14 +224,14 @@ function Maze() {
     setScreen("difficulty");
   };
 
-  const openRealDifficultyMenu = () => {
-    setGameMode("real");
-    setScreen("realDifficulty");
-  };
-
   const openDarknessDifficultyMenu = () => {
     setGameMode("darkness");
     setScreen("difficulty");
+  };
+
+  const openRealDifficultyMenu = () => {
+    setGameMode("real");
+    setScreen("realDifficulty");
   };
 
   const openTimeAttack = () => {
@@ -307,59 +247,31 @@ function Maze() {
   };
 
   /*
-    =========================
-    CREATE NEW MAZE
-    =========================
+    ==========================================
+    CREATE A NEW MAZE
+    ==========================================
   */
 
   const createNewMaze = (
     selectedDifficulty = difficulty,
     selectedMode = gameMode
   ) => {
-    const mazeSize =
-      MAZE_SIZES[selectedDifficulty];
-
-    const newMazeData =
-      createMaze(mazeSize);
+    const mazeSize = MAZE_SIZES[selectedDifficulty];
+    const newMazeData = createMaze(mazeSize);
 
     setDifficulty(selectedDifficulty);
     setGameMode(selectedMode);
-
     setMazeData(newMazeData);
 
-    /*
-      Start the player at the
-      randomized entrance.
-    */
+    // Place the slime at the new entrance.
     setPlayer({
       row: newMazeData.start.row,
       col: newMazeData.start.col,
     });
 
-    /*
-      Set the initial slime direction
-      based on which edge the entrance
-      is located on.
-    */
-    let initialDirection = "right";
-
-    if (newMazeData.start.row === 0) {
-      initialDirection = "down";
-    } else if (
-      newMazeData.start.row === mazeSize - 1
-    ) {
-      initialDirection = "up";
-    } else if (
-      newMazeData.start.col === 0
-    ) {
-      initialDirection = "right";
-    } else if (
-      newMazeData.start.col === mazeSize - 1
-    ) {
-      initialDirection = "left";
-    }
-
-    setPlayerDirection(initialDirection);
+    setPlayerDirection(
+      getInitialDirection(newMazeData.start, mazeSize)
+    );
 
     setGameStatus("playing");
     setTime(0);
@@ -367,9 +279,9 @@ function Maze() {
   };
 
   /*
-    =========================
+    ==========================================
     RETURN FUNCTIONS
-    =========================
+    ==========================================
   */
 
   const returnToMenu = () => {
@@ -383,9 +295,9 @@ function Maze() {
   };
 
   /*
-    =========================
+    ==========================================
     PLAYER MOVEMENT
-    =========================
+    ==========================================
   */
 
   const movePlayer = (direction) => {
@@ -396,67 +308,50 @@ function Maze() {
       return;
     }
 
-    setPlayer((currentPlayer) => {
-      let newRow = currentPlayer.row;
-      let newCol = currentPlayer.col;
+    let newRow = player.row;
+    let newCol = player.col;
 
-      if (direction === "up") {
-        newRow--;
-      }
+    if (direction === "up") newRow--;
+    if (direction === "down") newRow++;
+    if (direction === "left") newCol--;
+    if (direction === "right") newCol++;
 
-      if (direction === "down") {
-        newRow++;
-      }
+    // Prevent moving outside the maze.
+    if (
+      newRow < 0 ||
+      newRow >= maze.length ||
+      newCol < 0 ||
+      newCol >= maze[0].length
+    ) {
+      return;
+    }
 
-      if (direction === "left") {
-        newCol--;
-      }
+    // Prevent walking through walls.
+    if (maze[newRow][newCol] === 1) {
+      return;
+    }
 
-      if (direction === "right") {
-        newCol++;
-      }
-
-      // Prevent moving outside the maze.
-      if (
-        newRow < 0 ||
-        newRow >= maze.length ||
-        newCol < 0 ||
-        newCol >= maze[0].length
-      ) {
-        return currentPlayer;
-      }
-
-      // Prevent walking through walls.
-      if (maze[newRow][newCol] === 1) {
-        return currentPlayer;
-      }
-
-      // Only change slime direction
-      // when movement succeeds.
-      setPlayerDirection(direction);
-
-      /*
-        Check for the randomized
-        interior goal.
-      */
-      if (
-        newRow === goal.row &&
-        newCol === goal.col
-      ) {
-        setGameStatus("won");
-      }
-
-      return {
-        row: newRow,
-        col: newCol,
-      };
+    // Update position and facing direction.
+    setPlayer({
+      row: newRow,
+      col: newCol,
     });
+
+    setPlayerDirection(direction);
+
+    // Check whether the player has reached the goal.
+    if (
+      newRow === goal.row &&
+      newCol === goal.col
+    ) {
+      setGameStatus("won");
+    }
   };
 
   /*
-    =========================
+    ==========================================
     TIMER
-    =========================
+    ==========================================
   */
 
   useEffect(() => {
@@ -464,27 +359,25 @@ function Maze() {
       screen !== "playing" ||
       gameStatus !== "playing"
     ) {
-      return;
+      return undefined;
     }
 
     const timer = setInterval(() => {
-      setTime(
-        (currentTime) => currentTime + 1
-      );
+      setTime((currentTime) => currentTime + 1);
     }, 1000);
 
     return () => clearInterval(timer);
   }, [screen, gameStatus]);
 
   /*
-    =========================
+    ==========================================
     KEYBOARD CONTROLS
-    =========================
+    ==========================================
   */
 
   useEffect(() => {
     if (screen !== "playing") {
-      return;
+      return undefined;
     }
 
     const handleKeyDown = (event) => {
@@ -505,28 +398,19 @@ function Maze() {
         event.preventDefault();
       }
 
-      if (
-        key === "arrowup" ||
-        key === "w"
-      ) {
+      if (key === "arrowup" || key === "w") {
         movePlayer("up");
-      }
-
-      if (
+      } else if (
         key === "arrowdown" ||
         key === "s"
       ) {
         movePlayer("down");
-      }
-
-      if (
+      } else if (
         key === "arrowleft" ||
         key === "a"
       ) {
         movePlayer("left");
-      }
-
-      if (
+      } else if (
         key === "arrowright" ||
         key === "d"
       ) {
@@ -534,10 +418,7 @@ function Maze() {
       }
     };
 
-    window.addEventListener(
-      "keydown",
-      handleKeyDown
-    );
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       window.removeEventListener(
@@ -548,18 +429,16 @@ function Maze() {
   }, [
     screen,
     gameStatus,
+    player,
     maze,
     goal,
   ]);
 
   /*
-    =====================================================
+    ==========================================
     REAL MODE CAMERA
-    =====================================================
+    ==========================================
   */
-
-  const isRealMode =
-    gameMode === "real";
 
   const viewportSize = isRealMode
     ? REAL_VIEWPORT_SIZE
@@ -577,8 +456,7 @@ function Maze() {
       0,
       Math.min(
         player.row - cameraRadius,
-        maze.length -
-        REAL_VIEWPORT_SIZE
+        maze.length - REAL_VIEWPORT_SIZE
       )
     );
 
@@ -586,8 +464,7 @@ function Maze() {
       0,
       Math.min(
         player.col - cameraRadius,
-        maze[0].length -
-        REAL_VIEWPORT_SIZE
+        maze[0].length - REAL_VIEWPORT_SIZE
       )
     );
   }
@@ -596,14 +473,12 @@ function Maze() {
     ? maze
       .slice(
         viewportStartRow,
-        viewportStartRow +
-        REAL_VIEWPORT_SIZE
+        viewportStartRow + REAL_VIEWPORT_SIZE
       )
       .map((row) =>
         row.slice(
           viewportStartCol,
-          viewportStartCol +
-          REAL_VIEWPORT_SIZE
+          viewportStartCol + REAL_VIEWPORT_SIZE
         )
       )
     : maze;
@@ -616,19 +491,16 @@ function Maze() {
         : "NORMAL";
 
   /*
-    =========================
+    ==========================================
     RENDER
-    =========================
+    ==========================================
   */
 
   return (
     <main className="maze-page">
       <section className="maze-game">
 
-        {/* =========================
-            MAIN MENU
-        ========================== */}
-
+        {/* MAIN MENU */}
         {screen === "menu" && (
           <>
             <header className="maze-header">
@@ -699,10 +571,7 @@ function Maze() {
           </>
         )}
 
-        {/* =========================
-            CLASSIC MENU
-        ========================== */}
-
+        {/* CLASSIC MENU: THREE MAZE OPTIONS */}
         {screen === "classic" && (
           <>
             <header className="maze-header">
@@ -727,8 +596,7 @@ function Maze() {
                 </span>
 
                 <span className="maze-menu-description">
-                  Find your way from the
-                  entrance to the exit.
+                  Find your way from the entrance to the exit.
                 </span>
               </button>
 
@@ -746,19 +614,6 @@ function Maze() {
               </button>
 
               <button
-                className="maze-menu-button maze-menu-button-disabled"
-                disabled
-              >
-                <span className="maze-menu-title">
-                  Circle
-                </span>
-
-                <span className="maze-menu-description">
-                  Coming Soon
-                </span>
-              </button>
-
-              <button
                 className="maze-menu-button"
                 onClick={openRealDifficultyMenu}
               >
@@ -767,8 +622,7 @@ function Maze() {
                 </span>
 
                 <span className="maze-menu-description">
-                  Navigate with a close-up
-                  view around the slime.
+                  Navigate with a close-up view around the slime.
                 </span>
               </button>
             </section>
@@ -782,10 +636,7 @@ function Maze() {
           </>
         )}
 
-        {/* =========================
-            NORMAL DIFFICULTY
-        ========================== */}
-
+        {/* NORMAL AND DARKNESS DIFFICULTY */}
         {screen === "difficulty" && (
           <>
             <header className="maze-header">
@@ -796,100 +647,42 @@ function Maze() {
               <h1>Choose Difficulty</h1>
 
               <p>
-                Choose how large you want your
-                maze to be.
+                Choose how large you want your maze to be.
               </p>
             </header>
 
             <section className="maze-menu">
-              <button
-                className="maze-menu-button"
-                onClick={() =>
-                  createNewMaze(
-                    "easy",
-                    gameMode
-                  )
-                }
-              >
-                <span className="maze-menu-title">
-                  Easy
-                </span>
+              {Object.entries(MAZE_SIZES).map(
+                ([level, size]) => (
+                  <button
+                    key={level}
+                    className="maze-menu-button"
+                    onClick={() =>
+                      createNewMaze(level, gameMode)
+                    }
+                  >
+                    <span className="maze-menu-title">
+                      {DIFFICULTY_LABELS[level]}
+                    </span>
 
-                <span className="maze-menu-description">
-                  15 × 15 maze
-                </span>
-              </button>
-
-              <button
-                className="maze-menu-button"
-                onClick={() =>
-                  createNewMaze(
-                    "normal",
-                    gameMode
-                  )
-                }
-              >
-                <span className="maze-menu-title">
-                  Normal
-                </span>
-
-                <span className="maze-menu-description">
-                  21 × 21 maze
-                </span>
-              </button>
-
-              <button
-                className="maze-menu-button"
-                onClick={() =>
-                  createNewMaze(
-                    "hard",
-                    gameMode
-                  )
-                }
-              >
-                <span className="maze-menu-title">
-                  Hard
-                </span>
-
-                <span className="maze-menu-description">
-                  27 × 27 maze
-                </span>
-              </button>
-
-              <button
-                className="maze-menu-button"
-                onClick={() =>
-                  createNewMaze(
-                    "veryHard",
-                    gameMode
-                  )
-                }
-              >
-                <span className="maze-menu-title">
-                  Very Hard
-                </span>
-
-                <span className="maze-menu-description">
-                  33 × 33 maze
-                </span>
-              </button>
+                    <span className="maze-menu-description">
+                      {size} × {size} maze
+                    </span>
+                  </button>
+                )
+              )}
             </section>
 
             <button
               className="maze-back-button"
-              onClick={
-                returnToClassicMenu
-              }
+              onClick={returnToClassicMenu}
             >
               ← Back to Classic
             </button>
           </>
         )}
 
-        {/* =========================
-            REAL DIFFICULTY
-        ========================== */}
-
+        {/* REAL MODE DIFFICULTY */}
         {screen === "realDifficulty" && (
           <>
             <header className="maze-header">
@@ -900,100 +693,42 @@ function Maze() {
               <h1>Choose Difficulty</h1>
 
               <p>
-                The maze follows the slime as
-                you move.
+                The maze follows the slime as you move.
               </p>
             </header>
 
             <section className="maze-menu">
-              <button
-                className="maze-menu-button"
-                onClick={() =>
-                  createNewMaze(
-                    "easy",
-                    "real"
-                  )
-                }
-              >
-                <span className="maze-menu-title">
-                  Easy
-                </span>
+              {Object.entries(MAZE_SIZES).map(
+                ([level, size]) => (
+                  <button
+                    key={level}
+                    className="maze-menu-button"
+                    onClick={() =>
+                      createNewMaze(level, "real")
+                    }
+                  >
+                    <span className="maze-menu-title">
+                      {DIFFICULTY_LABELS[level]}
+                    </span>
 
-                <span className="maze-menu-description">
-                  15 × 15 maze
-                </span>
-              </button>
-
-              <button
-                className="maze-menu-button"
-                onClick={() =>
-                  createNewMaze(
-                    "normal",
-                    "real"
-                  )
-                }
-              >
-                <span className="maze-menu-title">
-                  Normal
-                </span>
-
-                <span className="maze-menu-description">
-                  21 × 21 maze
-                </span>
-              </button>
-
-              <button
-                className="maze-menu-button"
-                onClick={() =>
-                  createNewMaze(
-                    "hard",
-                    "real"
-                  )
-                }
-              >
-                <span className="maze-menu-title">
-                  Hard
-                </span>
-
-                <span className="maze-menu-description">
-                  27 × 27 maze
-                </span>
-              </button>
-
-              <button
-                className="maze-menu-button"
-                onClick={() =>
-                  createNewMaze(
-                    "veryHard",
-                    "real"
-                  )
-                }
-              >
-                <span className="maze-menu-title">
-                  Very Hard
-                </span>
-
-                <span className="maze-menu-description">
-                  33 × 33 maze
-                </span>
-              </button>
+                    <span className="maze-menu-description">
+                      {size} × {size} maze
+                    </span>
+                  </button>
+                )
+              )}
             </section>
 
             <button
               className="maze-back-button"
-              onClick={
-                returnToClassicMenu
-              }
+              onClick={returnToClassicMenu}
             >
               ← Back to Classic
             </button>
           </>
         )}
 
-        {/* =========================
-            TIME ATTACK
-        ========================== */}
-
+        {/* TIME ATTACK */}
         {screen === "timeAttack" && (
           <>
             <header className="maze-header">
@@ -1017,13 +752,12 @@ function Maze() {
               <h2>Coming Soon</h2>
 
               <p>
-                Time Attack will be added in later.
+                Time Attack will be added later.
               </p>
 
               <p>
-                The mode will start with 60 seconds
-                and challenge you to clear
-                consecutive mazes.
+                The mode will start with 60 seconds and
+                challenge you to clear consecutive mazes.
               </p>
             </section>
 
@@ -1036,10 +770,7 @@ function Maze() {
           </>
         )}
 
-        {/* =========================
-            HIGH SCORES
-        ========================== */}
-
+        {/* HIGH SCORES */}
         {screen === "highScores" && (
           <>
             <header className="maze-header">
@@ -1062,12 +793,11 @@ function Maze() {
               <h2>Coming Soon</h2>
 
               <p>
-                High scores will be added in later.
+                High scores will be added later.
               </p>
 
               <p>
-                Your best Time Attack runs will
-                be saved here.
+                Your best Time Attack runs will be saved here.
               </p>
             </section>
 
@@ -1080,10 +810,7 @@ function Maze() {
           </>
         )}
 
-        {/* =========================
-            HOW TO PLAY
-        ========================== */}
-
+        {/* HOW TO PLAY */}
         {screen === "howToPlay" && (
           <>
             <header className="maze-header">
@@ -1094,8 +821,7 @@ function Maze() {
               <h1>Maze</h1>
 
               <p>
-                Find the exit while avoiding
-                the walls.
+                Find the exit while avoiding the walls.
               </p>
             </header>
 
@@ -1104,10 +830,8 @@ function Maze() {
                 <h2>Movement</h2>
 
                 <p>
-                  Use the{" "}
-                  <strong>Arrow Keys</strong> or
-                  <strong> WASD</strong> to move
-                  the slime.
+                  Use the <strong>Arrow Keys</strong> or{" "}
+                  <strong>WASD</strong> to move the slime.
                 </p>
               </div>
 
@@ -1115,26 +839,29 @@ function Maze() {
                 <h2>Goal</h2>
 
                 <p>
-                  Start at the entrance and reach
-                  the <strong> ★ exit</strong>.
+                  Start at the entrance and reach the{" "}
+                  <strong>★</strong>.
+                  to complete the maze.
                 </p>
               </div>
+
 
               <div className="maze-how-to-card">
-                <h2>Classic</h2>
+                <h2>Darkness</h2>
 
                 <p>
-                  Normal, Darkness, and Real have Easy, Normal,
-                  Hard, and Very Hard difficulties.
+                  Only the area around the slime is visible.
+                  Explore to the find the exit.
                 </p>
               </div>
+
 
               <div className="maze-how-to-card">
                 <h2>Real</h2>
 
                 <p>
-                  Real uses a close-up camera that
-                  follows the slime through the maze.
+                  Uses a close-up camera that follows
+                  the slime through the maze.
                 </p>
               </div>
             </section>
@@ -1148,18 +875,13 @@ function Maze() {
           </>
         )}
 
-        {/* =========================
-            PLAYING
-        ========================== */}
-
+        {/* GAMEPLAY */}
         {screen === "playing" && (
           <>
             <header className="maze-header">
               <p className="page-label">
                 CLASSIC • {modeLabel} •{" "}
-                {DIFFICULTY_LABELS[
-                  difficulty
-                ].toUpperCase()}
+                {DIFFICULTY_LABELS[difficulty].toUpperCase()}
               </p>
 
               <h1>Maze</h1>
@@ -1183,10 +905,7 @@ function Maze() {
                 <button
                   className="maze-new-button"
                   onClick={() =>
-                    createNewMaze(
-                      difficulty,
-                      gameMode
-                    )
+                    createNewMaze(difficulty, gameMode)
                   }
                 >
                   New Maze
@@ -1203,94 +922,76 @@ function Maze() {
 
             <section className="maze-board-section">
               <div
-                className={`maze-board maze-board-size-${maze.length} ${isRealMode
-                  ? "maze-board-real"
-                  : ""
-                  } ${gameStatus === "won"
-                    ? "maze-board-won"
-                    : ""
+                className={`maze-board maze-board-size-${maze.length} ${isRealMode ? "maze-board-real" : ""
+                  } ${gameStatus === "won" ? "maze-board-won" : ""
                   }`}
                 style={{
-                  gridTemplateColumns:
-                    `repeat(${viewportSize}, minmax(0, 1fr))`,
-
-                  gridTemplateRows:
-                    `repeat(${viewportSize}, minmax(0, 1fr))`,
+                  gridTemplateColumns: `repeat(${viewportSize}, minmax(0, 1fr))`,
+                  gridTemplateRows: `repeat(${viewportSize}, minmax(0, 1fr))`,
                 }}
               >
-                {visibleMaze.map(
-                  (row, rowIndex) =>
-                    row.map(
-                      (cell, colIndex) => {
-                        const actualRow =
-                          rowIndex +
-                          viewportStartRow;
+                {visibleMaze.map((row, rowIndex) =>
+                  row.map((cell, colIndex) => {
+                    const actualRow =
+                      rowIndex + viewportStartRow;
 
-                        const actualCol =
-                          colIndex +
-                          viewportStartCol;
+                    const actualCol =
+                      colIndex + viewportStartCol;
 
-                        const isPlayer =
-                          player.row ===
-                          actualRow &&
-                          player.col ===
-                          actualCol;
+                    const isPlayer =
+                      player.row === actualRow &&
+                      player.col === actualCol;
 
-                        const isStart =
-                          start.row ===
-                          actualRow &&
-                          start.col ===
-                          actualCol;
+                    const isStart =
+                      start.row === actualRow &&
+                      start.col === actualCol;
 
-                        const isGoal =
-                          goal.row ===
-                          actualRow &&
-                          goal.col ===
-                          actualCol;
+                    const isGoal =
+                      goal.row === actualRow &&
+                      goal.col === actualCol;
 
-                        const isHidden =
-                          gameMode === "darkness" &&
-                          gameStatus !== "won" &&
-                          (
-                            Math.abs(actualRow - player.row) > 2 ||
-                            Math.abs(actualCol - player.col) > 2
-                          );
+                    const isHidden =
+                      gameMode === "darkness" &&
+                      gameStatus !== "won" &&
+                      (
+                        Math.abs(actualRow - player.row) > 2 ||
+                        Math.abs(actualCol - player.col) > 2
+                      );
 
-                        return (
+                    return (
+                      <div
+                        key={`${actualRow}-${actualCol}`}
+                        className={`maze-cell ${cell === 1
+                          ? "maze-wall"
+                          : "maze-path"
+                          } ${isHidden ? "maze-cell-hidden" : ""
+                          }`}
+                      >
+                        {isPlayer && (
                           <div
-                            key={`${actualRow}-${actualCol}`}
-                            className={`maze-cell ${cell === 1
-                              ? "maze-wall"
-                              : "maze-path"
-                              } ${isHidden ? "maze-cell-hidden" : ""}`}
+                            className={`maze-player maze-player-${playerDirection} ${gameStatus === "won"
+                              ? "maze-player-won"
+                              : ""
+                              }`}
                           >
-                            {isPlayer && (
-                              <div
-                                className={`maze-player maze-player-${playerDirection} ${gameStatus ===
-                                  "won"
-                                  ? "maze-player-won"
-                                  : ""
-                                  }`}
-                              >
-                                ●
-                              </div>
-                            )}
-
-                            {isGoal && !isPlayer && !isHidden && (
-                              <div className="maze-goal">
-                                ★
-                              </div>
-                            )}
-
-                            {isStart && !isPlayer && !isHidden && (
-                              <div className="maze-start">
-                                START
-                              </div>
-                            )}
+                            ●
                           </div>
-                        );
-                      }
-                    )
+                        )}
+
+                        {isGoal && !isPlayer && !isHidden && (
+                          <div className="maze-goal">
+                            ★
+                          </div>
+                        )}
+
+                        {isStart && !isPlayer && !isHidden && (
+                          <div className="maze-start">
+                            START
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })
                 )}
               </div>
 
@@ -1308,9 +1009,7 @@ function Maze() {
                 <button
                   type="button"
                   aria-label="Move up"
-                  onClick={() =>
-                    movePlayer("up")
-                  }
+                  onClick={() => movePlayer("up")}
                 >
                   ▲
                 </button>
@@ -1319,9 +1018,7 @@ function Maze() {
                   <button
                     type="button"
                     aria-label="Move left"
-                    onClick={() =>
-                      movePlayer("left")
-                    }
+                    onClick={() => movePlayer("left")}
                   >
                     ◀
                   </button>
@@ -1329,9 +1026,7 @@ function Maze() {
                   <button
                     type="button"
                     aria-label="Move down"
-                    onClick={() =>
-                      movePlayer("down")
-                    }
+                    onClick={() => movePlayer("down")}
                   >
                     ▼
                   </button>
@@ -1339,9 +1034,7 @@ function Maze() {
                   <button
                     type="button"
                     aria-label="Move right"
-                    onClick={() =>
-                      movePlayer("right")
-                    }
+                    onClick={() => movePlayer("right")}
                   >
                     ▶
                   </button>
@@ -1349,6 +1042,7 @@ function Maze() {
               </div>
             </section>
 
+            {/* COMPLETION */}
             {gameStatus === "won" && (
               <section className="maze-complete">
                 <p className="maze-complete-label">
@@ -1359,20 +1053,14 @@ function Maze() {
 
                 <p>
                   You reached the exit in{" "}
-                  <strong>
-                    {time} seconds
-                  </strong>
-                  .
+                  <strong>{time} seconds</strong>.
                 </p>
 
                 <div className="maze-complete-actions">
                   <button
                     className="maze-play-again-button"
                     onClick={() =>
-                      createNewMaze(
-                        difficulty,
-                        gameMode
-                      )
+                      createNewMaze(difficulty, gameMode)
                     }
                   >
                     Play Again
@@ -1389,7 +1077,6 @@ function Maze() {
             )}
           </>
         )}
-
       </section>
     </main>
   );
