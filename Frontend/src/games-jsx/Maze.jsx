@@ -202,16 +202,16 @@ function chooseEndpoints(maze) {
 
   const start =
     startCandidates[
-      Math.floor(
-        Math.random() * startCandidates.length
-      )
+    Math.floor(
+      Math.random() * startCandidates.length
+    )
     ];
 
   const goal =
     goalCandidates[
-      Math.floor(
-        Math.random() * goalCandidates.length
-      )
+    Math.floor(
+      Math.random() * goalCandidates.length
+    )
     ];
 
   return {
@@ -287,6 +287,11 @@ function Maze() {
   const openRealDifficultyMenu = () => {
     setGameMode("real");
     setScreen("realDifficulty");
+  };
+
+  const openDarknessDifficultyMenu = () => {
+    setGameMode("darkness");
+    setScreen("difficulty");
   };
 
   const openTimeAttack = () => {
@@ -573,7 +578,7 @@ function Maze() {
       Math.min(
         player.row - cameraRadius,
         maze.length -
-          REAL_VIEWPORT_SIZE
+        REAL_VIEWPORT_SIZE
       )
     );
 
@@ -582,30 +587,33 @@ function Maze() {
       Math.min(
         player.col - cameraRadius,
         maze[0].length -
-          REAL_VIEWPORT_SIZE
+        REAL_VIEWPORT_SIZE
       )
     );
   }
 
   const visibleMaze = isRealMode
     ? maze
-        .slice(
-          viewportStartRow,
-          viewportStartRow +
-            REAL_VIEWPORT_SIZE
+      .slice(
+        viewportStartRow,
+        viewportStartRow +
+        REAL_VIEWPORT_SIZE
+      )
+      .map((row) =>
+        row.slice(
+          viewportStartCol,
+          viewportStartCol +
+          REAL_VIEWPORT_SIZE
         )
-        .map((row) =>
-          row.slice(
-            viewportStartCol,
-            viewportStartCol +
-              REAL_VIEWPORT_SIZE
-          )
-        )
+      )
     : maze;
 
-  const modeLabel = isRealMode
-    ? "REAL"
-    : "NORMAL";
+  const modeLabel =
+    gameMode === "real"
+      ? "REAL"
+      : gameMode === "darkness"
+        ? "DARKNESS"
+        : "NORMAL";
 
   /*
     =========================
@@ -712,9 +720,7 @@ function Maze() {
             <section className="maze-menu">
               <button
                 className="maze-menu-button"
-                onClick={
-                  openNormalDifficultyMenu
-                }
+                onClick={openNormalDifficultyMenu}
               >
                 <span className="maze-menu-title">
                   Normal
@@ -727,15 +733,15 @@ function Maze() {
               </button>
 
               <button
-                className="maze-menu-button maze-menu-button-disabled"
-                disabled
+                className="maze-menu-button"
+                onClick={openDarknessDifficultyMenu}
               >
                 <span className="maze-menu-title">
                   Darkness
                 </span>
 
                 <span className="maze-menu-description">
-                  Coming Soon
+                  Only the area around the slime is visible.
                 </span>
               </button>
 
@@ -754,9 +760,7 @@ function Maze() {
 
               <button
                 className="maze-menu-button"
-                onClick={
-                  openRealDifficultyMenu
-                }
+                onClick={openRealDifficultyMenu}
               >
                 <span className="maze-menu-title">
                   Real
@@ -786,7 +790,7 @@ function Maze() {
           <>
             <header className="maze-header">
               <p className="page-label">
-                CLASSIC • NORMAL
+                CLASSIC • {gameMode.toUpperCase()}
               </p>
 
               <h1>Choose Difficulty</h1>
@@ -803,7 +807,7 @@ function Maze() {
                 onClick={() =>
                   createNewMaze(
                     "easy",
-                    "normal"
+                    gameMode
                   )
                 }
               >
@@ -821,7 +825,7 @@ function Maze() {
                 onClick={() =>
                   createNewMaze(
                     "normal",
-                    "normal"
+                    gameMode
                   )
                 }
               >
@@ -839,7 +843,7 @@ function Maze() {
                 onClick={() =>
                   createNewMaze(
                     "hard",
-                    "normal"
+                    gameMode
                   )
                 }
               >
@@ -857,7 +861,7 @@ function Maze() {
                 onClick={() =>
                   createNewMaze(
                     "veryHard",
-                    "normal"
+                    gameMode
                   )
                 }
               >
@@ -1120,9 +1124,8 @@ function Maze() {
                 <h2>Classic</h2>
 
                 <p>
-                  Normal and Real currently have
-                  Easy, Normal, Hard, and Very Hard
-                  difficulties.
+                  Normal, Darkness, and Real have Easy, Normal,
+                  Hard, and Very Hard difficulties.
                 </p>
               </div>
 
@@ -1164,7 +1167,9 @@ function Maze() {
               <p>
                 {isRealMode
                   ? "Stay close to the slime and find the exit."
-                  : "Find your way from the entrance to the exit."}
+                  : gameMode === "darkness"
+                    ? "Explore the darkness and find the hidden exit."
+                    : "Find your way from the entrance to the exit."}
               </p>
             </header>
 
@@ -1198,15 +1203,13 @@ function Maze() {
 
             <section className="maze-board-section">
               <div
-                className={`maze-board maze-board-size-${maze.length} ${
-                  isRealMode
-                    ? "maze-board-real"
-                    : ""
-                } ${
-                  gameStatus === "won"
+                className={`maze-board maze-board-size-${maze.length} ${isRealMode
+                  ? "maze-board-real"
+                  : ""
+                  } ${gameStatus === "won"
                     ? "maze-board-won"
                     : ""
-                }`}
+                  }`}
                 style={{
                   gridTemplateColumns:
                     `repeat(${viewportSize}, minmax(0, 1fr))`,
@@ -1229,57 +1232,61 @@ function Maze() {
 
                         const isPlayer =
                           player.row ===
-                            actualRow &&
+                          actualRow &&
                           player.col ===
-                            actualCol;
+                          actualCol;
 
                         const isStart =
                           start.row ===
-                            actualRow &&
+                          actualRow &&
                           start.col ===
-                            actualCol;
+                          actualCol;
 
                         const isGoal =
                           goal.row ===
-                            actualRow &&
+                          actualRow &&
                           goal.col ===
-                            actualCol;
+                          actualCol;
+
+                        const isHidden =
+                          gameMode === "darkness" &&
+                          gameStatus !== "won" &&
+                          (
+                            Math.abs(actualRow - player.row) > 2 ||
+                            Math.abs(actualCol - player.col) > 2
+                          );
 
                         return (
                           <div
                             key={`${actualRow}-${actualCol}`}
-                            className={`maze-cell ${
-                              cell === 1
-                                ? "maze-wall"
-                                : "maze-path"
-                            }`}
+                            className={`maze-cell ${cell === 1
+                              ? "maze-wall"
+                              : "maze-path"
+                              } ${isHidden ? "maze-cell-hidden" : ""}`}
                           >
                             {isPlayer && (
                               <div
-                                className={`maze-player maze-player-${playerDirection} ${
-                                  gameStatus ===
+                                className={`maze-player maze-player-${playerDirection} ${gameStatus ===
                                   "won"
-                                    ? "maze-player-won"
-                                    : ""
-                                }`}
+                                  ? "maze-player-won"
+                                  : ""
+                                  }`}
                               >
                                 ●
                               </div>
                             )}
 
-                            {isGoal &&
-                              !isPlayer && (
-                                <div className="maze-goal">
-                                  ★
-                                </div>
-                              )}
+                            {isGoal && !isPlayer && !isHidden && (
+                              <div className="maze-goal">
+                                ★
+                              </div>
+                            )}
 
-                            {isStart &&
-                              !isPlayer && (
-                                <div className="maze-start">
-                                  START
-                                </div>
-                              )}
+                            {isStart && !isPlayer && !isHidden && (
+                              <div className="maze-start">
+                                START
+                              </div>
+                            )}
                           </div>
                         );
                       }

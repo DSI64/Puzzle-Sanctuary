@@ -416,6 +416,20 @@
 }
 
 /* =========================================================
+   DARKNESS MODE
+   ========================================================= */
+
+.maze-cell-hidden {
+  background: #172326 !important;
+  box-shadow: none !important;
+}
+
+.maze-cell-hidden::before,
+.maze-cell-hidden::after {
+  display: none !important;
+}
+
+/* =========================================================
    CELLS
    ========================================================= */
 
