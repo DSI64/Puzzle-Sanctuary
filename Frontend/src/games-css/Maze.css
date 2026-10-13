@@ -22,70 +22,6 @@
   position: relative;
 }
 
-/*
-  CSS-only maze icon.
-  The different background layers form
-  a simple maze/path illustration.
-*/
-
-.maze-header h1::before {
-  content: "";
-
-  display: inline-block;
-
-  width: 38px;
-  height: 38px;
-
-  margin-right: 12px;
-
-  vertical-align: middle;
-
-  border: 3px solid #2f3e46;
-  border-radius: 9px;
-
-  background:
-    /* horizontal paths */
-    linear-gradient(#01796f,
-      #01796f) 7px 7px / 18px 4px no-repeat,
-    linear-gradient(#01796f,
-      #01796f) 15px 16px / 16px 4px no-repeat,
-
-    linear-gradient(#01796f,
-      #01796f) 7px 25px / 18px 4px no-repeat,
-
-    /* vertical paths */
-    linear-gradient(#01796f,
-      #01796f) 7px 7px / 4px 14px no-repeat,
-
-    linear-gradient(#01796f,
-      #01796f) 27px 10px / 4px 19px no-repeat,
-
-    linear-gradient(#01796f,
-      #01796f) 15px 16px / 4px 13px no-repeat,
-
-    #dde8d5;
-
-  box-shadow:
-    0 4px 0 #2f3e46,
-    0 6px 12px rgba(47, 62, 70, 0.16);
-
-  transform: rotate(-3deg);
-
-  animation:
-    maze-icon-bounce 2.5s ease-in-out infinite;
-}
-
-@keyframes maze-icon-bounce {
-
-  0%,
-  100% {
-    transform: translateY(0) rotate(-3deg);
-  }
-
-  50% {
-    transform: translateY(-3px) rotate(3deg);
-  }
-}
 
 /* =========================================================
    GAME CONTAINER
@@ -387,11 +323,6 @@
 
   aspect-ratio: 1 / 1;
 
-  /*
-    Slightly stronger framing helps distinguish
-    Real mode from the regular full-maze view.
-  */
-
   box-shadow:
     0 0 0 4px #01796f,
     0 0 20px rgba(1, 121, 111, 0.25),
@@ -412,6 +343,59 @@
 .maze-cell-hidden::after {
   display: none !important;
 }
+
+/* =========================================================
+   TIME ATTACK STATUS LAYOUT
+   ========================================================= */
+
+.maze-info-time-attack {
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.maze-info-time-attack .maze-stat {
+  flex: 1 1 155px;
+  min-width: 145px;
+}
+
+.maze-info-time-attack .maze-game-actions {
+  flex: 1 1 100%;
+  justify-content: center;
+}
+
+/* Highlight the countdown when only 10 seconds remain. */
+.maze-stat-low-time {
+  border-color: #dc7373;
+  background: linear-gradient(145deg, #ffffff, #fff0ed);
+}
+
+.maze-stat-low-time strong {
+  color: #b42318;
+}
+
+/* Add spacing around the intro's Start button. */
+.maze-time-attack-intro .maze-play-again-button {
+  margin-top: 18px;
+}
+
+/* Separate the final results from the maze board. */
+.maze-time-attack-results {
+  margin-top: 24px;
+}
+
+/* Keep the Time Attack stats readable on mobile. */
+@media (max-width: 650px) {
+  .maze-info-time-attack .maze-stat {
+    flex: 1 1 100%;
+  }
+
+  .maze-info-time-attack .maze-game-actions {
+    width: 100%;
+  }
+}
+
 
 /* =========================================================
    CELLS
@@ -1073,13 +1057,6 @@
   z-index: 1;
 }
 
-/*
-   CLASSIC MENU ADJUSTMENT:
-   The Classic menu contains exactly three buttons.
-   Display those options in three columns on wider screens.
-   Other menus retain their original two-column layout.
-*/
-
 .maze-menu:has(> .maze-menu-button:nth-child(3):last-child) {
   width: min(760px, 100%);
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1375,7 +1352,7 @@
 
 
 /* =========================================================
-   PHASE 2 MOBILE MENU STYLES
+   MOBILE MENU STYLES
    ========================================================= */
 
 @media (max-width: 650px) {
@@ -1411,7 +1388,126 @@
 }
 
 /* =========================================================
-   PHASE 2 REDUCED MOTION
+   MAZE COMPLETION OVERLAY
+   ========================================================= */
+
+/* The wrapper matches the maze board's square footprint. */
+.maze-board-wrap {
+  width: min(600px, 90vw);
+  aspect-ratio: 1 / 1;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Keep the existing maze board's exact dimensions within the wrapper. */
+.maze-board-wrap>.maze-board {
+  width: 100%;
+  height: 100%;
+}
+
+/* Dim the board and show the result as a pop-up on top of the maze. */
+.maze-board-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  box-sizing: border-box;
+  border-radius: 18px;
+  background: rgba(23, 35, 38, 0.72);
+  animation: maze-overlay-fade-in 180ms ease-out;
+}
+
+/* Reuse the existing completion-panel colors without its below-board margin. */
+.maze-board-overlay .maze-overlay-card {
+  width: min(440px, 100%);
+  max-height: 100%;
+  margin: 0;
+  padding: 24px 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  border-color: #cad2c5;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(74, 222, 128, 0.18), transparent 55%),
+    #ffffff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+}
+
+.maze-board-overlay .maze-overlay-card h2 {
+  font-size: clamp(23px, 4vw, 32px);
+}
+
+.maze-board-overlay .maze-overlay-card h3 {
+  margin: 4px 0 18px;
+  color: #2f3e46;
+  font-size: clamp(15px, 2.5vw, 19px);
+  line-height: 1.35;
+}
+
+.maze-board-overlay .maze-complete-actions {
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.maze-board-overlay .maze-complete-actions button {
+  max-width: 100%;
+}
+
+@keyframes maze-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .maze-board-wrap {
+    width: min(560px, 90vw);
+  }
+
+  .maze-board-wrap>.maze-board {
+    max-width: none;
+  }
+}
+
+@media (max-width: 650px) {
+  .maze-board-overlay {
+    padding: 8px;
+    border-radius: 14px;
+  }
+
+  .maze-board-overlay .maze-overlay-card {
+    padding: 18px 12px;
+  }
+
+  .maze-board-overlay .maze-overlay-card p {
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+
+  .maze-board-overlay .maze-complete-actions {
+    flex-direction: column;
+  }
+
+  .maze-board-overlay .maze-complete-actions button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .maze-board-overlay {
+    animation: none;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
