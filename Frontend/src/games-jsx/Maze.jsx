@@ -314,6 +314,20 @@ function Maze() {
     setScreen("classic");
   };
 
+  /* ===================== PAUSE / RESUME ===================== */
+
+  const pauseGame = () => {
+    if (screen === "playing" && gameStatus === "playing") {
+      setGameStatus("paused");
+    }
+  };
+
+  const resumeGame = () => {
+    if (screen === "playing" && gameStatus === "paused") {
+      setGameStatus("playing");
+    }
+  };
+
   /* ===================== PLAYER MOVEMENT ===================== */
 
   const movePlayer = (direction) => {
@@ -371,7 +385,7 @@ function Maze() {
       if (gameMode === "darkness" || gameMode === "real") {
         // Special variants refill the timer instead of awarding a bonus.
         setTimeAttackRemaining(TIME_ATTACK_MAX_TIME);
-        setTimeAttackLastReward("Time Reset");
+        setTimeAttackLastReward("Reset to 60s");
       } else {
         // Normal mazes award time based on completion speed, capped at 60.
         const bonusTime = getTimeAttackBonus(elapsedSeconds);
@@ -437,7 +451,9 @@ function Maze() {
   /* ===================== KEYBOARD CONTROLS ===================== */
 
   useEffect(() => {
-    if (screen !== "playing") return undefined;
+    if (screen !== "playing" || gameStatus !== "playing") {
+      return undefined;
+    }
 
     const handleKeyDown = (event) => {
       const key = event.key.toLowerCase();
@@ -674,13 +690,13 @@ function Maze() {
 
             <section className="maze-coming-soon maze-time-attack-intro">
               <div className="maze-coming-icon">⏱</div>
-              <h2>Ready to Race?</h2>
+              <h2>Rules</h2>
               <p>
                 Start with 60 seconds and clear as many mazes as possible.
               </p>
               <p>
                 Finish quickly to earn bonus time. Mazes get larger as you
-                progress, and Darkness and Real mazes may appear along the way.
+                progress. Watch out for Darkness and Real mazes!
               </p>
               <button
                 className="maze-play-again-button"
@@ -757,13 +773,6 @@ function Maze() {
                   maze.
                 </p>
               </div>
-              <div className="maze-how-to-card">
-                <h2>Time Attack</h2>
-                <p>
-                  Start with 60 seconds, finish mazes quickly for bonus time,
-                  and tackle harder mazes as you progress.
-                </p>
-              </div>
             </section>
 
             <button className="maze-back-button" onClick={returnToMenu}>
@@ -806,7 +815,7 @@ function Maze() {
               </div>
 
               <div className="maze-stat">
-                <span>Mazes Completed</span>
+                <span>Mazes Done</span>
                 <strong>
                   {timeAttackActive ? mazesCompleted : classicMazesCompleted}
                 </strong>
@@ -814,11 +823,21 @@ function Maze() {
 
               {timeAttackActive && (
                 <div className="maze-stat">
-                  <span>Time Reward</span>
+                  <span>Time Gained</span>
                   <strong>{timeAttackLastReward}</strong>
                 </div>
               )}
 
+              {gameStatus === "playing" && (
+                <button
+                  type="button"
+                  className="maze-pause-button"
+                  onClick={pauseGame}
+                  aria-label="Pause maze game"
+                >
+                  Ⅱ Pause
+                </button>
+              )}
             </div>
 
             <section className="maze-board-section">
@@ -943,6 +962,36 @@ function Maze() {
                           Play Again
                         </button>
                         <button
+                          className="maze-menu-small-button"
+                          onClick={returnToMenu}
+                        >
+                          Main Menu
+                        </button>
+                      </div>
+                    </section>
+                  </div>
+                )}
+
+                {gameStatus === "paused" && (
+                  <div
+                    className="maze-board-overlay maze-pause-overlay"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="maze-pause-overlay-title"
+                  >
+                    <section className="maze-complete maze-overlay-card maze-pause-card">
+                      <h2 id="maze-pause-overlay-title">Game Paused</h2>
+                      <p>Your timer has been paused.</p>
+                      <div className="maze-complete-actions">
+                        <button
+                          type="button"
+                          className="maze-play-again-button"
+                          onClick={resumeGame}
+                        >
+                          Resume
+                        </button>
+                        <button
+                          type="button"
                           className="maze-menu-small-button"
                           onClick={returnToMenu}
                         >

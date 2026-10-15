@@ -924,6 +924,7 @@
   }
 }
 
+
 /* =========================================================
    TOUCH DEVICES
    ========================================================= */
@@ -1042,7 +1043,7 @@
 
 
 /* =========================================================
-   PHASE 2 - MAIN MENU
+    MAIN MENU
    ========================================================= */
 
 .maze-menu {
@@ -1238,6 +1239,73 @@
 
   gap: 10px;
   flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   PAUSE BUTTON AND PAUSE MENU
+   ========================================================= */
+
+.maze-pause-button {
+  flex: 0 0 auto;
+  padding: 11px 18px;
+  border: 2px solid #cad2c5;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #2f3e46;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.maze-pause-button:hover {
+  transform: translateY(-2px);
+  border-color: #4ade80;
+  background: #f0fff3;
+}
+
+.maze-pause-button:active {
+  transform: translateY(1px);
+}
+
+.maze-pause-overlay {
+  background: rgba(23, 35, 38, 0.78);
+}
+
+.maze-board-overlay .maze-pause-card {
+  max-width: 380px;
+  text-align: center;
+}
+
+.maze-pause-card .maze-complete-label {
+  color: #01796f;
+}
+
+.maze-pause-card .maze-complete-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.maze-pause-card .maze-complete-actions button {
+  width: 100%;
+}
+
+@media (max-width: 650px) {
+  .maze-pause-button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .maze-pause-button {
+    transition: none;
+  }
 }
 
 /* =========================================================
