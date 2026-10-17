@@ -4,7 +4,7 @@ import "../pages-css/Puzzles.css"
 import puzzlePlaceholder from "../assets/placeholder.png";
 import slidingPuzzle from "../assets/slidingPuzzle.png";
 import mazeIcon from "../assets/maze-icon.png";
-
+import sudokuIcon from "../assets/sudoku-icon.png";
 
 function Puzzles() {
   const puzzles = [ //Gives the name, desciption, and the type of puzzle game it is
@@ -23,10 +23,11 @@ function Puzzles() {
       path: "/puzzles/maze",
     },
     {
-      name: "",
-      description: "",
-      type: "",
-      image: puzzlePlaceholder,
+      name: "Sudoku",
+      description: "Fill the grid with numbers without repeating them in any row, column, or box.",
+      type: "Number Puzzle",
+      image: sudokuIcon,
+      path: "/puzzles/sudoku",
     },
     {
       name: "",
