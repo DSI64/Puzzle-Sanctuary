@@ -5,6 +5,8 @@ import puzzlePlaceholder from "../assets/placeholder.png";
 import slidingPuzzle from "../assets/slidingPuzzle.png";
 import mazeIcon from "../assets/maze-icon.png";
 import sudokuIcon from "../assets/sudoku-icon.png";
+import game2048 from "../assets/2048icon.svg";
+
 
 function Puzzles() {
   const puzzles = [ //Gives the name, desciption, and the type of puzzle game it is
@@ -18,7 +20,7 @@ function Puzzles() {
     {
       name: "Maze",
       description: "Find your way through the maze.",
-      type: "Maze",
+      type: "Tour Puzzle",
       image: mazeIcon,
       path: "/puzzles/maze",
     },
@@ -30,10 +32,11 @@ function Puzzles() {
       path: "/puzzles/sudoku",
     },
     {
-      name: "",
-      description: "",
-      type: "",
-      image: puzzlePlaceholder,
+      name: "2048",
+      description: "Slide numbered tiles across the board, merge matching numbers, and work your way up to 2048!",
+      type: "Number Puzzle",
+      image: game2048,
+      path: "/puzzles/2048",
     },
     {
       name: "",

@@ -1,0 +1,77 @@
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 800 450"
+     width="800"
+     height="450">
+
+  <defs>
+    <filter id="boardShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6"
+                    flood-color="#173b26" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- White background -->
+  <rect width="800" height="450" fill="#ffffff"/>
+
+  <!-- Large 2048 title: matches the actual game heading -->
+  <text x="225" y="252"
+        text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="150"
+        font-weight="900"
+        letter-spacing="-8"
+        fill="#2f3e46">2048</text>
+
+  <!-- 4x4 game board -->
+  <g transform="translate(455 58)" filter="url(#boardShadow)">
+    <rect width="292" height="334" rx="12" fill="#9cae9c"/>
+
+    <!-- Row 1 -->
+    <rect x="7" y="7" width="67" height="77" rx="4" fill="#edf2e8"/>
+    <rect x="78" y="7" width="67" height="77" rx="4" fill="#c7d4c4"/>
+    <rect x="149" y="7" width="67" height="77" rx="4" fill="#a9df8b"/>
+    <rect x="220" y="7" width="65" height="77" rx="4" fill="#c7d4c4"/>
+
+    <!-- Row 2 -->
+    <rect x="7" y="88" width="67" height="77" rx="4" fill="#c7d4c4"/>
+    <rect x="78" y="88" width="67" height="77" rx="4" fill="#d9edc8"/>
+    <rect x="149" y="88" width="67" height="77" rx="4" fill="#c7d4c4"/>
+    <rect x="220" y="88" width="65" height="77" rx="4" fill="#78cf72"/>
+
+    <!-- Row 3 -->
+    <rect x="7" y="169" width="67" height="77" rx="4" fill="#a9df8b"/>
+    <rect x="78" y="169" width="67" height="77" rx="4" fill="#c7d4c4"/>
+    <rect x="149" y="169" width="67" height="77" rx="4" fill="#d9edc8"/>
+    <rect x="220" y="169" width="65" height="77" rx="4" fill="#c7d4c4"/>
+
+    <!-- Row 4 -->
+    <rect x="7" y="250" width="67" height="77" rx="4" fill="#c7d4c4"/>
+    <rect x="78" y="250" width="67" height="77" rx="4" fill="#78cf72"/>
+    <rect x="149" y="250" width="67" height="77" rx="4" fill="#c7d4c4"/>
+    <rect x="220" y="250" width="65" height="77" rx="4" fill="#e58b2e"/>
+
+    <!-- Tile numbers -->
+    <g font-family="Arial, Helvetica, sans-serif"
+       font-weight="850"
+       text-anchor="middle"
+       dominant-baseline="central">
+
+      <!-- Row 1 -->
+      <text x="40.5" y="45.5" font-size="32" fill="#405344">2</text>
+      <text x="182.5" y="45.5" font-size="32" fill="#173b26">8</text>
+
+      <!-- Row 2 -->
+      <text x="111.5" y="126.5" font-size="32" fill="#405344">4</text>
+      <text x="252.5" y="126.5" font-size="30" fill="#173b26">16</text>
+
+      <!-- Row 3 -->
+      <text x="40.5" y="207.5" font-size="32" fill="#173b26">8</text>
+      <text x="182.5" y="207.5" font-size="32" fill="#405344">4</text>
+
+      <!-- Row 4 -->
+      <text x="111.5" y="288.5" font-size="30" fill="#173b26">16</text>
+	  <text x="252.5" y="288.5" font-size="23" fill="#ffffff">2048</text>
+    </g>
+  </g>
+</svg>

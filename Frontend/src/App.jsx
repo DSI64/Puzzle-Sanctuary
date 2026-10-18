@@ -9,6 +9,7 @@ import Challenges from "./pages-jsx/Challenges";
 import SlidingPuzzle from "./games-jsx/SlidingPuzzle";
 import Maze from "./games-jsx/Maze";
 import Sudoku from "./games-jsx/Sudoku";
+import Game2048 from "./games-jsx/2048";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/puzzles/SlidingPuzzle" element={<SlidingPuzzle />} />
           <Route path="/puzzles/maze" element={<Maze />} />
           <Route path="/puzzles/sudoku" element={<Sudoku />} />
+          <Route path="/puzzles/2048" element={<Game2048 />} />
           <Route path="/challenges" element={<Challenges />} />
           <Route path="/account" element={<Account />} />
           <Route path="/account/settings" element={<AccountSettings />} />

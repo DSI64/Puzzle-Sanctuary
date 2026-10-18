@@ -1,0 +1,409 @@
+.game2048-page {
+    width: min(100% - 32px, 520px);
+    margin: 0 auto;
+    padding: 32px 0 48px;
+    color: #2f3e46;
+}
+
+.game2048-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.game2048-eyebrow {
+    margin: 0 0 5px;
+    color: #52796f;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+.game2048-header h1 {
+    margin: 0;
+    color: #2f3e46;
+    font-size: clamp(3rem, 12vw, 4.5rem);
+    font-weight: 850;
+    line-height: 1;
+}
+
+.game2048-subtitle {
+    margin: 10px 0 0;
+    color: #405344;
+    font-size: 0.95rem;
+}
+
+.game2048-new-game {
+    border: none;
+    border-radius: 9px;
+    padding: 11px 16px;
+    background: #4ade80;
+    color: #173b26;
+    font: inherit;
+    font-weight: 750;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+    white-space: nowrap;
+}
+
+.game2048-new-game:hover {
+    background: #36cc6c;
+    transform: translateY(-1px);
+}
+
+.game2048-new-game:focus-visible,
+.game2048-overlay-button:focus-visible,
+.game2048-cancel-button:focus-visible,
+.game2048-confirm-button:focus-visible {
+    outline: 3px solid #176b35;
+    outline-offset: 3px;
+}
+
+.game2048-score-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.game2048-score-card {
+    min-width: 95px;
+    padding: 9px 14px;
+    border-radius: 9px;
+    background: #354f52;
+    color: #fff;
+    text-align: center;
+}
+
+.game2048-score-card span {
+    display: block;
+    margin-bottom: 3px;
+    color: #d8e8dd;
+    font-size: 0.72rem;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.game2048-score-card strong {
+    display: block;
+    font-size: 1.25rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.game2048-board {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+    aspect-ratio: 1;
+    padding: 10px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #9cae9c;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.game2048-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 0;
+    border-radius: 7px;
+    background: #dce5d7;
+    color: #405344;
+    font-size: clamp(1.1rem, 5.5vw, 2rem);
+    font-weight: 850;
+    font-variant-numeric: tabular-nums;
+    overflow: hidden;
+}
+
+.game2048-cell.tile-empty {
+    background: #c7d4c4;
+}
+
+.game2048-cell.tile-2 {
+    background: #edf2e8;
+    color: #405344;
+}
+
+.game2048-cell.tile-4 {
+    background: #d9edc8;
+    color: #405344;
+}
+
+.game2048-cell.tile-8 {
+    background: #a9df8b;
+    color: #173b26;
+}
+
+.game2048-cell.tile-16 {
+    background: #78cf72;
+    color: #173b26;
+}
+
+.game2048-cell.tile-32 {
+    background: #4cbf70;
+    color: #fff;
+}
+
+.game2048-cell.tile-64 {
+    background: #299d63;
+    color: #fff;
+}
+
+.game2048-cell.tile-128 {
+    background: #f3d879;
+    color: #493e1d;
+    font-size: clamp(1rem, 4.8vw, 1.75rem);
+}
+
+.game2048-cell.tile-256 {
+    background: #f0c75d;
+    color: #493e1d;
+    font-size: clamp(1rem, 4.8vw, 1.75rem);
+}
+
+.game2048-cell.tile-512 {
+    background: #edb84d;
+    color: #493e1d;
+    font-size: clamp(1rem, 4.8vw, 1.75rem);
+}
+
+.game2048-cell.tile-1024 {
+    background: #eaa33f;
+    color: #fff;
+    font-size: clamp(0.9rem, 4vw, 1.5rem);
+}
+
+.game2048-cell.tile-2048 {
+    background: #e58b2e;
+    color: #fff;
+    font-size: clamp(0.85rem, 3.8vw, 1.3rem);
+    box-shadow: inset 0 0 0 3px #f7d98c;
+}
+
+.game2048-cell[class~="tile-4096"],
+.game2048-cell[class~="tile-8192"] {
+    background: #6d587a;
+    color: #fff;
+    font-size: clamp(0.85rem, 4vw, 1.4rem);
+}
+
+.game2048-cell:not(.tile-empty) {
+    animation: game2048-tile-appear 160ms ease-out;
+}
+
+@keyframes game2048-tile-appear {
+    from {
+        opacity: 0.65;
+        transform: scale(0.88);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.game2048-instructions {
+    margin: 20px 0 16px;
+    color: #405344;
+    font-size: 0.93rem;
+    line-height: 1.7;
+}
+
+.game2048-instructions strong {
+    color: #2f3e46;
+}
+
+.game2048-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgb(237 242 232 / 86%);
+    border-radius: 12px;
+}
+
+.game2048-overlay-card {
+    width: 100%;
+    max-width: 320px;
+    padding: 25px 20px;
+    border: 1px solid #d6e5d2;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 8px 30px rgb(23 59 38 / 12%);
+    text-align: center;
+}
+
+.game2048-overlay-card h2 {
+    margin: 0 0 10px;
+    color: #176b35;
+    font-size: 1.6rem;
+}
+
+.game2048-overlay-card p {
+    margin: 0 0 18px;
+    color: #405344;
+    line-height: 1.6;
+}
+
+.game2048-overlay-button {
+    width: 100%;
+    margin-top: 8px;
+    border: none;
+    border-radius: 9px;
+    padding: 11px 16px;
+    background: #4ade80;
+    color: #173b26;
+    font: inherit;
+    font-weight: 750;
+    cursor: pointer;
+}
+
+.game2048-overlay-button:hover {
+    background: #36cc6c;
+}
+
+.game2048-confirm-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgb(23 59 38 / 45%);
+    animation: game2048-fade-in 160ms ease-out;
+}
+
+.game2048-confirm-dialog {
+    width: min(100%, 380px);
+    padding: 26px;
+    border: 1px solid #d6e5d2;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 12px 40px rgb(23 59 38 / 20%);
+    text-align: center;
+    animation: game2048-dialog-in 180ms ease-out;
+}
+
+.game2048-confirm-dialog h2 {
+    margin: 0 0 12px;
+    color: #176b35;
+    font-size: 1.5rem;
+}
+
+.game2048-confirm-dialog p {
+    margin: 0 0 22px;
+    color: #405344;
+    line-height: 1.6;
+}
+
+.game2048-confirm-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.game2048-confirm-actions button {
+    flex: 1;
+    min-height: 44px;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 9px;
+    font: inherit;
+    font-weight: 750;
+    cursor: pointer;
+}
+
+.game2048-cancel-button {
+    background: #edf2e8;
+    color: #2f3e46;
+}
+
+.game2048-cancel-button:hover {
+    background: #dce5d7;
+}
+
+.game2048-confirm-button {
+    background: #4ade80;
+    color: #173b26;
+}
+
+.game2048-confirm-button:hover {
+    background: #36cc6c;
+}
+
+@keyframes game2048-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes game2048-dialog-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 480px) {
+    .game2048-page {
+        width: min(100% - 24px, 520px);
+        padding-top: 24px;
+    }
+
+    .game2048-board {
+        gap: 7px;
+        padding: 7px;
+    }
+
+    .game2048-cell {
+        border-radius: 5px;
+    }
+
+    .game2048-score-card {
+        min-width: 85px;
+    }
+
+    .game2048-score-row {
+        gap: 8px;
+    }
+
+    .game2048-new-game {
+        padding: 10px 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .game2048-cell:not(.tile-empty),
+    .game2048-confirm-backdrop,
+    .game2048-confirm-dialog {
+        animation: none;
+    }
+}
