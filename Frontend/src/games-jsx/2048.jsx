@@ -308,13 +308,17 @@ export default function Game2048() {
           <div className="game2048-overlay">
             <div className="game2048-overlay-card">
               <h2>
-                {gameOver ? "Game Over!" : "You reached 2048!"}
+                {won && !keepPlaying
+                  ? "You reached 2048!"
+                  : "Game Over!"}
               </h2>
 
               <p>
-                {gameOver
-                  ? "No more moves are available."
-                  : "Great job! You can keep playing or start again."}
+                {won && !keepPlaying
+                  ? gameOver
+                    ? "Congratulations! You've reached 2048, and no more moves are available."
+                    : "Great job! You can keep playing or start again."
+                  : "No more moves are available."}
               </p>
 
               {!gameOver && (

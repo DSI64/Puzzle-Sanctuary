@@ -507,6 +507,48 @@ function Sudoku() {
                                         value !== 0 &&
                                         value !== game.solution[index];
 
+                                    // Check for a duplicate in this cell's row or column.
+                                    const hasRowConflict =
+                                        value !== 0 &&
+                                        grid.some(
+                                            (otherValue, otherIndex) =>
+                                                otherIndex !== index &&
+                                                Math.floor(otherIndex / 9) === row &&
+                                                otherValue === value
+                                        );
+
+                                    const hasColumnConflict =
+                                        value !== 0 &&
+                                        grid.some(
+                                            (otherValue, otherIndex) =>
+                                                otherIndex !== index &&
+                                                otherIndex % 9 === col &&
+                                                otherValue === value
+                                        );
+
+                                    // Check for a duplicate in this cell's 3×3 box.
+                                    const boxRow = Math.floor(row / 3) * 3;
+                                    const boxCol = Math.floor(col / 3) * 3;
+
+                                    const hasBoxConflict =
+                                        value !== 0 &&
+                                        grid.some((otherValue, otherIndex) => {
+                                            if (otherIndex === index || otherValue !== value) {
+                                                return false;
+                                            }
+
+                                            const otherRow = Math.floor(otherIndex / 9);
+                                            const otherCol = otherIndex % 9;
+
+                                            return (
+                                                Math.floor(otherRow / 3) * 3 === boxRow &&
+                                                Math.floor(otherCol / 3) * 3 === boxCol
+                                            );
+                                        });
+
+                                    const hasConflict =
+                                        hasRowConflict || hasColumnConflict || hasBoxConflict;
+
                                     const classNames = [
                                         "sudoku-cell",
                                         isFixed ? "fixed" : "editable",
@@ -514,6 +556,7 @@ function Sudoku() {
                                         isSameNumber ? "same-number" : "",
                                         isRelated ? "related" : "",
                                         isIncorrect ? "incorrect" : "",
+                                        hasConflict ? "conflict" : "",
                                         col === 2 || col === 5
                                             ? "box-right"
                                             : "",
@@ -532,13 +575,11 @@ function Sudoku() {
                                             onClick={() =>
                                                 setSelectedCell(index)
                                             }
-                                            aria-label={`Row ${row + 1}, column ${
-                                                col + 1
-                                            }${
-                                                value
+                                            aria-label={`Row ${row + 1}, column ${col + 1
+                                                }${value
                                                     ? `, ${value}`
                                                     : ", empty"
-                                            }`}
+                                                }`}
                                             aria-pressed={isSelected}
                                             disabled={
                                                 paused || won || showHelp
