@@ -18,6 +18,9 @@ function SlidingPuzzle() {
   // Give Up confirmation
   const [showGiveUpConfirmation, setShowGiveUpConfirmation] =
     useState(false);
+  const [showingSolution, setShowingSolution] = useState(false);
+  const solutionTimeoutRef = useRef(null);
+  const solutionIntervalRef = useRef(null);
 
   // Options window
   const [showOptions, setShowOptions] = useState(false);
@@ -111,7 +114,8 @@ function SlidingPuzzle() {
       !gameStarted ||
       shuffling ||
       gameComplete ||
-      gameAbandoned
+      gameAbandoned ||
+      showingSolution
     ) {
       return;
     }
@@ -126,6 +130,7 @@ function SlidingPuzzle() {
     shuffling,
     gameComplete,
     gameAbandoned,
+    showingSolution,
   ]);
 
   // Create a new puzzle.
@@ -137,6 +142,18 @@ function SlidingPuzzle() {
     if (shuffleIntervalRef.current) {
       clearInterval(shuffleIntervalRef.current);
       shuffleIntervalRef.current = null;
+    }
+
+    if (solutionTimeoutRef.current) {
+      clearTimeout(solutionTimeoutRef.current);
+      solutionTimeoutRef.current = null;
+    }
+
+    setShowingSolution(false);
+
+    if (solutionIntervalRef.current) {
+      clearInterval(solutionIntervalRef.current);
+      solutionIntervalRef.current = null;
     }
 
     const boardSize = getBoardSize(selectedDifficulty);
@@ -450,7 +467,8 @@ function SlidingPuzzle() {
     if (
       shuffling ||
       gameComplete ||
-      gameAbandoned
+      gameAbandoned ||
+      showingSolution
     ) {
       return;
     }
@@ -524,12 +542,119 @@ function SlidingPuzzle() {
     setShowGiveUpConfirmation(true);
   };
 
-  // Confirm Give Up.
+  // Confirm Give Up, reverse the moves, and show the solution.
   const confirmGiveUp = () => {
     setShowGiveUpConfirmation(false);
+    setShowOptions(false);
     setTimer(0);
-    setGameAbandoned(true);
+
+    // Stop any existing solution animation or timeout.
+    if (solutionIntervalRef.current) {
+      clearInterval(solutionIntervalRef.current);
+      solutionIntervalRef.current = null;
+    }
+
+    if (solutionTimeoutRef.current) {
+      clearTimeout(solutionTimeoutRef.current);
+      solutionTimeoutRef.current = null;
+    }
+
+    // Copy the moves so we can reverse them.
+    const reverseMoves = [...moveHistory.current].reverse();
+
+    // Use a local board so each animation step uses the latest positions.
+    let currentPieces = pieces.map((piece) =>
+      piece ? { ...piece } : null
+    );
+
+    setShowGiveUpConfirmation(false);
+    setGameAbandoned(false);
+    setShowingSolution(true);
+
+    // No more player moves should be recorded after this point.
     moveHistory.current = [];
+
+    let moveIndex = 0;
+
+    const finishSolution = () => {
+      if (solutionIntervalRef.current) {
+        clearInterval(solutionIntervalRef.current);
+        solutionIntervalRef.current = null;
+      }
+
+      // Ensure the final board is perfectly solved.
+      const boardSize = getBoardSize(difficulty);
+      const totalPieces = boardSize * boardSize;
+
+      const solvedPieces = Array.from(
+        { length: totalPieces - 1 },
+        (_, index) => ({
+          id: index,
+          correctPosition: index,
+          currentPosition: index,
+        })
+      );
+
+      solvedPieces.push(null);
+
+      setPieces(solvedPieces);
+
+      // Leave the completed puzzle visible for 2.5 seconds.
+      solutionTimeoutRef.current = setTimeout(() => {
+        setShowingSolution(false);
+        setGameAbandoned(true);
+        solutionTimeoutRef.current = null;
+      }, 2500);
+    };
+
+    // If there are no moves to reverse, show the solved board directly.
+    if (reverseMoves.length === 0) {
+      finishSolution();
+      return;
+    }
+
+    // Undo one recorded move at a time.
+    solutionIntervalRef.current = setInterval(() => {
+      if (moveIndex >= reverseMoves.length) {
+        finishSolution();
+        return;
+      }
+
+      const move = reverseMoves[moveIndex];
+
+      // The tile moved from piecePosition into emptyPosition.
+      // Undo that move by returning the tile to piecePosition.
+      const tilePosition = move.emptyPosition;
+      const emptyPosition = move.piecePosition;
+
+      if (
+        currentPieces[tilePosition] &&
+        currentPieces[emptyPosition] === null
+      ) {
+        currentPieces[emptyPosition] = {
+          ...currentPieces[tilePosition],
+          currentPosition: emptyPosition,
+        };
+
+        currentPieces[tilePosition] = null;
+
+        // Keep every piece's position in sync.
+        currentPieces = currentPieces.map((piece, index) =>
+          piece
+            ? { ...piece, currentPosition: index }
+            : null
+        );
+
+        setPieces([...currentPieces]);
+      }
+
+      moveIndex += 1;
+
+      // Finish immediately after the final reverse move.
+      if (moveIndex >= reverseMoves.length) {
+        finishSolution();
+      }
+    }, 180);
   };
 
   // Cancel Give Up.
@@ -556,6 +681,13 @@ function SlidingPuzzle() {
 
       shuffleIntervalRef.current = null;
     }
+
+    if (solutionTimeoutRef.current) {
+      clearTimeout(solutionTimeoutRef.current);
+      solutionTimeoutRef.current = null;
+    }
+
+    setShowingSolution(false);
 
     setGameStarted(false);
     setGameComplete(false);
@@ -796,9 +928,11 @@ function SlidingPuzzle() {
                 </h1>
 
                 <p>
-                  {shuffling
-                    ? "Shuffling puzzle..."
-                    : "Slide the pieces into the empty space to complete the image."}
+                  {showingSolution
+                    ? "Watch the solution unfold..."
+                    : shuffling
+                      ? "Shuffling puzzle..."
+                      : "Slide the pieces into the empty space to complete the image."}
                 </p>
 
                 <div className="slidingPuzzle-stats">
@@ -872,9 +1006,8 @@ function SlidingPuzzle() {
 
                       const canMove =
                         !shuffling &&
-                        isAdjacentToEmpty(
-                          index
-                        );
+                        !showingSolution &&
+                        isAdjacentToEmpty(index);
 
                       return (
                         <div
@@ -955,13 +1088,15 @@ function SlidingPuzzle() {
                   </p>
                 )}
 
-                <button
-                  className="slidingPuzzle-give-up-button"
-                  onClick={handleGiveUp}
-                  disabled={shuffling}
-                >
-                  Give Up
-                </button>
+                {!showingSolution && (
+                  <button
+                    className="slidingPuzzle-give-up-button"
+                    onClick={handleGiveUp}
+                    disabled={shuffling}
+                  >
+                    Give Up
+                  </button>
+                )}
 
               </section>
 
