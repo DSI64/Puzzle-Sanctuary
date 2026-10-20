@@ -13,6 +13,7 @@ function SlidingPuzzle() {
   const [score, setScore] = useState(0);
   const [gameComplete, setGameComplete] = useState(false);
   const [gameAbandoned, setGameAbandoned] = useState(false);
+  const logoTiles = [8, 2, 5, 1, 6, 3, 7, 4, null];
 
   // Give Up confirmation
   const [showGiveUpConfirmation, setShowGiveUpConfirmation] =
@@ -20,6 +21,8 @@ function SlidingPuzzle() {
 
   // Options window
   const [showOptions, setShowOptions] = useState(false);
+  const [showHighScores, setShowHighScores] = useState(false);
+  const [showHowToPlay, setShowHowToPlay] = useState(false);
 
   // Selected game options
   const [difficulty, setDifficulty] = useState("medium");
@@ -279,9 +282,9 @@ function SlidingPuzzle() {
 
       const randomMove =
         moves[
-          Math.floor(
-            Math.random() * moves.length
-          )
+        Math.floor(
+          Math.random() * moves.length
+        )
         ];
 
       // Save the move.
@@ -428,7 +431,7 @@ function SlidingPuzzle() {
 
     const multiplier =
       difficultyMultipliers[
-        puzzleDifficulty
+      puzzleDifficulty
       ];
 
     const baseScore =
@@ -574,214 +577,206 @@ function SlidingPuzzle() {
       <div className="slidingPuzzle-game">
 
         {/* Main Menu */}
-        {!gameStarted && (
-          <section className="slidingPuzzle-title-screen">
 
-            <div className="slidingPuzzle-title-main">
+        {!gameStarted && !showHighScores && !showHowToPlay && (
+          <section className="slidingPuzzle-title-screen slidingPuzzle-hub-screen">
 
-              {/* Left Side */}
-              <div className="slidingPuzzle-title-content">
+            <div className="slidingPuzzle-nature-decor" aria-hidden="true">
+              {/* Left side */}
+              <span className="slidingPuzzle-decor leaf leaf-one">🌿</span>
+              <span className="slidingPuzzle-decor leaf leaf-three">🍃</span>
+              <span className="slidingPuzzle-decor flower flower-one">🌸</span>
+              <span className="slidingPuzzle-decor flower flower-three">🌸</span>
+              <span className="slidingPuzzle-decor flower flower-five">🌸</span>
+              <span className="slidingPuzzle-decor sparkle sparkle-one">✦</span>
 
-                <p className="page-label">
-                  PUZZLE SANCTUARY
-                </p>
-
-                <h1>
-                  Sliding Puzzle
-                </h1>
-
-                <p className="title-description">
-                  Rearrange the pieces to recreate
-                  the image.
-                </p>
-
-                <div className="title-menu-buttons">
-
-                  <button
-                    className="slidingPuzzle-play-button"
-                    onClick={() =>
-                      newPuzzle(
-                        difficulty,
-                        category
-                      )
-                    }
-                  >
-                    Play Game
-                  </button>
-
-                  <button
-                    className="slidingPuzzle-options-button"
-                    onClick={openOptions}
-                  >
-                    Options
-                  </button>
-
-                </div>
-
-                {/* How to Play */}
-                <div className="how-to-play">
-
-                  <h2>
-                    How to Play
-                  </h2>
-
-                  <div className="how-to-play-steps">
-
-                    <div className="how-to-play-step">
-
-                      <span className="how-to-play-number">
-                        1
-                      </span>
-
-                      <div>
-                        <strong>
-                          Slide the pieces
-                        </strong>
-
-                        <p>
-                          Click a piece next to
-                          the empty space to
-                          slide it into place.
-                        </p>
-                      </div>
-
-                    </div>
-
-                    <div className="how-to-play-step">
-
-                      <span className="how-to-play-number">
-                        2
-                      </span>
-
-                      <div>
-                        <strong>
-                          Recreate the image
-                        </strong>
-
-                        <p>
-                          Put every piece into
-                          its correct position.
-                        </p>
-                      </div>
-
-                    </div>
-
-                    <div className="how-to-play-step">
-
-                      <span className="how-to-play-number">
-                        3
-                      </span>
-
-                      <div>
-                        <strong>
-                          Beat your time
-                        </strong>
-
-                        <p>
-                          Finish quickly to earn
-                          a higher score.
-                        </p>
-                      </div>
-
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Right Side */}
-              <div className="slidingPuzzle-title-right">
-
-                {/* Puzzle Preview */}
-                <div className="title-puzzle-preview">
-
-                  <div className="preview-piece">
-                    8
-                  </div>
-
-                  <div className="preview-piece">
-                    2
-                  </div>
-
-                  <div className="preview-piece">
-                    5
-                  </div>
-
-                  <div className="preview-piece">
-                    1
-                  </div>
-
-                  <div className="preview-piece">
-                    6
-                  </div>
-
-                  <div className="preview-piece">
-                    3
-                  </div>
-
-                  <div className="preview-piece">
-                    7
-                  </div>
-
-                  <div className="preview-piece">
-                    4
-                  </div>
-
-                  <div className="preview-piece empty"></div>
-
-                </div>
-
-                {/* High Scores */}
-                <div className="high-scores">
-
-                  <h2>
-                    High Scores
-                  </h2>
-
-                  <div className="high-score-table">
-                    <div className="high-score-row high-score-header">
-                      <span>RANK</span>
-                      <span>NAME</span>
-                      <span>SCORE</span>
-                    </div>
-                     {/* Where High Score information goes*/}
-                    <div className="high-score-row">
-                      <span>1</span>
-                      <span>PMR</span>
-                      <span>18,420</span>
-                    </div>
-
-                    <div className="high-score-row">
-                      <span>2</span>
-                      <span>GGR</span>
-                      <span>17,950</span>
-                    </div>
-
-                    <div className="high-score-row">
-                      <span>3</span>
-                      <span>PZF</span>
-                      <span>16,780</span>
-                    </div>
-
-                    <div className="high-score-row">
-                      <span>4</span>
-                      <span>SLM</span>
-                      <span>15,640</span>
-                    </div>
-
-                    <div className="high-score-row">
-                      <span>5</span>
-                      <span>PPR</span>
-                      <span>14,920</span>
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
+              {/* Right side — mirrors the left */}
+              <span className="slidingPuzzle-decor leaf leaf-two">🌿</span>
+              <span className="slidingPuzzle-decor leaf leaf-four">🍃</span>
+              <span className="slidingPuzzle-decor flower flower-two">🌸</span>
+              <span className="slidingPuzzle-decor flower flower-four">🌸</span>
+              <span className="slidingPuzzle-decor flower flower-six">🌸</span>
+              <span className="slidingPuzzle-decor sparkle sparkle-two">✦</span>
             </div>
 
+
+            <div className="slidingPuzzle-hub-content">
+
+              <div className="slidingPuzzle-menu-heading">
+                <div
+                  className="slidingPuzzle-menu-logo"
+                  role="img"
+                  aria-label="Sliding puzzle logo with numbered tiles"
+                >
+                  <div className="slidingPuzzle-menu-logo-board">
+                    {[8, 2, 5, 1, 6, 3, 7, 4, null].map((number, index) => (
+                      <div
+                        key={index}
+                        className={`slidingPuzzle-menu-logo-tile ${number === null ? "empty" : ""
+                          }`}
+                      >
+                        {number !== null && (
+                          <span className="slidingPuzzle-menu-logo-number">
+                            {number}
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="slidingPuzzle-menu-heading-text">
+                  <p className="page-label">PUZZLE SANCTUARY</p>
+
+                  <h1>Sliding Puzzle</h1>
+
+                </div>
+              </div>
+
+              <div className="slidingPuzzle-hub-buttons">
+                <button
+                  className="slidingPuzzle-play-button"
+                  onClick={() => newPuzzle(difficulty, category)}
+                >
+                  Play
+                </button>
+
+                <button
+                  className="slidingPuzzle-options-button"
+                  onClick={() => setShowHighScores(true)}
+                >
+                  High Scores
+                </button>
+
+                <button
+                  className="slidingPuzzle-options-button"
+                  onClick={openOptions}
+                >
+                  Options
+                </button>
+
+                <button
+                  className="slidingPuzzle-options-button"
+                  onClick={() => setShowHowToPlay(true)}
+                >
+                  How to Play
+                </button>
+              </div>
+
+              <p className="slidingPuzzle-menu-settings">
+                Current Difficulty: <strong>{getDifficultyName()}</strong>
+                {" · "}
+                Current Category: <strong>{getCategoryName()}</strong>
+              </p>
+            </div>
+          </section>
+        )}
+
+
+        {/* How to Play Screen */}
+        {!gameStarted && showHowToPlay && (
+          <section className="slidingPuzzle-high-scores-screen">
+            <p className="page-label">PUZZLE SANCTUARY</p>
+
+            <h1>How to Play</h1>
+
+            <p className="title-description">
+              Learn how to solve the Sliding Puzzle!
+            </p>
+
+            <div className="slidingPuzzle-instructions-panel">
+              <h2>Rearrange the Pieces</h2>
+              <p>
+                Move the tiles into the empty space until the puzzle is
+                arranged in the correct order.
+              </p>
+
+              <h2>Controls</h2>
+              <ul>
+                <li>Click a tile next to the empty space to move it.</li>
+                <li>Only tiles adjacent to the empty space can move.</li>
+              </ul>
+
+              <h2>Scoring</h2>
+              <p>
+                Complete the puzzle as quickly as possible and try to beat
+                your personal best score.
+              </p>
+
+              <h2>Difficulty and Images</h2>
+              <p>
+                Select Options from the main menu to choose your difficulty
+                and image category.
+              </p>
+            </div>
+
+            <button
+              className="slidingPuzzle-play-button slidingPuzzle-back-button"
+              onClick={() => setShowHowToPlay(false)}
+            >
+              Back to Menu
+            </button>
+          </section>
+        )}
+
+        {/* High Scores Screen */}
+        {!gameStarted && showHighScores && (
+          <section className="slidingPuzzle-high-scores-screen">
+            <p className="page-label">PUZZLE SANCTUARY</p>
+
+            <h1>High Scores</h1>
+
+            <p className="title-description">
+              Your best scores for each difficulty.
+            </p>
+
+            <div className="slidingPuzzle-high-score-list">
+              {["easy", "medium", "hard"]
+                .map((level) => ({
+                  level,
+                  name: getDifficultyName(level),
+                  score: getHighScore(level),
+                }))
+                .sort((a, b) => b.score - a.score)
+                .map((entry, index) => (
+                  <div
+                    className="slidingPuzzle-high-score-card"
+                    key={entry.level}
+                  >
+                    <span className="slidingPuzzle-high-score-rank">
+                      {entry.score > 0 ? `#${index + 1}` : "—"}
+                    </span>
+
+                    <div className="slidingPuzzle-high-score-info">
+                      <strong>{entry.name}</strong>
+                      <span>
+                        {entry.level === "easy"
+                          ? "2 × 2 board"
+                          : entry.level === "medium"
+                            ? "3 × 3 board"
+                            : "4 × 4 board"}
+                      </span>
+                    </div>
+
+                    <strong className="slidingPuzzle-high-score-value">
+                      {entry.score > 0
+                        ? entry.score.toLocaleString()
+                        : "No score yet"}
+                    </strong>
+                  </div>
+                ))}
+            </div>
+
+            <p className="slidingPuzzle-high-score-note">
+              Your personal bests are saved in this browser.
+            </p>
+
+            <button
+              className="slidingPuzzle-play-button slidingPuzzle-back-button"
+              onClick={() => setShowHighScores(false)}
+            >
+              Back to Menu
+            </button>
           </section>
         )}
 
@@ -884,11 +879,10 @@ function SlidingPuzzle() {
                       return (
                         <div
                           key={piece.id}
-                          className={`slidingPuzzle-board-space ${
-                            canMove
-                              ? "movable"
-                              : ""
-                          }`}
+                          className={`slidingPuzzle-board-space ${canMove
+                            ? "movable"
+                            : ""
+                            }`}
                           onClick={() =>
                             movePiece(index)
                           }
@@ -907,15 +901,13 @@ function SlidingPuzzle() {
                                   )
                                 ),
 
-                              backgroundSize: `${
-                                getBoardSize(
+                              backgroundSize: `${getBoardSize(
+                                difficulty
+                              ) * 100
+                                }% ${getBoardSize(
                                   difficulty
                                 ) * 100
-                              }% ${
-                                getBoardSize(
-                                  difficulty
-                                ) * 100
-                              }%`,
+                                }%`,
                             }}
                           >
 
@@ -1054,11 +1046,10 @@ function SlidingPuzzle() {
                 <div className="options-choice-grid">
 
                   <button
-                    className={`options-choice ${
-                      difficulty === "easy"
-                        ? "selected"
-                        : ""
-                    }`}
+                    className={`options-choice ${difficulty === "easy"
+                      ? "selected"
+                      : ""
+                      }`}
                     onClick={() =>
                       setDifficulty("easy")
                     }
@@ -1077,11 +1068,10 @@ function SlidingPuzzle() {
                   </button>
 
                   <button
-                    className={`options-choice ${
-                      difficulty === "medium"
-                        ? "selected"
-                        : ""
-                    }`}
+                    className={`options-choice ${difficulty === "medium"
+                      ? "selected"
+                      : ""
+                      }`}
                     onClick={() =>
                       setDifficulty("medium")
                     }
@@ -1100,11 +1090,10 @@ function SlidingPuzzle() {
                   </button>
 
                   <button
-                    className={`options-choice ${
-                      difficulty === "hard"
-                        ? "selected"
-                        : ""
-                    }`}
+                    className={`options-choice ${difficulty === "hard"
+                      ? "selected"
+                      : ""
+                      }`}
                     onClick={() =>
                       setDifficulty("hard")
                     }
@@ -1136,11 +1125,10 @@ function SlidingPuzzle() {
                 <div className="options-category-grid">
 
                   <button
-                    className={`options-category ${
-                      category === "nature"
-                        ? "selected"
-                        : ""
-                    }`}
+                    className={`options-category ${category === "nature"
+                      ? "selected"
+                      : ""
+                      }`}
                     onClick={() =>
                       setCategory("nature")
                     }
@@ -1149,11 +1137,10 @@ function SlidingPuzzle() {
                   </button>
 
                   <button
-                    className={`options-category ${
-                      category === "animals"
-                        ? "selected"
-                        : ""
-                    }`}
+                    className={`options-category ${category === "animals"
+                      ? "selected"
+                      : ""
+                      }`}
                     onClick={() =>
                       setCategory("animals")
                     }
@@ -1162,11 +1149,10 @@ function SlidingPuzzle() {
                   </button>
 
                   <button
-                    className={`options-category ${
-                      category === "architecture"
-                        ? "selected"
-                        : ""
-                    }`}
+                    className={`options-category ${category === "architecture"
+                      ? "selected"
+                      : ""
+                      }`}
                     onClick={() =>
                       setCategory(
                         "architecture"
@@ -1177,11 +1163,10 @@ function SlidingPuzzle() {
                   </button>
 
                   <button
-                    className={`options-category ${
-                      category === "art"
-                        ? "selected"
-                        : ""
-                    }`}
+                    className={`options-category ${category === "art"
+                      ? "selected"
+                      : ""
+                      }`}
                     onClick={() =>
                       setCategory("art")
                     }
@@ -1190,11 +1175,10 @@ function SlidingPuzzle() {
                   </button>
 
                   <button
-                    className={`options-category ${
-                      category === "games"
-                        ? "selected"
-                        : ""
-                    }`}
+                    className={`options-category ${category === "games"
+                      ? "selected"
+                      : ""
+                      }`}
                     onClick={() =>
                       setCategory("games")
                     }
@@ -1203,11 +1187,10 @@ function SlidingPuzzle() {
                   </button>
 
                   <button
-                    className={`options-category ${
-                      category === "music"
-                        ? "selected"
-                        : ""
-                    }`}
+                    className={`options-category ${category === "music"
+                      ? "selected"
+                      : ""
+                      }`}
                     onClick={() =>
                       setCategory("music")
                     }
