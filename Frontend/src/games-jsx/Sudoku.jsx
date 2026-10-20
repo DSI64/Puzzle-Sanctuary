@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useState } from "react";
 import "../games-css/Sudoku.css";
 
@@ -140,6 +139,8 @@ function Sudoku() {
     const [won, setWon] = useState(false);
     const [paused, setPaused] = useState(false);
     const [showHelp, setShowHelp] = useState(false);
+    const [showNewPuzzleConfirm, setShowNewPuzzleConfirm] =
+        useState(false);
     const [bestTime, setBestTime] = useState(readBestTime);
 
     const startNewGame = useCallback(() => {
@@ -152,10 +153,11 @@ function Sudoku() {
         setWon(false);
         setPaused(false);
         setShowHelp(false);
+        setShowNewPuzzleConfirm(false);
         setScreen("playing");
     }, []);
 
-    // The timer stops while paused or while the help screen is open.
+    // The timer stops while paused or while help is open.
     useEffect(() => {
         if (
             screen !== "playing" ||
@@ -179,6 +181,7 @@ function Sudoku() {
                 screen !== "playing" ||
                 paused ||
                 showHelp ||
+                showNewPuzzleConfirm ||
                 won ||
                 selectedCell === null ||
                 !game
@@ -218,6 +221,7 @@ function Sudoku() {
             screen,
             paused,
             showHelp,
+            showNewPuzzleConfirm,
             won,
             selectedCell,
             game,
@@ -232,6 +236,7 @@ function Sudoku() {
             screen !== "playing" ||
             paused ||
             showHelp ||
+            showNewPuzzleConfirm ||
             won ||
             selectedCell === null ||
             !game
@@ -244,7 +249,16 @@ function Sudoku() {
         const nextGrid = [...grid];
         nextGrid[selectedCell] = 0;
         setGrid(nextGrid);
-    }, [screen, paused, showHelp, won, selectedCell, game, grid]);
+    }, [
+        screen,
+        paused,
+        showHelp,
+        showNewPuzzleConfirm,
+        won,
+        selectedCell,
+        game,
+        grid,
+    ]);
 
     // Keyboard number entry, deletion, and arrow-key navigation.
     useEffect(() => {
@@ -252,6 +266,7 @@ function Sudoku() {
             screen !== "playing" ||
             paused ||
             showHelp ||
+            showNewPuzzleConfirm ||
             won
         ) {
             return undefined;
@@ -306,22 +321,20 @@ function Sudoku() {
         window.addEventListener("keydown", handleKeyDown);
 
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [screen, paused, showHelp, won, enterNumber, eraseCell]);
-
-    const restartGame = () => {
-        if (!game) return;
-
-        setGrid([...game.puzzle]);
-        setSelectedCell(null);
-        setElapsed(0);
-        setWon(false);
-        setPaused(false);
-        setShowHelp(false);
-    };
+    }, [
+        screen,
+        paused,
+        showHelp,
+        showNewPuzzleConfirm,
+        won,
+        enterNumber,
+        eraseCell,
+    ]);
 
     const returnToMenu = () => {
         setPaused(false);
         setShowHelp(false);
+        setShowNewPuzzleConfirm(false);
         setScreen("menu");
     };
 
@@ -507,7 +520,7 @@ function Sudoku() {
                                         value !== 0 &&
                                         value !== game.solution[index];
 
-                                    // Check for a duplicate in this cell's row or column.
+                                    // Check for a duplicate in this cell's row.
                                     const hasRowConflict =
                                         value !== 0 &&
                                         grid.some(
@@ -517,6 +530,7 @@ function Sudoku() {
                                                 otherValue === value
                                         );
 
+                                    // Check for a duplicate in this cell's column.
                                     const hasColumnConflict =
                                         value !== 0 &&
                                         grid.some(
@@ -533,7 +547,10 @@ function Sudoku() {
                                     const hasBoxConflict =
                                         value !== 0 &&
                                         grid.some((otherValue, otherIndex) => {
-                                            if (otherIndex === index || otherValue !== value) {
+                                            if (
+                                                otherIndex === index ||
+                                                otherValue !== value
+                                            ) {
                                                 return false;
                                             }
 
@@ -547,7 +564,9 @@ function Sudoku() {
                                         });
 
                                     const hasConflict =
-                                        hasRowConflict || hasColumnConflict || hasBoxConflict;
+                                        hasRowConflict ||
+                                        hasColumnConflict ||
+                                        hasBoxConflict;
 
                                     const classNames = [
                                         "sudoku-cell",
@@ -572,17 +591,17 @@ function Sudoku() {
                                             key={index}
                                             type="button"
                                             className={classNames}
-                                            onClick={() =>
-                                                setSelectedCell(index)
-                                            }
-                                            aria-label={`Row ${row + 1}, column ${col + 1
-                                                }${value
-                                                    ? `, ${value}`
-                                                    : ", empty"
+                                            onClick={() => setSelectedCell(index)}
+                                            aria-label={`Row ${row + 1}, column ${col + 1}${value
+                                                ? `, ${value}`
+                                                : ", empty"
                                                 }`}
                                             aria-pressed={isSelected}
                                             disabled={
-                                                paused || won || showHelp
+                                                paused ||
+                                                won ||
+                                                showHelp ||
+                                                showNewPuzzleConfirm
                                             }
                                         >
                                             {value || ""}
@@ -591,39 +610,73 @@ function Sudoku() {
                                 })}
                             </div>
 
-                            {/* Pause overlay */}
+                            {/* Pause menu and New Puzzle confirmation */}
                             {paused && (
                                 <div className="sudoku-overlay">
                                     <div className="sudoku-overlay-card">
-                                        <h2>Game Paused</h2>
+                                        {!showNewPuzzleConfirm ? (
+                                            <>
+                                                <h2>Game Paused</h2>
 
-                                        <p>
-                                            Your timer is paused. Take a breather!
-                                        </p>
+                                                <p>
+                                                    Your timer is paused. Take a breather!
+                                                </p>
 
-                                        <button
-                                            type="button"
-                                            className="sudoku-primary-button"
-                                            onClick={() => setPaused(false)}
-                                        >
-                                            Resume
-                                        </button>
+                                                <button
+                                                    type="button"
+                                                    className="sudoku-primary-button"
+                                                    onClick={() => setPaused(false)}
+                                                >
+                                                    Resume
+                                                </button>
 
-                                        <button
-                                            type="button"
-                                            className="sudoku-secondary-button"
-                                            onClick={restartGame}
-                                        >
-                                            Restart Puzzle
-                                        </button>
+                                                <button
+                                                    type="button"
+                                                    className="sudoku-secondary-button"
+                                                    onClick={() =>
+                                                        setShowNewPuzzleConfirm(true)
+                                                    }
+                                                >
+                                                    New Puzzle
+                                                </button>
 
-                                        <button
-                                            type="button"
-                                            className="sudoku-secondary-button"
-                                            onClick={returnToMenu}
-                                        >
-                                            Main Menu
-                                        </button>
+                                                <button
+                                                    type="button"
+                                                    className="sudoku-secondary-button"
+                                                    onClick={returnToMenu}
+                                                >
+                                                    Main Menu
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <h2>New Puzzle?</h2>
+
+                                                <p>
+                                                    Are you sure you want to start a
+                                                    new puzzle? Your current progress
+                                                    will be lost.
+                                                </p>
+
+                                                <button
+                                                    type="button"
+                                                    className="sudoku-primary-button"
+                                                    onClick={startNewGame}
+                                                >
+                                                    Confirm
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    className="sudoku-secondary-button"
+                                                    onClick={() =>
+                                                        setShowNewPuzzleConfirm(false)
+                                                    }
+                                                >
+                                                    Cancel
+                                                </button>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             )}

@@ -12,7 +12,7 @@ function Puzzles() {
   const puzzles = [ //Gives the name, desciption, and the type of puzzle game it is
     {
       name: "Sliding Puzzle",
-      description: "Rearrange the pieces to reveal a picture!",
+      description: "Rearrange and slide the pieces to reveal a picture!",
       type: "Puzzle Type",
       image: slidingPuzzle,
       path: "/puzzles/SlidingPuzzle",
