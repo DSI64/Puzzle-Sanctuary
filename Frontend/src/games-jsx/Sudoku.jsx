@@ -365,7 +365,7 @@ function Sudoku() {
                     <h1>Sudoku</h1>
 
                     <p className="sudoku-title-description">
-                        Fill the grid, find your rhythm, and beat your best time.
+                        Fill the grid and beat your best time.
                     </p>
 
                     <div className="sudoku-menu-buttons">
