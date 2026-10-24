@@ -1,0 +1,547 @@
+
+/* ---------- Main page ---------- */
+
+.solitaire-page {
+    min-height: 650px;
+    padding: 40px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f7f4e9;
+    color: #2f3e46;
+    box-sizing: border-box;
+}
+
+/* ---------- Main menu ---------- */
+
+.solitaire-menu,
+.solitaire-placeholder {
+    width: 100%;
+    max-width: 520px;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #dde8d5;
+    border-radius: 24px;
+    box-shadow: 0 12px 35px rgba(47, 62, 70, 0.09);
+    box-sizing: border-box;
+}
+
+.solitaire-eyebrow {
+    margin: 0 0 24px;
+    color: #01796f;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+/* ---------- Playing-card illustration ---------- */
+
+.solitaire-card-logo {
+    width: 150px;
+    height: 155px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.solitaire-playing-card {
+    width: 88px;
+    height: 124px;
+    position: absolute;
+    top: 12px;
+    border: 3px solid #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.18);
+    box-sizing: border-box;
+}
+
+.solitaire-card-back {
+    left: 64px;
+    transform: rotate(13deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #354f52;
+    border: 4px solid #ffffff;
+}
+
+.solitaire-card-pattern {
+    width: 65px;
+    height: 101px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 2.5rem;
+    border: 2px solid #cad2c5;
+    border-radius: 5px;
+    background:
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 6px,
+            rgba(255, 255, 255, 0.09) 6px,
+            rgba(255, 255, 255, 0.09) 8px
+        );
+}
+
+.solitaire-card-front {
+    left: 12px;
+    transform: rotate(-9deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    color: #d73535;
+}
+
+.solitaire-card-corner {
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.solitaire-card-corner span {
+    font-size: 0.9rem;
+}
+
+.solitaire-card-corner.bottom {
+    top: auto;
+    left: auto;
+    right: 7px;
+    bottom: 5px;
+    transform: rotate(180deg);
+}
+
+.solitaire-card-heart {
+    font-size: 3.5rem;
+}
+
+/* ---------- Title and description ---------- */
+
+.solitaire-title {
+    margin: 0;
+    color: #2f3e46;
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+}
+
+.solitaire-description {
+    max-width: 360px;
+    margin: 12px 0 28px;
+    color: #405344;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+/* ---------- Menu buttons ---------- */
+
+.solitaire-menu-buttons {
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.solitaire-button {
+    width: 100%;
+    min-height: 52px;
+    padding: 13px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 2px solid #cad2c5;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #354f52;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background-color 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.solitaire-button:hover {
+    background: #dde8d5;
+    border-color: #52796f;
+    transform: translateY(-2px);
+}
+
+.solitaire-button:focus-visible {
+    outline: 3px solid #01796f;
+    outline-offset: 3px;
+}
+
+.solitaire-primary-button {
+    background: #4ade80;
+    border-color: #4ade80;
+    color: #183b2a;
+}
+
+.solitaire-primary-button:hover {
+    background: #35cf70;
+    border-color: #35cf70;
+}
+
+.solitaire-menu-footer {
+    margin: 26px 0 0;
+    color: #718078;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+/* ---------- Placeholder screens ---------- */
+
+.solitaire-placeholder {
+    gap: 16px;
+    min-height: 300px;
+    justify-content: center;
+}
+
+.solitaire-placeholder .solitaire-eyebrow {
+    margin-bottom: 0;
+}
+
+.solitaire-placeholder h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.solitaire-placeholder p:not(.solitaire-eyebrow) {
+    max-width: 350px;
+    margin: 0 0 12px;
+    color: #405344;
+    line-height: 1.7;
+}
+
+.solitaire-placeholder .solitaire-button {
+    max-width: 320px;
+    margin-top: 8px;
+}
+
+/* ---------- Responsive layout ---------- */
+
+@media (max-width: 480px) {
+    .solitaire-page {
+        min-height: 600px;
+        padding: 24px 14px;
+    }
+
+    .solitaire-menu,
+    .solitaire-placeholder {
+        padding: 32px 20px;
+        border-radius: 18px;
+    }
+
+    .solitaire-eyebrow {
+        letter-spacing: 2px;
+    }
+
+    .solitaire-title {
+        font-size: 2.6rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .solitaire-button {
+        transition: none;
+    }
+
+    .solitaire-button:hover {
+        transform: none;
+    }
+}
+
+
+/* ---------- Solitaire game board ---------- */
+
+.solitaire-game {
+    width: 100%;
+    max-width: 1100px;
+    min-width: 0;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.solitaire-game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.solitaire-game-header h1 {
+    margin: 0;
+    color: #2f3e46;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.solitaire-game-header .solitaire-eyebrow {
+    margin-bottom: 8px;
+}
+
+.solitaire-game-header .solitaire-button {
+    width: auto;
+    flex-shrink: 0;
+}
+
+.solitaire-board {
+    width: 100%;
+    min-width: 0;
+    padding: clamp(8px, 1.5vw, 18px);
+    border: 1px solid #cad2c5;
+    border-radius: 16px;
+    background: #276749;
+    box-shadow: 0 8px 24px rgba(32, 60, 40, 0.15);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.solitaire-top-piles {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: clamp(4px, 1vw, 12px);
+    width: 100%;
+    margin-bottom: clamp(18px, 3vw, 30px);
+}
+
+.solitaire-empty-pile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 5 / 7;
+    min-width: 0;
+    border: 2px dashed rgba(255, 255, 255, 0.42);
+    border-radius: 7px;
+    color: rgba(255, 255, 255, 0.8);
+    box-sizing: border-box;
+}
+
+.solitaire-empty-pile span {
+    font-size: clamp(0.7rem, 2vw, 1.5rem);
+}
+
+.solitaire-pile-spacer {
+    min-width: 0;
+}
+
+.solitaire-tableau {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: clamp(4px, 1vw, 12px);
+    width: 100%;
+    min-width: 0;
+    align-items: start;
+}
+
+.solitaire-tableau-column {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    min-height: 300px;
+}
+
+.solitaire-tableau-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-width: 0;
+}
+
+.solitaire-board-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 5 / 7;
+    overflow: hidden;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.solitaire-board-card-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #fffdf4;
+    background: #354f8c;
+    box-shadow: inset 0 0 0 2px #354f8c,
+                inset 0 0 0 4px #fffdf4;
+}
+
+.solitaire-board-card-pattern {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 75%;
+    height: 80%;
+    border: 1px solid #fffdf4;
+    color: #fffdf4;
+    font-size: clamp(0.6rem, 2vw, 1.5rem);
+    box-sizing: border-box;
+}
+
+.solitaire-board-card-face {
+    border: 1px solid #d7d7d7;
+    background: #fffdf8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+.solitaire-board-card-face.red {
+    color: #c62828;
+}
+
+.solitaire-board-card-face.black {
+    color: #202124;
+}
+
+.solitaire-board-card-corner {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: clamp(0.5rem, 1.2vw, 0.95rem);
+    font-weight: 800;
+    line-height: 1;
+}
+
+.solitaire-board-card-corner.bottom {
+    top: auto;
+    left: auto;
+    right: 3px;
+    bottom: 3px;
+    transform: rotate(180deg);
+}
+
+.solitaire-board-card-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1rem, 2.8vw, 2.3rem);
+}
+
+.solitaire-board-message {
+    margin: 24px 0 0;
+    color: #fffdf4;
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* ---------- Smaller screens ---------- */
+
+@media (max-width: 600px) {
+    .solitaire-game-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .solitaire-board {
+        padding: 6px;
+        border-radius: 10px;
+    }
+
+    .solitaire-top-piles,
+    .solitaire-tableau {
+        gap: 3px;
+    }
+
+    .solitaire-tableau-column {
+        min-height: 260px;
+    }
+
+    .solitaire-board-card {
+        border-radius: 3px;
+    }
+
+    .solitaire-board-card-back {
+        border-width: 2px;
+    }
+
+    .solitaire-board-card-corner {
+        top: 2px;
+        left: 2px;
+        font-size: clamp(0.45rem, 2vw, 0.7rem);
+    }
+
+    .solitaire-board-card-corner.bottom {
+        right: 2px;
+        bottom: 2px;
+    }
+
+    .solitaire-board-message {
+        font-size: 0.8rem;
+    }
+}
+
+
+/* ---------- Reduce Solitaire card sizes ---------- */
+
+.solitaire-tableau-card {
+    width: 75%;
+    left: 12.5%;
+}
+
+.solitaire-board-card {
+    width: 100%;
+}
+
+.solitaire-top-piles .solitaire-empty-pile {
+    width: 75%;
+    justify-self: center;
+}
+
+/* Make card symbols fit the smaller cards */
+.solitaire-board-card-corner {
+    font-size: clamp(7px, 0.85vw, 12px);
+}
+
+.solitaire-board-card-corner.bottom {
+    right: 3px;
+    bottom: 3px;
+}
+
+.solitaire-board-card-center {
+    font-size: clamp(16px, 1.8vw, 25px);
+}
+
+.solitaire-tableau-column {
+    min-height: 330px;
+}
+
+/* Keep the cards centered on smaller screens */
+@media (max-width: 600px) {
+    .solitaire-tableau-card {
+        width: 85%;
+        left: 7.5%;
+    }
+
+    .solitaire-top-piles .solitaire-empty-pile {
+        width: 85%;
+    }
+
+    .solitaire-board-card-center {
+        font-size: clamp(12px, 3vw, 20px);
+    }
+}

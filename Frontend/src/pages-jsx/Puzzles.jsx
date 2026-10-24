@@ -1,6 +1,6 @@
 // Puzzle Page of the website; Lists the available games on the website
-import PuzzleCard from "../components/PuzzleCard";
 import "../pages-css/Puzzles.css"
+import PuzzleCard from "../components/PuzzleCard";
 import puzzlePlaceholder from "../assets/placeholder.png";
 import slidingPuzzle from "../assets/slidingPuzzle.png";
 import mazeIcon from "../assets/maze-icon.png";
@@ -39,10 +39,11 @@ function Puzzles() {
       path: "/puzzles/2048",
     },
     {
-      name: "",
+      name: "Solitaire",
       description: "",
-      type: "",
-      image: puzzlePlaceholder,
+      type: "Card Puzzle",
+      image: puzzlePlaceholder, 
+      path: "/puzzles/solitaire",
     },
     {
       name: "",
