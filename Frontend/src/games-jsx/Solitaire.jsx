@@ -145,11 +145,6 @@ function Solitaire() {
 
                     <h1 className="solitaire-title">Solitaire</h1>
 
-                    <p className="solitaire-description">
-                        Take your time, plan your moves, and
-                        find your winning hand.
-                    </p>
-
                     <div className="solitaire-menu-buttons">
                         <button
                             type="button"
@@ -187,10 +182,6 @@ function Solitaire() {
                             How to Play
                         </button>
                     </div>
-
-                    <p className="solitaire-menu-footer">
-                        A little patience goes a long way.
-                    </p>
                 </section>
             )}
 

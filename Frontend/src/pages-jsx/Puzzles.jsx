@@ -41,7 +41,7 @@ function Puzzles() {
     {
       name: "Solitaire",
       description: "",
-      type: "Card Puzzle",
+      type: "Logic Puzzle",
       image: puzzlePlaceholder, 
       path: "/puzzles/solitaire",
     },
