@@ -545,3 +545,148 @@
         font-size: clamp(12px, 3vw, 20px);
     }
 }
+
+
+/* ---------- Stock and waste piles ---------- */
+
+.solitaire-stock-pile {
+    appearance: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
+.solitaire-stock-pile.solitaire-pile-has-card {
+    border: none;
+    background: transparent;
+}
+
+.solitaire-stock-pile:focus-visible {
+    outline: 3px solid #4ade80;
+    outline-offset: 3px;
+}
+
+.solitaire-stock-pile:disabled {
+    cursor: default;
+}
+
+.solitaire-pile-has-card {
+    border: none;
+}
+
+.solitaire-pile-has-card .solitaire-board-card {
+    width: 100%;
+    height: 100%;
+}
+
+.solitaire-stock-pile .solitaire-board-card {
+    pointer-events: none;
+}
+
+
+/* ---------- Card selection and pile interactions ---------- */
+
+.solitaire-card-button {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.solitaire-card-button:focus-visible {
+    outline: 3px solid #4ade80;
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+.solitaire-card-button.is-selected .solitaire-board-card {
+    outline: 3px solid #4ade80;
+    outline-offset: 2px;
+}
+
+.solitaire-card-button:disabled {
+    cursor: default;
+}
+
+.solitaire-stock-pile,
+.solitaire-waste-pile,
+.solitaire-foundation-pile {
+    appearance: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
+.solitaire-waste-pile:disabled {
+    cursor: default;
+}
+
+.solitaire-pile-selected {
+    outline: 3px solid #4ade80;
+    outline-offset: 2px;
+}
+
+.solitaire-waste-pile .solitaire-board-card,
+.solitaire-foundation-pile .solitaire-board-card {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* ---------- Undo and tableau destinations ---------- */
+
+.solitaire-game-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.solitaire-game-header-actions .solitaire-button {
+    width: auto;
+}
+
+.solitaire-game-header-actions .solitaire-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.solitaire-empty-column-target {
+    outline: 2px dashed #4ade80;
+    outline-offset: 3px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .solitaire-game-header-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+}
+
+
+/* ---------- Tableau movement targets ---------- */
+
+.solitaire-card-button.solitaire-valid-move-target
+.solitaire-board-card {
+    outline: 3px solid #4ade80;
+    outline-offset: 2px;
+}
+
+.solitaire-empty-column-target {
+    outline: 2px dashed #4ade80;
+    outline-offset: 3px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.solitaire-card-button.is-selected .solitaire-board-card {
+    outline: 3px solid #facc15;
+    outline-offset: 2px;
+}
