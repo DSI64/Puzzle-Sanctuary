@@ -6,7 +6,7 @@ import slidingPuzzle from "../assets/slidingPuzzle.png";
 import mazeIcon from "../assets/maze-icon.png";
 import sudokuIcon from "../assets/sudoku-icon.png";
 import game2048 from "../assets/2048icon.svg";
-
+import solitaire from "../assets/solitaire.png";
 
 function Puzzles() {
   const puzzles = [ //Gives the name, desciption, and the type of puzzle game it is
@@ -33,16 +33,16 @@ function Puzzles() {
     },
     {
       name: "2048",
-      description: "Slide numbered tiles across the board, merge matching numbers, and work your way up to 2048!",
+      description: "Slide numbers across the board and work your way up to 2048!",
       type: "Number Puzzle",
       image: game2048,
       path: "/puzzles/2048",
     },
     {
       name: "Solitaire",
-      description: "",
+      description: "Sort a standard 52-card deck into four piles from Ace to King.",
       type: "Logic Puzzle",
-      image: puzzlePlaceholder, 
+      image: solitaire, 
       path: "/puzzles/solitaire",
     },
     {

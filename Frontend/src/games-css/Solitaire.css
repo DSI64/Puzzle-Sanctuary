@@ -1114,3 +1114,597 @@
         transform: none;
     }
 }
+
+/* =========================================
+   GAME TIMER AND MOVE COUNTER
+========================================= */
+
+.solitaire-game-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.solitaire-game-stats {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.solitaire-game-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+
+    background: #ffffff;
+    border: 2px solid #2f3e46;
+    border-radius: 10px;
+
+    color: #2f3e46;
+}
+
+.solitaire-game-stat span {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.solitaire-game-stat strong {
+    font-size: 0.95rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================
+   WIN SCREEN
+========================================= */
+
+.solitaire-win-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: grid;
+    place-items: center;
+
+    padding: 20px;
+
+    background: rgba(20, 35, 28, 0.65);
+}
+
+.solitaire-win-card {
+    width: min(100%, 440px);
+    padding: 32px;
+
+    text-align: center;
+
+    background: #f7f4e9;
+    border: 3px solid #2f3e46;
+    border-radius: 20px;
+
+    box-shadow: 0 14px 0 rgba(47, 62, 70, 0.2);
+}
+
+.solitaire-win-icon {
+    margin-bottom: 10px;
+    font-size: 2.8rem;
+}
+
+.solitaire-win-card h2 {
+    margin: 8px 0;
+
+    color: #2f3e46;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.solitaire-win-description {
+    margin: 10px 0 22px;
+
+    color: #405344;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   FINAL GAME STATISTICS
+========================================= */
+
+.solitaire-win-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.solitaire-win-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    padding: 16px 10px;
+
+    background: #ffffff;
+    border: 2px solid #cad2c5;
+    border-radius: 12px;
+}
+
+.solitaire-win-stat span {
+    color: #405344;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.solitaire-win-stat strong {
+    color: #2f3e46;
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================
+   WIN SCREEN BUTTONS
+========================================= */
+
+.solitaire-win-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-top: 24px;
+}
+
+
+/* =========================================
+   MOBILE ADJUSTMENTS
+========================================= */
+
+@media (max-width: 600px) {
+
+    .solitaire-game-stats {
+        gap: 7px;
+    }
+
+    .solitaire-game-stat {
+        padding: 6px 9px;
+    }
+
+    .solitaire-game-stat span {
+        font-size: 0.65rem;
+    }
+
+    .solitaire-game-stat strong {
+        font-size: 0.85rem;
+    }
+
+    .solitaire-win-card {
+        padding: 24px 18px;
+    }
+
+    .solitaire-win-card h2 {
+        font-size: 1.7rem;
+    }
+
+    .solitaire-win-actions {
+        flex-direction: column;
+    }
+
+    .solitaire-win-actions .solitaire-button {
+        width: 100%;
+    }
+}
+
+
+/* =========================================
+   GAME TIMER AND MOVE COUNTER
+========================================= */
+
+.solitaire-game-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.solitaire-game-stats {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.solitaire-game-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+
+    background: #ffffff;
+    border: 2px solid #2f3e46;
+    border-radius: 10px;
+
+    color: #2f3e46;
+}
+
+.solitaire-game-stat span {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.solitaire-game-stat strong {
+    font-size: 0.95rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================
+   WIN SCREEN
+========================================= */
+
+.solitaire-win-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: grid;
+    place-items: center;
+
+    padding: 20px;
+
+    background: rgba(20, 35, 28, 0.65);
+}
+
+.solitaire-win-card {
+    width: min(100%, 440px);
+    padding: 32px;
+
+    text-align: center;
+
+    background: #f7f4e9;
+    border: 3px solid #2f3e46;
+    border-radius: 20px;
+
+    box-shadow: 0 14px 0 rgba(47, 62, 70, 0.2);
+}
+
+.solitaire-win-icon {
+    margin-bottom: 10px;
+    font-size: 2.8rem;
+}
+
+.solitaire-win-card h2 {
+    margin: 8px 0;
+
+    color: #2f3e46;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.solitaire-win-description {
+    margin: 10px 0 22px;
+
+    color: #405344;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   FINAL GAME STATISTICS
+========================================= */
+
+.solitaire-win-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.solitaire-win-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    padding: 16px 10px;
+
+    background: #ffffff;
+    border: 2px solid #cad2c5;
+    border-radius: 12px;
+}
+
+.solitaire-win-stat span {
+    color: #405344;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.solitaire-win-stat strong {
+    color: #2f3e46;
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================
+   WIN SCREEN BUTTONS
+========================================= */
+
+.solitaire-win-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-top: 24px;
+}
+
+
+/* =========================================
+   SOLITAIRE LEADERBOARD
+========================================= */
+
+.solitaire-high-scores-page {
+    width: min(100%, 900px);
+}
+
+.solitaire-high-scores-table-wrap {
+    width: 100%;
+    margin: 25px 0;
+    overflow-x: auto;
+
+    background: #ffffff;
+    border: 2px solid #2f3e46;
+    border-radius: 12px;
+}
+
+.solitaire-high-scores-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.solitaire-high-scores-table th,
+.solitaire-high-scores-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #cad2c5;
+    white-space: nowrap;
+}
+
+.solitaire-high-scores-table th {
+    background: #dde8d5;
+    color: #2f3e46;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.solitaire-high-scores-table td {
+    color: #405344;
+}
+
+.solitaire-high-scores-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.solitaire-high-scores-table tbody tr:first-child {
+    background: #f7f4e9;
+}
+
+.solitaire-no-scores {
+    margin: 25px 0;
+    padding: 35px 20px;
+
+    background: #ffffff;
+    border: 2px dashed #cad2c5;
+    border-radius: 14px;
+}
+
+.solitaire-no-scores span {
+    color: #52796f;
+    font-size: 2.5rem;
+}
+
+.solitaire-no-scores h2 {
+    color: #2f3e46;
+}
+
+.solitaire-no-scores p {
+    color: #405344;
+}
+
+
+/* =========================================
+   SOLITAIRE CUSTOMIZATION OPTIONS
+========================================= */
+
+.solitaire-options-panel {
+    width: min(100%, 500px);
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    margin: 25px 0;
+    padding: 24px;
+
+    background: #ffffff;
+    border: 2px solid #2f3e46;
+    border-radius: 14px;
+}
+
+.solitaire-option {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.solitaire-option label {
+    color: #2f3e46;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.solitaire-option select {
+    width: 100%;
+    padding: 11px 12px;
+
+    background: #f7f4e9;
+    border: 2px solid #cad2c5;
+    border-radius: 8px;
+
+    color: #2f3e46;
+    font: inherit;
+    cursor: pointer;
+}
+
+.solitaire-option select:focus {
+    outline: 3px solid #4ade80;
+    outline-offset: 2px;
+}
+
+.solitaire-options-page > .solitaire-button {
+    margin: 5px;
+}
+
+
+/* =========================================
+   SOLITAIRE BOARD COLORS
+========================================= */
+
+.solitaire-game.solitaire-board-green .solitaire-board {
+    background: #52796f !important;
+}
+
+.solitaire-game.solitaire-board-blue .solitaire-board {
+    background: #547f9e !important;
+}
+
+.solitaire-game.solitaire-board-purple .solitaire-board {
+    background: #786b91 !important;
+}
+
+.solitaire-game.solitaire-board-dark .solitaire-board {
+    background: #46545b !important;
+}
+
+
+/* =========================================
+   SOLITAIRE CARD BACK COLORS
+========================================= */
+
+.solitaire-game.solitaire-back-blue .solitaire-board-card-back {
+    background: #315f91 !important;
+    border-color: #203f63 !important;
+}
+
+.solitaire-game.solitaire-back-red .solitaire-board-card-back {
+    background: #a94442 !important;
+    border-color: #762c2b !important;
+}
+
+.solitaire-game.solitaire-back-green .solitaire-board-card-back {
+    background: #3c765c !important;
+    border-color: #28513e !important;
+}
+
+.solitaire-game.solitaire-back-purple .solitaire-board-card-back {
+    background: #6c5a91 !important;
+    border-color: #493b66 !important;
+}
+
+
+/* Keep the existing card-back symbol visible. */
+
+.solitaire-game .solitaire-board-card-pattern {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+
+/* =========================================
+   SOLITAIRE CARD FACE COLORS
+========================================= */
+
+.solitaire-game.solitaire-face-white .solitaire-board-card-face {
+    background-color: #ffffff !important;
+}
+
+.solitaire-game.solitaire-face-cream .solitaire-board-card-face {
+    background-color: #fff4dc !important;
+}
+
+
+/* =========================================
+   MOBILE ADJUSTMENTS
+========================================= */
+
+@media (max-width: 600px) {
+
+    /* Timer and moves */
+
+    .solitaire-game-stats {
+        gap: 7px;
+    }
+
+    .solitaire-game-stat {
+        padding: 6px 9px;
+    }
+
+    .solitaire-game-stat span {
+        font-size: 0.65rem;
+    }
+
+    .solitaire-game-stat strong {
+        font-size: 0.85rem;
+    }
+
+
+    /* Win screen */
+
+    .solitaire-win-card {
+        padding: 24px 18px;
+    }
+
+    .solitaire-win-card h2 {
+        font-size: 1.7rem;
+    }
+
+    .solitaire-win-actions {
+        flex-direction: column;
+    }
+
+    .solitaire-win-actions .solitaire-button {
+        width: 100%;
+    }
+
+
+    /* Leaderboard */
+
+    .solitaire-high-scores-table th,
+    .solitaire-high-scores-table td {
+        padding: 10px 8px;
+        font-size: 0.75rem;
+    }
+
+
+    /* Options */
+
+    .solitaire-options-panel {
+        padding: 18px;
+    }
+}
