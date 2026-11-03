@@ -1,5 +1,6 @@
-
-/* ---------- Main page ---------- */
+/* =========================================
+   MAIN PAGE
+========================================= */
 
 .solitaire-page {
     min-height: 650px;
@@ -12,7 +13,10 @@
     box-sizing: border-box;
 }
 
-/* ---------- Main menu ---------- */
+
+/* =========================================
+   MAIN MENU
+========================================= */
 
 .solitaire-menu,
 .solitaire-placeholder {
@@ -38,7 +42,10 @@
     letter-spacing: 3px;
 }
 
-/* ---------- Playing-card illustration ---------- */
+
+/* =========================================
+   TITLE-SCREEN CARD ILLUSTRATION
+========================================= */
 
 .solitaire-card-logo {
     width: 150px;
@@ -57,6 +64,8 @@
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.18);
     box-sizing: border-box;
 }
+
+/* Back of the title-screen card */
 
 .solitaire-card-back {
     left: 64px;
@@ -88,6 +97,8 @@
         );
 }
 
+/* Front of the title-screen card */
+
 .solitaire-card-front {
     left: 12px;
     transform: rotate(-9deg);
@@ -98,35 +109,42 @@
     color: #d73535;
 }
 
+/* Rank in the top-left corner */
+
 .solitaire-card-corner {
     position: absolute;
     top: 5px;
     left: 7px;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
     font-size: 1.15rem;
     font-weight: 800;
     line-height: 1;
 }
 
+/* Hide the small suit underneath the rank */
+
 .solitaire-card-corner span {
-    font-size: 0.9rem;
+    display: none;
 }
 
+/* Hide the duplicate bottom-right corner */
+
 .solitaire-card-corner.bottom {
-    top: auto;
-    left: auto;
-    right: 7px;
-    bottom: 5px;
-    transform: rotate(180deg);
+    display: none;
 }
+
+/* Large center suit */
 
 .solitaire-card-heart {
     font-size: 3.5rem;
 }
 
-/* ---------- Title and description ---------- */
+
+/* =========================================
+   TITLE AND DESCRIPTION
+========================================= */
 
 .solitaire-title {
     margin: 0;
@@ -144,7 +162,10 @@
     line-height: 1.7;
 }
 
-/* ---------- Menu buttons ---------- */
+
+/* =========================================
+   MENU BUTTONS
+========================================= */
 
 .solitaire-menu-buttons {
     width: 100%;
@@ -206,7 +227,10 @@
     font-style: italic;
 }
 
-/* ---------- Placeholder screens ---------- */
+
+/* =========================================
+   PLACEHOLDER SCREENS
+========================================= */
 
 .solitaire-placeholder {
     gap: 16px;
@@ -235,10 +259,814 @@
     margin-top: 8px;
 }
 
-/* ---------- Responsive layout ---------- */
+
+/* =========================================
+   SOLITAIRE GAME LAYOUT
+========================================= */
+
+.solitaire-game {
+    --solitaire-card-max-width: 64px;
+    --sidebar-w: 84px;
+    --sidebar-card-w: var(--solitaire-card-max-width);
+    --tableau-stack-step: 19px;
+
+    width: 100%;
+    max-width: 1100px;
+    min-width: 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   GAME HEADER
+========================================= */
+
+.solitaire-game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 20px;
+    background: #323232;
+    color: #ffffff;
+    border-radius: 12px 12px 0 0;
+}
+
+.solitaire-game-header h1 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+.solitaire-game-header .solitaire-eyebrow {
+    margin: 0 0 2px;
+    color: #9aa0a6;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+}
+
+.solitaire-game-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Header buttons */
+
+.solitaire-game-header .solitaire-button {
+    width: auto;
+    min-height: 36px;
+    padding: 6px 14px;
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.solitaire-game-header .solitaire-button:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: none;
+}
+
+.solitaire-game-header .solitaire-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: transparent;
+}
+
+.solitaire-game-header .solitaire-button:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+
+/* =========================================
+   GAME BOARD
+========================================= */
+
+.solitaire-board {
+    width: 100%;
+    min-width: 0;
+    padding: 20px 0;
+    display: grid;
+    grid-template-columns: var(--sidebar-w) minmax(0, 1fr) var(--sidebar-w);
+    grid-template-rows: repeat(4, auto) auto;
+    align-items: start;
+    row-gap: 12px;
+    border-radius: 0 0 12px 12px;
+    box-sizing: border-box;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(32, 60, 40, 0.2);
+
+    background: linear-gradient(
+        to right,
+        #2b7a3e 0,
+        #2b7a3e var(--sidebar-w),
+        #34a04a var(--sidebar-w),
+        #34a04a calc(100% - var(--sidebar-w)),
+        #2b7a3e calc(100% - var(--sidebar-w)),
+        #2b7a3e 100%
+    );
+}
+
+
+/* =========================================
+   STOCK, WASTE AND FOUNDATION PILES
+========================================= */
+
+.solitaire-top-piles {
+    display: contents;
+}
+
+.solitaire-pile-spacer {
+    display: none;
+}
+
+/* Left sidebar: stock and waste */
+
+.solitaire-top-piles > :nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.solitaire-top-piles > :nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+/* Right sidebar: four foundations */
+
+.solitaire-top-piles > :nth-child(4) {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.solitaire-top-piles > :nth-child(5) {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.solitaire-top-piles > :nth-child(6) {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+.solitaire-top-piles > :nth-child(7) {
+    grid-column: 3;
+    grid-row: 4;
+}
+
+
+/* =========================================
+   PILE DIMENSIONS AND APPEARANCE
+========================================= */
+
+.solitaire-stock-pile,
+.solitaire-waste-pile,
+.solitaire-foundation-pile,
+.solitaire-empty-pile {
+    width: var(--sidebar-card-w);
+    aspect-ratio: 5 / 7;
+    justify-self: center;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.solitaire-stock-pile,
+.solitaire-waste-pile,
+.solitaire-foundation-pile {
+    appearance: none;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+}
+
+/* Empty pile outlines */
+
+.solitaire-empty-pile,
+.solitaire-stock-pile.solitaire-empty-pile,
+.solitaire-waste-pile.solitaire-empty-pile,
+.solitaire-foundation-pile.solitaire-empty-pile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.28);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.solitaire-empty-pile > span {
+    font-size: 1.6rem;
+}
+
+/* Empty Stock and Waste labels */
+
+.solitaire-stock-pile > span {
+    font-size: 0.58rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.solitaire-waste-pile > .solitaire-waste-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+}
+
+/* Occupied piles */
+
+.solitaire-stock-pile.solitaire-pile-has-card,
+.solitaire-waste-pile.solitaire-pile-has-card,
+.solitaire-foundation-pile.solitaire-pile-has-card,
+.solitaire-pile-has-card {
+    border: none;
+    background: transparent;
+}
+
+.solitaire-pile-has-card .solitaire-board-card,
+.solitaire-waste-pile .solitaire-board-card,
+.solitaire-foundation-pile .solitaire-board-card {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 5 / 7;
+}
+
+.solitaire-stock-pile .solitaire-board-card {
+    pointer-events: none;
+}
+
+.solitaire-stock-pile:disabled,
+.solitaire-waste-pile:disabled {
+    cursor: default;
+}
+
+.solitaire-stock-pile:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+}
+
+.solitaire-pile-selected {
+    outline: 3px solid #facc15;
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+
+/* =========================================
+   TABLEAU
+========================================= */
+
+.solitaire-tableau {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+    align-items: start;
+}
+
+.solitaire-tableau-column {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    min-height: 340px;
+}
+
+.solitaire-tableau-card {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(100%, var(--solitaire-card-max-width));
+    min-width: 0;
+    transform: translateX(-50%);
+}
+
+
+/* =========================================
+   PLAYING CARD BASE
+========================================= */
+
+.solitaire-board-card {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 5 / 7;
+    height: auto;
+    overflow: hidden;
+    border-radius: 8px;
+    box-sizing: border-box;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+
+/* =========================================
+   CARD BACK
+   Matches the title-screen illustration
+========================================= */
+
+.solitaire-board-card-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: 3px solid #ffffff;
+    border-radius: 8px;
+    background: #354f52;
+}
+
+/* Decorative inner pattern */
+
+.solitaire-board-card-pattern {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #cad2c5;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: clamp(16px, 2vw, 25px);
+    background:
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 6px,
+            rgba(255, 255, 255, 0.08) 6px,
+            rgba(255, 255, 255, 0.08) 9px
+        );
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   CARD FACE
+========================================= */
+
+.solitaire-board-card-face {
+    border: 3px solid #ffffff;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+.solitaire-board-card-face.red {
+    color: #d73535;
+}
+
+.solitaire-board-card-face.black {
+    color: #354f52;
+}
+
+
+/* =========================================
+   CARD RANK AND SUIT
+========================================= */
+
+/* Rank in the top-left corner */
+
+.solitaire-board-card-corner {
+    position: absolute;
+    top: 6px;
+    left: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    font-size: clamp(10px, 1.2vw, 15px);
+    font-weight: 800;
+    line-height: 1;
+}
+
+/* Hide the small suit underneath the rank */
+
+.solitaire-board-card-corner span:nth-child(2) {
+    display: none;
+}
+
+/* Hide the duplicate bottom-right corner */
+
+.solitaire-board-card-corner.bottom {
+    display: none;
+}
+
+/* Large suit symbol in the center */
+
+.solitaire-board-card-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 8px;
+    font-size: clamp(25px, 3vw, 39px);
+}
+
+
+/* =========================================
+   CARD BUTTONS AND SELECTION
+========================================= */
+
+.solitaire-card-button {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.solitaire-card-button:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+.solitaire-card-button:disabled {
+    cursor: default;
+}
+
+/* Selected card */
+
+.solitaire-card-button.is-selected .solitaire-board-card {
+    outline: 3px solid #facc15;
+    outline-offset: 1px;
+}
+
+/* Valid move target */
+
+.solitaire-card-button.solitaire-valid-move-target .solitaire-board-card {
+    outline: 3px solid #ffffff;
+    outline-offset: 1px;
+}
+
+/* Empty column move target */
+
+.solitaire-empty-column-target {
+    outline: 2px dashed rgba(255, 255, 255, 0.8);
+    outline-offset: 3px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
+/* =========================================
+   BOARD STATUS MESSAGE
+========================================= */
+
+.solitaire-board-message {
+    grid-column: 1 / -1;
+    grid-row: 5;
+    margin: 12px 12px 0;
+    color: #ffffff;
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   HELP POPUP OVERLAY
+========================================= */
+
+.solitaire-help-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(0, 0, 0, 0.62);
+    box-sizing: border-box;
+}
+
+.solitaire-help-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: min(100%, 390px);
+    max-height: min(90vh, 700px);
+    overflow-y: auto;
+    padding: 26px 22px;
+    border-radius: 16px;
+    background: #ffffff;
+    color: #2f3e46;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    text-align: left;
+}
+
+/* Help popup heading */
+
+.solitaire-help-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.solitaire-help-heading span {
+    color: #01796f;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+/* Close button */
+
+.solitaire-help-close {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: #f1f5ef;
+    color: #354f52;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.solitaire-help-close:hover {
+    background: #dde8d5;
+}
+
+.solitaire-help-close:focus-visible,
+.solitaire-help-dot:focus-visible,
+.solitaire-help-nav-button:focus-visible {
+    outline: 3px solid #01796f;
+    outline-offset: 3px;
+}
+
+/* Page information */
+
+.solitaire-help-page-count {
+    margin: 8px 0 -10px;
+    color: #718078;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.solitaire-help-card h2 {
+    margin: 0;
+    color: #2f3e46;
+    font-size: 1.7rem;
+}
+
+.solitaire-help-description {
+    margin: 0;
+    color: #405344;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Help tips */
+
+.solitaire-help-tips {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 4px 0;
+    padding-left: 22px;
+    color: #405344;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.solitaire-help-tips li::marker {
+    color: #2b7a3e;
+}
+
+/* Page navigation dots */
+
+.solitaire-help-dots {
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 4px;
+}
+
+.solitaire-help-dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #cad2c5;
+    cursor: pointer;
+}
+
+.solitaire-help-dot.active {
+    background: #2b7a3e;
+    transform: scale(1.2);
+}
+
+/* Help navigation buttons */
+
+.solitaire-help-navigation {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.solitaire-help-navigation span {
+    color: #718078;
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.solitaire-help-nav-button {
+    min-height: 40px;
+    padding: 9px 14px;
+    border: 1px solid #cad2c5;
+    border-radius: 9px;
+    background: #f5f8f3;
+    color: #354f52;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.solitaire-help-nav-button:hover:not(:disabled) {
+    background: #dde8d5;
+}
+
+.solitaire-help-nav-button.primary {
+    border-color: #4ade80;
+    background: #4ade80;
+    color: #183b2a;
+}
+
+.solitaire-help-nav-button.primary:hover {
+    background: #35cf70;
+}
+
+.solitaire-help-nav-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   RESPONSIVE GAME LAYOUT
+========================================= */
+
+@media (max-width: 600px) {
+    .solitaire-game {
+        --solitaire-card-max-width: 44px;
+        --sidebar-w: 52px;
+        --sidebar-card-w: var(--solitaire-card-max-width);
+        --tableau-stack-step: 14px;
+    }
+
+    .solitaire-page:has(.solitaire-game) {
+        min-height: 100vh;
+        padding: 0;
+    }
+
+    /* Game header */
+
+    .solitaire-game-header {
+        padding: 8px 10px;
+        border-radius: 0;
+        flex-wrap: wrap;
+    }
+
+    .solitaire-game-header-actions {
+        gap: 4px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .solitaire-game-header .solitaire-button {
+        padding: 6px 9px;
+        font-size: 0.82rem;
+    }
+
+    /* Board */
+
+    .solitaire-board {
+        padding: 10px 0;
+        border-radius: 0;
+        row-gap: 8px;
+    }
+
+    /* Tableau */
+
+    .solitaire-tableau {
+        gap: 3px;
+        padding: 0 4px;
+    }
+
+    .solitaire-tableau-column {
+        min-height: 260px;
+    }
+
+    /* Playing cards */
+
+    .solitaire-board-card {
+        border-radius: 5px;
+    }
+
+    .solitaire-board-card-back {
+        padding: 3px;
+        border-width: 2px;
+        border-radius: 5px;
+    }
+
+    .solitaire-board-card-pattern {
+        border-width: 1px;
+        font-size: 14px;
+    }
+
+    .solitaire-board-card-face {
+        border-width: 2px;
+        border-radius: 5px;
+    }
+
+    .solitaire-board-card-corner {
+        top: 3px;
+        left: 3px;
+        font-size: 8px;
+    }
+
+    .solitaire-board-card-center {
+        font-size: 18px;
+    }
+
+    /* Empty piles */
+
+    .solitaire-empty-pile span {
+        font-size: 1.1rem;
+    }
+
+    .solitaire-stock-pile > span {
+        font-size: 0.46rem;
+    }
+
+    .solitaire-waste-pile > .solitaire-waste-label {
+        font-size: 0.7rem;
+    }
+
+    /* Board message */
+
+    .solitaire-board-message {
+        font-size: 0.8rem;
+    }
+
+    /* Help popup */
+
+    .solitaire-help-overlay {
+        padding: 10px;
+    }
+
+    .solitaire-help-card {
+        width: min(100%, 340px);
+        max-height: 88vh;
+        padding: 22px 17px;
+        gap: 12px;
+    }
+
+    .solitaire-help-card h2 {
+        font-size: 1.45rem;
+    }
+
+    .solitaire-help-description,
+    .solitaire-help-tips {
+        font-size: 0.85rem;
+    }
+}
+
+
+/* =========================================
+   SMALL MENU SCREENS
+========================================= */
 
 @media (max-width: 480px) {
-    .solitaire-page {
+    .solitaire-page:has(.solitaire-menu),
+    .solitaire-page:has(.solitaire-placeholder) {
         min-height: 600px;
         padding: 24px 14px;
     }
@@ -258,6 +1086,25 @@
     }
 }
 
+
+/* =========================================
+   DESKTOP VIEWPORT
+========================================= */
+
+@media (min-width: 601px) {
+    .solitaire-page:has(.solitaire-game) {
+        min-height: 100vh;
+        height: 100vh;
+        padding: 10px 12px;
+        overflow: hidden;
+    }
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
 @media (prefers-reduced-motion: reduce) {
     .solitaire-button {
         transition: none;
@@ -266,427 +1113,4 @@
     .solitaire-button:hover {
         transform: none;
     }
-}
-
-
-/* ---------- Solitaire game board ---------- */
-
-.solitaire-game {
-    width: 100%;
-    max-width: 1100px;
-    min-width: 0;
-    margin: 0 auto;
-    box-sizing: border-box;
-}
-
-.solitaire-game-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 24px;
-}
-
-.solitaire-game-header h1 {
-    margin: 0;
-    color: #2f3e46;
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-}
-
-.solitaire-game-header .solitaire-eyebrow {
-    margin-bottom: 8px;
-}
-
-.solitaire-game-header .solitaire-button {
-    width: auto;
-    flex-shrink: 0;
-}
-
-.solitaire-board {
-    width: 100%;
-    min-width: 0;
-    padding: clamp(8px, 1.5vw, 18px);
-    border: 1px solid #cad2c5;
-    border-radius: 16px;
-    background: #276749;
-    box-shadow: 0 8px 24px rgba(32, 60, 40, 0.15);
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-.solitaire-top-piles {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: clamp(4px, 1vw, 12px);
-    width: 100%;
-    margin-bottom: clamp(18px, 3vw, 30px);
-}
-
-.solitaire-empty-pile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    aspect-ratio: 5 / 7;
-    min-width: 0;
-    border: 2px dashed rgba(255, 255, 255, 0.42);
-    border-radius: 7px;
-    color: rgba(255, 255, 255, 0.8);
-    box-sizing: border-box;
-}
-
-.solitaire-empty-pile span {
-    font-size: clamp(0.7rem, 2vw, 1.5rem);
-}
-
-.solitaire-pile-spacer {
-    min-width: 0;
-}
-
-.solitaire-tableau {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: clamp(4px, 1vw, 12px);
-    width: 100%;
-    min-width: 0;
-    align-items: start;
-}
-
-.solitaire-tableau-column {
-    position: relative;
-    width: 100%;
-    min-width: 0;
-    min-height: 300px;
-}
-
-.solitaire-tableau-card {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-width: 0;
-}
-
-.solitaire-board-card {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 5 / 7;
-    overflow: hidden;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.solitaire-board-card-back {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #fffdf4;
-    background: #354f8c;
-    box-shadow: inset 0 0 0 2px #354f8c,
-                inset 0 0 0 4px #fffdf4;
-}
-
-.solitaire-board-card-pattern {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 75%;
-    height: 80%;
-    border: 1px solid #fffdf4;
-    color: #fffdf4;
-    font-size: clamp(0.6rem, 2vw, 1.5rem);
-    box-sizing: border-box;
-}
-
-.solitaire-board-card-face {
-    border: 1px solid #d7d7d7;
-    background: #fffdf8;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
-}
-
-.solitaire-board-card-face.red {
-    color: #c62828;
-}
-
-.solitaire-board-card-face.black {
-    color: #202124;
-}
-
-.solitaire-board-card-corner {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: clamp(0.5rem, 1.2vw, 0.95rem);
-    font-weight: 800;
-    line-height: 1;
-}
-
-.solitaire-board-card-corner.bottom {
-    top: auto;
-    left: auto;
-    right: 3px;
-    bottom: 3px;
-    transform: rotate(180deg);
-}
-
-.solitaire-board-card-center {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: clamp(1rem, 2.8vw, 2.3rem);
-}
-
-.solitaire-board-message {
-    margin: 24px 0 0;
-    color: #fffdf4;
-    text-align: center;
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-
-/* ---------- Smaller screens ---------- */
-
-@media (max-width: 600px) {
-    .solitaire-game-header {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .solitaire-board {
-        padding: 6px;
-        border-radius: 10px;
-    }
-
-    .solitaire-top-piles,
-    .solitaire-tableau {
-        gap: 3px;
-    }
-
-    .solitaire-tableau-column {
-        min-height: 260px;
-    }
-
-    .solitaire-board-card {
-        border-radius: 3px;
-    }
-
-    .solitaire-board-card-back {
-        border-width: 2px;
-    }
-
-    .solitaire-board-card-corner {
-        top: 2px;
-        left: 2px;
-        font-size: clamp(0.45rem, 2vw, 0.7rem);
-    }
-
-    .solitaire-board-card-corner.bottom {
-        right: 2px;
-        bottom: 2px;
-    }
-
-    .solitaire-board-message {
-        font-size: 0.8rem;
-    }
-}
-
-
-/* ---------- Reduce Solitaire card sizes ---------- */
-
-.solitaire-tableau-card {
-    width: 75%;
-    left: 12.5%;
-}
-
-.solitaire-board-card {
-    width: 100%;
-}
-
-.solitaire-top-piles .solitaire-empty-pile {
-    width: 75%;
-    justify-self: center;
-}
-
-/* Make card symbols fit the smaller cards */
-.solitaire-board-card-corner {
-    font-size: clamp(7px, 0.85vw, 12px);
-}
-
-.solitaire-board-card-corner.bottom {
-    right: 3px;
-    bottom: 3px;
-}
-
-.solitaire-board-card-center {
-    font-size: clamp(16px, 1.8vw, 25px);
-}
-
-.solitaire-tableau-column {
-    min-height: 330px;
-}
-
-/* Keep the cards centered on smaller screens */
-@media (max-width: 600px) {
-    .solitaire-tableau-card {
-        width: 85%;
-        left: 7.5%;
-    }
-
-    .solitaire-top-piles .solitaire-empty-pile {
-        width: 85%;
-    }
-
-    .solitaire-board-card-center {
-        font-size: clamp(12px, 3vw, 20px);
-    }
-}
-
-
-/* ---------- Stock and waste piles ---------- */
-
-.solitaire-stock-pile {
-    appearance: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-}
-
-.solitaire-stock-pile.solitaire-pile-has-card {
-    border: none;
-    background: transparent;
-}
-
-.solitaire-stock-pile:focus-visible {
-    outline: 3px solid #4ade80;
-    outline-offset: 3px;
-}
-
-.solitaire-stock-pile:disabled {
-    cursor: default;
-}
-
-.solitaire-pile-has-card {
-    border: none;
-}
-
-.solitaire-pile-has-card .solitaire-board-card {
-    width: 100%;
-    height: 100%;
-}
-
-.solitaire-stock-pile .solitaire-board-card {
-    pointer-events: none;
-}
-
-
-/* ---------- Card selection and pile interactions ---------- */
-
-.solitaire-card-button {
-    display: block;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    border: none;
-    background: transparent;
-    font: inherit;
-    text-align: left;
-    cursor: pointer;
-}
-
-.solitaire-card-button:focus-visible {
-    outline: 3px solid #4ade80;
-    outline-offset: 2px;
-    border-radius: 6px;
-}
-
-.solitaire-card-button.is-selected .solitaire-board-card {
-    outline: 3px solid #4ade80;
-    outline-offset: 2px;
-}
-
-.solitaire-card-button:disabled {
-    cursor: default;
-}
-
-.solitaire-stock-pile,
-.solitaire-waste-pile,
-.solitaire-foundation-pile {
-    appearance: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-}
-
-.solitaire-waste-pile:disabled {
-    cursor: default;
-}
-
-.solitaire-pile-selected {
-    outline: 3px solid #4ade80;
-    outline-offset: 2px;
-}
-
-.solitaire-waste-pile .solitaire-board-card,
-.solitaire-foundation-pile .solitaire-board-card {
-    width: 100%;
-    height: 100%;
-}
-
-
-/* ---------- Undo and tableau destinations ---------- */
-
-.solitaire-game-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.solitaire-game-header-actions .solitaire-button {
-    width: auto;
-}
-
-.solitaire-game-header-actions .solitaire-button:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.solitaire-empty-column-target {
-    outline: 2px dashed #4ade80;
-    outline-offset: 3px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-@media (max-width: 600px) {
-    .solitaire-game-header-actions {
-        width: 100%;
-        flex-wrap: wrap;
-    }
-}
-
-
-/* ---------- Tableau movement targets ---------- */
-
-.solitaire-card-button.solitaire-valid-move-target
-.solitaire-board-card {
-    outline: 3px solid #4ade80;
-    outline-offset: 2px;
-}
-
-.solitaire-empty-column-target {
-    outline: 2px dashed #4ade80;
-    outline-offset: 3px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.solitaire-card-button.is-selected .solitaire-board-card {
-    outline: 3px solid #facc15;
-    outline-offset: 2px;
 }

@@ -1,6 +1,8 @@
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../games-css/Solitaire.css";
+
+
+/* ---------- Card data ---------- */
 
 const SUITS = [
     { symbol: "♥", color: "red", name: "hearts" },
@@ -25,6 +27,54 @@ const RANKS = [
     { value: 13, label: "K" },
 ];
 
+
+/* ---------- Help page content ---------- */
+
+const HELP_PAGES = [
+    {
+        title: "Tableau",
+        description:
+            "The tableau contains seven columns. Your goal is to organize cards, uncover hidden cards, and build sequences.",
+
+        tips: [
+            "Arrange cards in descending order, alternating between red and black.",
+            "You can move a single card or a valid sequence of face-up cards.",
+            "Only a King can be placed in an empty tableau column.",
+            "Moving the top face-up card can reveal a hidden card underneath.",
+            "Build the four foundations by suit, starting with Ace and ending with King.",
+        ],
+    },
+
+    {
+        title: "Stock Pile",
+        description:
+            "The Stock is the face-down pile on the left side of the game board.",
+
+        tips: [
+            "Select the Stock pile to draw one card.",
+            "The drawn card moves to the Waste pile.",
+            "When the Stock is empty, select it again to recycle the Waste pile.",
+            "You can continue drawing cards after the Stock has been recycled.",
+        ],
+    },
+
+    {
+        title: "Waste Pile",
+        description:
+            "The Waste pile holds the cards drawn from the Stock.",
+
+        tips: [
+            "Only the top card of the Waste pile can be played.",
+            "Select the top card to move it to a valid tableau column.",
+            "You can also move it to its matching foundation when it is next in sequence.",
+            "When a Waste card is moved, the previous card underneath becomes available.",
+        ],
+    },
+];
+
+
+/* ---------- Create and shuffle deck ---------- */
+
 function createDeck() {
     return SUITS.flatMap((suit) =>
         RANKS.map((rank) => ({
@@ -48,6 +98,9 @@ function shuffleDeck(deck) {
 
     return shuffled;
 }
+
+
+/* ---------- Deal game ---------- */
 
 function dealGame() {
     const deck = shuffleDeck(createDeck());
@@ -81,6 +134,9 @@ function dealGame() {
         },
     };
 }
+
+
+/* ---------- Playing card component ---------- */
 
 function PlayingCard({ card }) {
     if (!card.faceUp) {
@@ -118,6 +174,9 @@ function PlayingCard({ card }) {
     );
 }
 
+
+/* ---------- Main Solitaire component ---------- */
+
 function Solitaire() {
     const [screen, setScreen] = useState("menu");
     const [game, setGame] = useState(null);
@@ -125,21 +184,64 @@ function Solitaire() {
     const [selected, setSelected] = useState(null);
     const [moveMessage, setMoveMessage] = useState("");
 
+    // Help popup states.
+    const [showHelp, setShowHelp] = useState(false);
+    const [helpPage, setHelpPage] = useState(0);
+
+
+    /* ---------- Help keyboard controls ---------- */
+
+    useEffect(() => {
+        if (!showHelp) return;
+
+        function handleHelpKeyDown(event) {
+            if (event.key === "Escape") {
+                setShowHelp(false);
+            }
+
+            if (event.key === "ArrowLeft") {
+                setHelpPage((page) => Math.max(0, page - 1));
+            }
+
+            if (event.key === "ArrowRight") {
+                setHelpPage((page) =>
+                    Math.min(HELP_PAGES.length - 1, page + 1)
+                );
+            }
+        }
+
+        window.addEventListener("keydown", handleHelpKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleHelpKeyDown);
+        };
+    }, [showHelp]);
+
+
+    /* ---------- Start game ---------- */
+
     function startGame() {
         setGame(dealGame());
         setHistory([]);
         setSelected(null);
         setMoveMessage("");
+        setShowHelp(false);
+        setHelpPage(0);
         setScreen("playing");
     }
 
-    // Save a previous game state for Undo.
+
+    /* ---------- Save history for Undo ---------- */
+
     function saveHistory() {
         setHistory((previousHistory) => [
             ...previousHistory,
             game,
         ]);
     }
+
+
+    /* ---------- Draw and recycle stock ---------- */
 
     function drawFromStock() {
         if (!game) return;
@@ -188,6 +290,9 @@ function Solitaire() {
         });
     }
 
+
+    /* ---------- Get selected cards ---------- */
+
     function getSelectedCards(currentGame) {
         if (!selected || !currentGame) return [];
 
@@ -210,7 +315,9 @@ function Solitaire() {
         return [];
     }
 
-    // Check that a selected tableau sequence is valid.
+
+    /* ---------- Validate tableau sequences ---------- */
+
     function isValidSequence(cards) {
         if (cards.length === 0) return false;
 
@@ -233,8 +340,9 @@ function Solitaire() {
         return true;
     }
 
-    // Determine whether the selected cards can move
-    // to a particular tableau column.
+
+    /* ---------- Validate tableau destinations ---------- */
+
     function canMoveToTableau(columnIndex) {
         if (!selected || !game) return false;
 
@@ -274,6 +382,9 @@ function Solitaire() {
         );
     }
 
+
+    /* ---------- Move cards ---------- */
+
     function attemptMove(destination) {
         if (!game || !selected) return false;
 
@@ -294,14 +405,13 @@ function Solitaire() {
             setMoveMessage(
                 "That card sequence cannot be moved."
             );
+
             return false;
         }
 
         // Validate tableau destinations.
         if (destination.type === "tableau") {
-            if (
-                !canMoveToTableau(destination.column)
-            ) {
+            if (!canMoveToTableau(destination.column)) {
                 setMoveMessage(
                     firstCard.rank === 13
                         ? "Choose a valid destination column."
@@ -317,11 +427,12 @@ function Solitaire() {
             if (
                 destinationColumn.length > 0 &&
                 destination.targetIndex !==
-                    destinationColumn.length - 1
+                destinationColumn.length - 1
             ) {
                 setMoveMessage(
                     "Choose the top card of the destination column."
                 );
+
                 return false;
             }
         }
@@ -332,6 +443,7 @@ function Solitaire() {
                 setMoveMessage(
                     "Only one card at a time can be moved to a foundation."
                 );
+
                 return false;
             }
 
@@ -339,6 +451,7 @@ function Solitaire() {
                 setMoveMessage(
                     "A foundation card can only be moved back to the tableau."
                 );
+
                 return false;
             }
 
@@ -350,6 +463,7 @@ function Solitaire() {
                 setMoveMessage(
                     "Cards must go to their matching suit."
                 );
+
                 return false;
             }
 
@@ -361,6 +475,7 @@ function Solitaire() {
                     setMoveMessage(
                         "A foundation must start with an Ace."
                     );
+
                     return false;
                 }
             } else {
@@ -371,6 +486,7 @@ function Solitaire() {
                     setMoveMessage(
                         "Foundations must be built upward from Ace to King."
                     );
+
                     return false;
                 }
             }
@@ -440,6 +556,9 @@ function Solitaire() {
         return true;
     }
 
+
+    /* ---------- Tableau card selection ---------- */
+
     function handleTableauCardClick(columnIndex, cardIndex) {
         const column = game.tableau[columnIndex];
         const card = column[cardIndex];
@@ -483,6 +602,9 @@ function Solitaire() {
         setMoveMessage("");
     }
 
+
+    /* ---------- Empty tableau columns ---------- */
+
     function handleEmptyColumnClick(columnIndex) {
         if (!selected) return;
 
@@ -492,6 +614,9 @@ function Solitaire() {
             targetIndex: null,
         });
     }
+
+
+    /* ---------- Waste selection ---------- */
 
     function handleWasteClick() {
         if (game.waste.length === 0) return;
@@ -506,12 +631,16 @@ function Solitaire() {
             setMoveMessage(
                 "Click your selected card again to deselect it."
             );
+
             return;
         }
 
         setSelected({ type: "waste" });
         setMoveMessage("");
     }
+
+
+    /* ---------- Foundation selection ---------- */
 
     function handleFoundationClick(suitName) {
         const foundation = game.foundations[suitName];
@@ -544,6 +673,9 @@ function Solitaire() {
         }
     }
 
+
+    /* ---------- Undo ---------- */
+
     function undoMove() {
         if (history.length === 0) return;
 
@@ -559,13 +691,28 @@ function Solitaire() {
         setMoveMessage("");
     }
 
+
+    /* ---------- Current waste card ---------- */
+
     const topWasteCard =
         game?.waste[game.waste.length - 1];
 
+
+    /* ---------- Current Help page ---------- */
+
+    const currentHelpPage = HELP_PAGES[helpPage];
+
+
+    /* ---------- Render ---------- */
+
     return (
         <main className="solitaire-page">
+
+            {/* Main menu */}
+
             {screen === "menu" && (
                 <section className="solitaire-menu">
+
                     <p className="solitaire-eyebrow">
                         PUZZLE SANCTUARY
                     </p>
@@ -582,15 +729,11 @@ function Solitaire() {
 
                         <div className="solitaire-playing-card solitaire-card-front">
                             <span className="solitaire-card-corner">
-                                A<span>♥</span>
+                                A
                             </span>
 
                             <span className="solitaire-card-heart">
                                 ♥
-                            </span>
-
-                            <span className="solitaire-card-corner bottom">
-                                A<span>♥</span>
                             </span>
                         </div>
                     </div>
@@ -600,6 +743,7 @@ function Solitaire() {
                     </h1>
 
                     <div className="solitaire-menu-buttons">
+
                         <button
                             type="button"
                             className="solitaire-button solitaire-primary-button"
@@ -635,13 +779,21 @@ function Solitaire() {
                             <span aria-hidden="true">?</span>
                             How to Play
                         </button>
+
                     </div>
                 </section>
             )}
 
+
+            {/* Active game */}
+
             {screen === "playing" && game && (
                 <section className="solitaire-game">
+
+                    {/* Game header */}
+
                     <header className="solitaire-game-header">
+
                         <div>
                             <p className="solitaire-eyebrow">
                                 PUZZLE SANCTUARY
@@ -651,6 +803,9 @@ function Solitaire() {
                         </div>
 
                         <div className="solitaire-game-header-actions">
+
+                            {/* Undo */}
+
                             <button
                                 type="button"
                                 className="solitaire-button"
@@ -660,30 +815,59 @@ function Solitaire() {
                                 ↶ Undo
                             </button>
 
+
+                            {/* Help */}
+
+                            <button
+                                type="button"
+                                className="solitaire-button"
+                                onClick={() => {
+                                    setHelpPage(0);
+                                    setShowHelp(true);
+                                }}
+                                aria-haspopup="dialog"
+                                aria-label="Open Solitaire help"
+                            >
+                                ? Help
+                            </button>
+
+
+                            {/* Back to menu */}
+
                             <button
                                 type="button"
                                 className="solitaire-button"
                                 onClick={() => {
                                     setSelected(null);
                                     setMoveMessage("");
+                                    setShowHelp(false);
+                                    setHelpPage(0);
                                     setScreen("menu");
                                 }}
                             >
                                 Back to Menu
                             </button>
+
                         </div>
                     </header>
 
+
+                    {/* Game board */}
+
                     <div className="solitaire-board">
+
                         {/* Stock, waste, and foundations */}
+
                         <div className="solitaire-top-piles">
+
+                            {/* Stock */}
+
                             <button
                                 type="button"
-                                className={`solitaire-empty-pile solitaire-stock-pile ${
-                                    game.stock.length > 0
-                                        ? "solitaire-pile-has-card"
-                                        : ""
-                                }`}
+                                className={`solitaire-empty-pile solitaire-stock-pile ${game.stock.length > 0
+                                    ? "solitaire-pile-has-card"
+                                    : ""
+                                    }`}
                                 onClick={drawFromStock}
                                 disabled={
                                     game.stock.length === 0 &&
@@ -701,7 +885,7 @@ function Solitaire() {
                                     <PlayingCard
                                         card={
                                             game.stock[
-                                                game.stock.length - 1
+                                            game.stock.length - 1
                                             ]
                                         }
                                     />
@@ -712,17 +896,18 @@ function Solitaire() {
                                 )}
                             </button>
 
+
+                            {/* Waste */}
+
                             <button
                                 type="button"
-                                className={`solitaire-empty-pile solitaire-waste-pile ${
-                                    topWasteCard
-                                        ? "solitaire-pile-has-card"
-                                        : ""
-                                } ${
-                                    selected?.type === "waste"
+                                className={`solitaire-empty-pile solitaire-waste-pile ${topWasteCard
+                                    ? "solitaire-pile-has-card"
+                                    : ""
+                                    } ${selected?.type === "waste"
                                         ? "solitaire-pile-selected"
                                         : ""
-                                }`}
+                                    }`}
                                 onClick={handleWasteClick}
                                 disabled={!topWasteCard}
                                 aria-label={
@@ -734,11 +919,19 @@ function Solitaire() {
                                 {topWasteCard ? (
                                     <PlayingCard card={topWasteCard} />
                                 ) : (
-                                    <span>Waste</span>
+                                    <span className="solitaire-waste-label">
+                                        Waste
+                                    </span>
                                 )}
                             </button>
 
+
+                            {/* Spacer */}
+
                             <div className="solitaire-pile-spacer" />
+
+
+                            {/* Foundations */}
 
                             {SUITS.map((suit) => {
                                 const cards =
@@ -751,16 +944,14 @@ function Solitaire() {
                                     <button
                                         type="button"
                                         key={suit.name}
-                                        className={`solitaire-empty-pile solitaire-foundation-pile ${
-                                            topCard
-                                                ? "solitaire-pile-has-card"
-                                                : ""
-                                        } ${
-                                            selected?.type === "foundation" &&
-                                            selected.suitName === suit.name
+                                        className={`solitaire-empty-pile solitaire-foundation-pile ${topCard
+                                            ? "solitaire-pile-has-card"
+                                            : ""
+                                            } ${selected?.type === "foundation" &&
+                                                selected.suitName === suit.name
                                                 ? "solitaire-pile-selected"
                                                 : ""
-                                        }`}
+                                            }`}
                                         onClick={() =>
                                             handleFoundationClick(
                                                 suit.name
@@ -780,10 +971,14 @@ function Solitaire() {
                                     </button>
                                 );
                             })}
+
                         </div>
 
+
                         {/* Tableau */}
+
                         <div className="solitaire-tableau">
+
                             {game.tableau.map(
                                 (column, columnIndex) => {
                                     const validDestination =
@@ -792,12 +987,11 @@ function Solitaire() {
 
                                     return (
                                         <div
-                                            className={`solitaire-tableau-column ${
-                                                column.length === 0 &&
+                                            className={`solitaire-tableau-column ${column.length === 0 &&
                                                 validDestination
-                                                    ? "solitaire-empty-column-target"
-                                                    : ""
-                                            }`}
+                                                ? "solitaire-empty-column-target"
+                                                : ""
+                                                }`}
                                             key={columnIndex}
                                             onClick={() =>
                                                 handleEmptyColumnClick(
@@ -821,21 +1015,19 @@ function Solitaire() {
                                                             className="solitaire-tableau-card"
                                                             key={card.id}
                                                             style={{
-                                                                top: `${cardIndex * 30}px`,
+                                                                top: `${cardIndex * 16}px`,
                                                                 zIndex: cardIndex + 1,
                                                             }}
                                                         >
                                                             <button
                                                                 type="button"
-                                                                className={`solitaire-card-button ${
-                                                                    isSelected
-                                                                        ? "is-selected"
-                                                                        : ""
-                                                                } ${
-                                                                    isValidTarget
+                                                                className={`solitaire-card-button ${isSelected
+                                                                    ? "is-selected"
+                                                                    : ""
+                                                                    } ${isValidTarget
                                                                         ? "solitaire-valid-move-target"
                                                                         : ""
-                                                                }`}
+                                                                    }`}
                                                                 onClick={(event) => {
                                                                     event.stopPropagation();
 
@@ -863,7 +1055,11 @@ function Solitaire() {
                                     );
                                 }
                             )}
+
                         </div>
+
+
+                        {/* Move status and feedback */}
 
                         <p
                             className="solitaire-board-message"
@@ -874,57 +1070,204 @@ function Solitaire() {
                                     ? "Card selected. Choose a highlighted destination."
                                     : "Select a face-up card to move it.")}
                         </p>
+
                     </div>
+
+
+                    {/* Help popup */}
+
+                    {showHelp && (
+                        <div
+                            className="solitaire-help-overlay"
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="solitaire-help-title"
+                            onClick={(event) => {
+                                if (event.target === event.currentTarget) {
+                                    setShowHelp(false);
+                                }
+                            }}
+                        >
+                            <section className="solitaire-help-card">
+
+                                {/* Popup heading */}
+
+                                <div className="solitaire-help-heading">
+                                    <span>
+                                        PUZZLE SANCTUARY GUIDE
+                                    </span>
+
+                                    <button
+                                        type="button"
+                                        className="solitaire-help-close"
+                                        onClick={() => setShowHelp(false)}
+                                        aria-label="Close help"
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+
+
+                                {/* Page information */}
+
+                                <p className="solitaire-help-page-count">
+                                    PAGE {helpPage + 1} OF {HELP_PAGES.length}
+                                </p>
+
+                                <h2 id="solitaire-help-title">
+                                    {currentHelpPage.title}
+                                </h2>
+
+                                <p className="solitaire-help-description">
+                                    {currentHelpPage.description}
+                                </p>
+
+
+                                {/* Current page instructions */}
+
+                                <ul className="solitaire-help-tips">
+                                    {currentHelpPage.tips.map(
+                                        (tip, index) => (
+                                            <li key={index}>
+                                                {tip}
+                                            </li>
+                                        )
+                                    )}
+                                </ul>
+
+
+                                {/* Page indicators */}
+
+                                <div className="solitaire-help-dots">
+                                    {HELP_PAGES.map(
+                                        (page, index) => (
+                                            <button
+                                                key={page.title}
+                                                type="button"
+                                                className={
+                                                    helpPage === index
+                                                        ? "solitaire-help-dot active"
+                                                        : "solitaire-help-dot"
+                                                }
+                                                onClick={() =>
+                                                    setHelpPage(index)
+                                                }
+                                                aria-label={`Go to ${page.title} help page`}
+                                                aria-current={
+                                                    helpPage === index
+                                                        ? "step"
+                                                        : undefined
+                                                }
+                                            />
+                                        )
+                                    )}
+                                </div>
+
+
+                                {/* Previous and Next buttons */}
+
+                                <div className="solitaire-help-navigation">
+
+                                    <button
+                                        type="button"
+                                        className="solitaire-help-nav-button"
+                                        onClick={() =>
+                                            setHelpPage((page) =>
+                                                Math.max(0, page - 1)
+                                            )
+                                        }
+                                        disabled={helpPage === 0}
+                                    >
+                                        Previous
+                                    </button>
+
+                                    <span>
+                                        {helpPage + 1} / {HELP_PAGES.length}
+                                    </span>
+
+                                    <button
+                                        type="button"
+                                        className="solitaire-help-nav-button primary"
+                                        onClick={() => {
+                                            if (
+                                                helpPage ===
+                                                HELP_PAGES.length - 1
+                                            ) {
+                                                setShowHelp(false);
+                                            } else {
+                                                setHelpPage((page) =>
+                                                    page + 1
+                                                );
+                                            }
+                                        }}
+                                    >
+                                        {helpPage === HELP_PAGES.length - 1
+                                            ? "Done"
+                                            : "Next"}
+                                    </button>
+
+                                </div>
+
+                            </section>
+                        </div>
+                    )}
+
                 </section>
             )}
+
+
+            {/* Placeholder screens */}
 
             {[
                 "highScores",
                 "options",
                 "howToPlay",
             ].includes(screen) && (
-                <section className="solitaire-placeholder">
-                    <p className="solitaire-eyebrow">
-                        PUZZLE SANCTUARY
-                    </p>
+                    <section className="solitaire-placeholder">
 
-                    <h1>
-                        {screen === "highScores" && "High Scores"}
-                        {screen === "options" && "Options"}
-                        {screen === "howToPlay" && "How to Play"}
-                    </h1>
-
-                    {screen === "highScores" && (
-                        <p>
-                            Your best completion times and game
-                            statistics will appear here.
+                        <p className="solitaire-eyebrow">
+                            PUZZLE SANCTUARY
                         </p>
-                    )}
 
-                    {screen === "options" && (
-                        <p>
-                            Card backs, card faces, and table
-                            colors will be customizable here.
-                        </p>
-                    )}
+                        <h1>
+                            {screen === "highScores" && "High Scores"}
+                            {screen === "options" && "Options"}
+                            {screen === "howToPlay" && "How to Play"}
+                        </h1>
 
-                    {screen === "howToPlay" && (
-                        <p>
-                            Arrange cards in descending order,
-                            alternating colors, and move each suit
-                            to its foundation from Ace to King.
-                        </p>
-                    )}
+                        {screen === "highScores" && (
+                            <p>
+                                Your best completion times and game
+                                statistics will appear here.
+                            </p>
+                        )}
 
-                    <button
-                        type="button"
-                        className="solitaire-button solitaire-primary-button"
-                        onClick={() => setScreen("menu")}
-                    >
-                        Back to Menu
-                    </button>
-                </section>
-            )}
+                        {screen === "options" && (
+                            <p>
+                                Card backs, card faces, and table
+                                colors will be customizable here.
+                            </p>
+                        )}
+
+                        {screen === "howToPlay" && (
+                            <p>
+                                Arrange cards in descending order,
+                                alternating colors, and move each suit
+                                to its foundation from Ace to King.
+                            </p>
+                        )}
+
+                        <button
+                            type="button"
+                            className="solitaire-button solitaire-primary-button"
+                            onClick={() => setScreen("menu")}
+                        >
+                            Back to Menu
+                        </button>
+
+                    </section>
+                )}
+
         </main>
     );
 }
